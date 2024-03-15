@@ -65,7 +65,7 @@ Follow these steps to set up Schoolify locally for development or testing purpos
 
 We welcome contributions from the community! To contribute to Schoolify, please follow our contribution guidelines.
 
-## License 📝
+## [License](LICENSE) 📝
 
 Schoolify is licensed under the MIT License.
 
