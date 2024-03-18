@@ -1,28 +1,24 @@
-/* Assets */
-import { Roboto_Mono as Roboto } from "next/font/google";
-import { cn } from "@/lib/utils";
-import "@/styles/globals.css";
+/* Components */
+import Provider from "@/components/Provider";
+import Header from "@/components/Header";
 
-const roboto = Roboto({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-roboto",
-});
+/* Assets */
+import "@/styles/globals.css";
 
 interface Props {
   children: React.ReactNode;
 }
 
-function RootLayout({ children }: Readonly<Props>) {
+function RootLayout({ children }: Props) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          roboto.variable
-        )}
-      >
-        <main>{children}</main>
+    <html lang="en" suppressHydrationWarning className="dark">
+      <body>
+        <main>
+          <Provider>
+            <Header />
+            {children}
+          </Provider>
+        </main>
       </body>
     </html>
   );
