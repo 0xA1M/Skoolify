@@ -1,6 +1,7 @@
 # Schoolify 🎓 - School Management Solution
 
-![Schoolify Logo](link_to_your_logo)
+![Schoolify Logo](./public/LogoDark.png)
+![Schoolify Logo](./public/LogoLight.png)
 
 Welcome to Schoolify! 🚀
 
