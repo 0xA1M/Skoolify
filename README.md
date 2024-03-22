@@ -14,8 +14,6 @@ Schoolify is not your average school management system; it's a dynamic and open-
 - **Student Management:** Efficiently manage student profiles, attendance, and academic records.
 - **Teacher Dashboard:** Empower teachers with tools for lesson planning, grading, and communication.
 - **Administrative Tools:** Streamline administrative tasks, including scheduling, resource allocation, and reporting.
-- **Gradebook:** A centralized platform for teachers to manage and update student grades securely.
-- **Community Hub:** Engage unregistered users with upcoming events, school news, and other community activities. Let everyone feel the Schoolify spirit!
 
 ## Getting Started 🚀
 

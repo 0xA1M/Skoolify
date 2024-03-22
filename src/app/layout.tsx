@@ -1,8 +1,12 @@
+/* Components */
+import { Divider } from "@nextui-org/divider";
+
 /* Custom Components */
 import Provider from "@/components/UI/Provider";
 import Container from "@/components/UI/Container";
 import Nav from "@/components/Nav";
 import TopButton from "@/components/UI/TopButton";
+import Footer from "@/components/Footer";
 
 /* Assets */
 import type { Metadata } from "next";
@@ -37,6 +41,8 @@ function RootLayout({ children }: Props) {
             {children}
             <TopButton />
           </Container>
+          <Divider />
+          <Footer />
         </Provider>
       </body>
     </html>

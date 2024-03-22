@@ -10,7 +10,11 @@ import Image from "next/image";
 import logoDark from "/public/LogoDark.png";
 import logoLight from "/public/LogoLight.png";
 
-function Logo() {
+interface Props {
+  isFooter?: boolean;
+}
+
+function Logo({ isFooter }: Props) {
   const [mounted, setMounted] = useState(false);
   const { resolvedTheme } = useTheme();
 
@@ -30,7 +34,7 @@ function Logo() {
       src={Logo}
       alt="Skoolify"
       quality={100}
-      className="w-auto h-16"
+      className={`w-auto ${isFooter ? "h-28" : "h-16"} `}
       fetchPriority="high"
     />
   );

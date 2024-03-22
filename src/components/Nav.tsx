@@ -27,7 +27,7 @@ export type Menu = {
 
 /* Header Component */
 function Nav() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const navItems: Menu = [
     {
       link: "/",
@@ -36,10 +36,6 @@ function Nav() {
     {
       link: "#features",
       label: "Features",
-    },
-    {
-      link: "#events",
-      label: "Upcoming Events",
     },
     {
       link: "#contact",
