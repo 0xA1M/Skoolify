@@ -9,6 +9,7 @@ function Home() {
     <>
       <Hero />
       <Features />
+      <UpcomingEvents />
       <Contact />
     </>
   );

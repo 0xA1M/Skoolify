@@ -38,6 +38,10 @@ function Nav() {
       label: "Features",
     },
     {
+      link: "#events",
+      label: "Upcoming Events",
+    },
+    {
       link: "#contact",
       label: "Contact Us",
     },

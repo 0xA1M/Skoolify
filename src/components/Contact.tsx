@@ -13,7 +13,10 @@ import {
 
 function Contact() {
   return (
-    <section className="p-8 sm:p-16 lg:p-4 w-full sm:h-screen h-80v grid grid-cols-1 lg:grid-cols-2 grid-rows-1 lg:gap-6 mb-8 items-center">
+    <section
+      id="contact"
+      className="p-8 sm:p-16 lg:p-4 w-full sm:h-screen h-80v grid grid-cols-1 lg:grid-cols-2 grid-rows-1 lg:gap-6 mb-8 items-center"
+    >
       <Card className="mx-auto w-5/6 h-80v p-6">
         <CardHeader>
           <h2 className="text-3xl pl-6">Get in Touch</h2>
