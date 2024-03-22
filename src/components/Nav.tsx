@@ -1,6 +1,7 @@
 "use client";
 /* Utils */
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 /* Components */
 import {
@@ -74,6 +75,7 @@ function Nav() {
               href={item.link}
               color="primary"
               variant="light"
+              aria-label="link"
             >
               <p className="text-foreground text-medium">{item.label}</p>
             </Button>

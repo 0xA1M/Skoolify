@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@nextui-org/react": "^2.2.10",
+    "embla-carousel-autoplay": "^8.0.0",
+    "embla-carousel-react": "^8.0.0",
     "framer-motion": "^11.0.14",
     "lucide-react": "^0.359.0",
     "next": "14.1.3",

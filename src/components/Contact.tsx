@@ -10,6 +10,7 @@ import {
   Textarea,
   Input,
 } from "@nextui-org/react";
+import { Info } from "lucide-react";
 
 function Contact() {
   return (
@@ -18,8 +19,9 @@ function Contact() {
       className="p-8 sm:p-16 lg:p-4 w-full sm:h-screen h-80v grid grid-cols-1 lg:grid-cols-2 grid-rows-1 lg:gap-6 mb-8 items-center"
     >
       <Card className="mx-auto w-5/6 h-80v p-6">
-        <CardHeader>
-          <h2 className="text-3xl pl-6">Get in Touch</h2>
+        <CardHeader className="flex justify-between items-center px-8">
+          <h2 className="text-3xl">Get in Touch</h2>
+          <Info />
         </CardHeader>
         <Divider />
         <CardBody className="p-8 grid-cols-1 grid-rows-4 gap-4 overflow-hidden">

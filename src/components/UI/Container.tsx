@@ -3,7 +3,7 @@ interface Props {
 }
 
 function Container({ children }: Props) {
-  return <main className="w-full mx-auto max-w-7xl ">{children}</main>;
+  return <main className="w-full mx-auto max-w-7xl">{children}</main>;
 }
 
 export default Container;

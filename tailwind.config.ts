@@ -28,11 +28,11 @@ const config: Config = {
               200: "#B4CBFC",
               300: "#8DACF6",
               400: "#6E91EC",
-              500: "#4169E1", // 7C8DCE
+              500: "#4169E1",
               600: "#2F50C1",
               700: "#203AA2",
               800: "#142782",
-              900: "#0C1A6C", // 2C2D6F
+              900: "#0C1A6C",
               foreground: "#FFFFFF",
               DEFAULT: "#4169E1",
             },
