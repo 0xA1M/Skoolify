@@ -6,12 +6,12 @@ function Hero() {
     <section className="p-8 sm:p-16 lg:p-4 w-full sm:h-screen h-80v grid grid-cols-1 md:grid-cols-2 grid-rows-1 lg:gap-4 mb-8">
       <article className="sm:mb-12 text-center flex p-4 flex-col justify-center items-center sm:mt-0">
         <h1 className="text-3xl lg:text-4xl font-bold mb-6 sm:p-2 w-full text-center">
-          <span className="text-primary-600">Schoolify </span>
+          <span className="text-primary-600">Skoolify </span>
           Revolutionizing School Management
         </h1>
 
         <p className="text-lg lg:text-xl mb-9">
-          Revolutionize school management with Schoolify! Streamline tasks,
+          Revolutionize school management with Skoolify! Streamline tasks,
           empower educators, and engage students like never before.{" "}
           <span className="font-bold">Welcome to the future of education!</span>
         </p>
