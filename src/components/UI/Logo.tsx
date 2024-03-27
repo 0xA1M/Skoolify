@@ -11,10 +11,10 @@ import logoDark from "/public/LogoDark.png";
 import logoLight from "/public/LogoLight.png";
 
 interface Props {
-  isFooter?: boolean;
+  isIndependent?: boolean;
 }
 
-function Logo({ isFooter }: Props) {
+function Logo({ isIndependent }: Props) {
   const [mounted, setMounted] = useState(false);
   const { resolvedTheme } = useTheme();
 
@@ -34,7 +34,7 @@ function Logo({ isFooter }: Props) {
       src={Logo}
       alt="Skoolify"
       quality={100}
-      className={`w-auto ${isFooter ? "h-28" : "h-16"} `}
+      className={`w-auto ${isIndependent ? "h-24" : "h-16"}`}
       fetchPriority="high"
     />
   );

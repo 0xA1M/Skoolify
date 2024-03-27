@@ -1,7 +1,6 @@
 "use client";
 /* Utils */
 import { useState } from "react";
-import { usePathname } from "next/navigation";
 
 /* Components */
 import {

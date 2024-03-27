@@ -11,6 +11,7 @@ const config: Config = {
     extend: {
       spacing: {
         "80v": "80vh",
+        "20v": "20vh",
       },
     },
   },
