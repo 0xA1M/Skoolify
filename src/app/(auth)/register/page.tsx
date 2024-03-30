@@ -1,15 +1,9 @@
 "use client";
 /* Utils */
-import React, { useState } from "react";
+import { useState } from "react";
 
 /* Components */
-import {
-  Image,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-} from "@nextui-org/react";
+import { Image, Card, CardHeader, CardBody } from "@nextui-org/react";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
@@ -23,7 +17,10 @@ import ProgressBar from "@/components/ProgressBar";
 import type { FormDataType } from "./Form";
 
 function SignUp() {
+  // Keep track of the progress of the client
   const [step, setStep] = useState<number>(0);
+
+  // Store all of the data submitted by the client in this FormData Scheme, Find the definition in ./Form
   const [formData, setFormData] = useState<FormDataType>({
     firstName: "",
     lastName: "",
@@ -34,9 +31,11 @@ function SignUp() {
     role: "",
     level: "",
     subjects: [],
+    group: 1,
     password: "",
   });
 
+  /* Display a different image to the client, after each step */
   let ImageNode: React.JSX.Element;
   switch (step) {
     case 0:

@@ -1,6 +1,6 @@
 "use client";
 /* Utils */
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 /* Components */
 import {
@@ -10,7 +10,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
   Divider,
 } from "@nextui-org/react";
 import { ArrowLeft, Eye, EyeOff, Mail, KeyRound } from "lucide-react";
@@ -22,6 +21,13 @@ import ThemeSwitcher from "@/components/UI/ThemeSwitcher";
 function AdminLogin() {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
+
+  async function submitData(event: FormEvent<HTMLFormElement>) {
+    const email: string = event.currentTarget.email.value;
+    const password: string = event.currentTarget.password.value;
+
+    console.log("data will be passed to the server");
+  }
 
   return (
     <section className="w-full h-screen flex justify-center items-center flex-col mx-auto max-w-6xl">
@@ -52,7 +58,11 @@ function AdminLogin() {
           </CardHeader>
           <Divider />
           <CardBody>
-            <form className="w-full h-full flex flex-col justify-between items-center py-6 md:py-12 px-6 md:px-0">
+            <form
+              method="POST"
+              onSubmit={submitData}
+              className="w-full h-full flex flex-col justify-between items-center py-6 md:py-12 px-6 md:px-0"
+            >
               <div className="w-full h-full">
                 <div className="w-full flex items-center justify-center md:px-4">
                   <label htmlFor="email">
@@ -63,6 +73,7 @@ function AdminLogin() {
                     variant="bordered"
                     label="Email"
                     type="email"
+                    name="email"
                     isRequired
                     className="m-4 w-full md:w-9/12"
                   />
@@ -76,6 +87,7 @@ function AdminLogin() {
                     id="pass"
                     label="Password"
                     variant="bordered"
+                    name="password"
                     endContent={
                       <button
                         className="focus:outline-none"
