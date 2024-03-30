@@ -13,15 +13,15 @@ function Carousel() {
 
   const events = [
     {
-      img: "/door.jpg",
+      img: "/Home/door.jpg",
       alt: "door",
     },
     {
-      img: "/computer.jpg",
+      img: "/Home/computer.jpg",
       alt: "Computer",
     },
     {
-      img: "/cityscape.jpg",
+      img: "/Home/cityscape.jpg",
       alt: "cityscape",
     },
   ];
@@ -38,7 +38,11 @@ function Carousel() {
       <div className="embla__viewport">
         {events.map((event, i) => (
           <div key={i} className="mx-2 embla__slide">
-            <Image src={event.img} alt={event.alt} className="w-auto h-full" />
+            <Image
+              src={event.img}
+              alt={event.alt}
+              className="w-auto h-full shadow-lg"
+            />
           </div>
         ))}
       </div>
@@ -47,7 +51,7 @@ function Carousel() {
         variant="ghost"
         color="primary"
         isIconOnly
-        className="hidden lg:flex justify-center items-center embla__prev"
+        className="hidden lg:flex justify-center items-center embla__prev shadow-md"
         onClick={scrollPrev}
       >
         <ChevronLeft />
@@ -57,7 +61,7 @@ function Carousel() {
         variant="ghost"
         color="primary"
         isIconOnly
-        className="hidden lg:flex justify-center items-center embla__next"
+        className="hidden lg:flex justify-center items-center embla__next shadow-md"
         onClick={scrollNext}
       >
         <ChevronRight />

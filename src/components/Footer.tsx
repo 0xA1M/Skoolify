@@ -11,8 +11,8 @@ function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full grid grid-cols-2 lg:grid-cols-4 grid-rows-1 gap-5 px-4 items-center ">
-      <Logo isFooter />
+    <footer className="w-full grid grid-cols-2 lg:grid-cols-4 grid-rows-1 gap-5 px-4 items-center">
+      <Logo isIndependent />
 
       <section className="hidden ml-16 col-span-2 col-start-2 text-center lg:block">
         <p className="text-lg opacity-80 flex justify-center items-center">

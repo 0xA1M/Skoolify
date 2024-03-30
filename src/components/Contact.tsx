@@ -74,7 +74,7 @@ function Contact() {
 
       <aside className="flex items-center">
         <Image
-          src="/4.png"
+          src="/Home/4.png"
           alt="Computer"
           isBlurred
           className="anime-float hidden lg:flex"

@@ -29,7 +29,7 @@ function Hero() {
 
       <aside className="flex items-center">
         <Image
-          src="/5.png"
+          src="/Home/5.png"
           alt="Computer"
           isBlurred
           className="anime-float relative right-4 lg:right-0 hidden md:flex lg:mr-0"
