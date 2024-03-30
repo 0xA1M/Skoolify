@@ -1,27 +1,25 @@
 import dbConnect from "@/database/ConnectToDB";
-import Student from "@/models/Student";
 import { isObjectInArray } from "./checkExistence";
+import Teacher from "@/models/Teacher";
 
-export async function Add_Student(data:any){
+export async function Add_Teacher(data:any){
    await dbConnect();
 
-    const is_exist=await Student.find(data)
+    const is_exist=await Teacher.find(data)
     const is_inRequestList= await isObjectInArray(data)
 
   if(is_exist.length!=0 && !is_inRequestList)
  {
-  const newStudent= await new Student(data);
-  await newStudent.save();
+  const newTeacher= await new Teacher(data);
+  await newTeacher.save();
   return {data:"added"}
  }
   else
   { 
-   let errorMessage = 'Error adding student';
-   console.log(is_exist)
+   let errorMessage = 'Error adding ';
    if (is_exist.length!=0) {
      errorMessage = 'User exists';
    } else{
-    console.log(is_inRequestList)
      errorMessage = 'User in request list';
     }
   
