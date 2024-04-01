@@ -10,11 +10,11 @@ import Link from "next/link";
 /* Custom Components */
 import ThemeSwitcher from "@/components/UI/ThemeSwitcher";
 import Logo from "@/components/UI/Logo";
-import Form from "./Form";
+import Form from "./(components)/Form";
 import ProgressBar from "@/components/ProgressBar";
 
 /* Types */
-import type { FormDataType } from "./Form";
+import type { FormDataType } from "./(components)/Form";
 
 function SignUp() {
   // Keep track of the progress of the client
@@ -31,7 +31,6 @@ function SignUp() {
     role: "",
     level: "",
     subjects: [],
-    group: 1,
     password: "",
   });
 

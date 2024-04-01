@@ -3,7 +3,10 @@
 import { Dispatch, SetStateAction } from "react";
 
 /* Custom Components */
-import { FirstForm, SecondForm, ThirdForm, ForthForm } from "./Forms";
+import FirstForm from "./Forms/FirstForm";
+import SecondForm from "./Forms/SecondForm";
+import ThirdForm from "./Forms/ThirdForm";
+import ForthForm from "./Forms/ForthForm";
 
 /* Types */
 export type FormDataType = {
@@ -15,8 +18,13 @@ export type FormDataType = {
   gender: string;
   role: string;
   level: string | string[];
-  subjects: string[];
-  group: number;
+  subjects:
+    | {
+        subject: string;
+        group: number;
+        sessions: number;
+      }[]
+    | string[];
   password: string;
 }; // This is the data schema that will followed.
 
