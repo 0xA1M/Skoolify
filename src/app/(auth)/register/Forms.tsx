@@ -44,6 +44,7 @@ export const FirstForm = ({ setStep, setFormData }: FormProps) => {
         ...data,
       };
     });
+    console.log(data)
   };
 
   return (
@@ -450,8 +451,45 @@ export const ThirdForm = ({ formData, setStep, setFormData }: FormProps) => {
 
   /* This function will be used to send the data to the server */
   async function submitData() {
+    const form_data={
+      role:formData?.role,
+      data:{
+        username:formData ? `${formData.firstName} ${formData.lastName}` : '',
+        email:formData?.email,
+        phone_number:formData?.phone,
+        gender:formData?.gender,
+        birthday:formData?.dateOfBirth,
+        password:formData?.password,
+     //   modules_Groups_sessionNumber:
+      }
+    }
     const data: string = JSON.stringify(formData);
+    const Fetchdata= async ()=>{
+      try{
+        const response = await fetch(`http://localhost:3000/api/addStudent`, {
+        method: 'POST', 
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: data,
+      });
+      const Data = await response.json();
+     
+      if (response.status==400) {
+       throw new Error(Data.error);
+     }else{
 
+     
+
+     }
+     }
+     catch(error:any){
+       
+     }
+      finally{
+       
+      }}
+  Fetchdata();
     console.log(data);
   }
 

@@ -1,19 +1,12 @@
-import { Add_Student } from "@/actions/addStudent";
-import { Add_Teacher } from "@/actions/addTeacher";
+import { Add_Request } from "@/actions/addRequest";
 import dbConnect from "@/database/ConnectToDB";
 
 export async function POST(request: Request) {
     await dbConnect();
     var response:any;
     const res=await request.json();
-    if(res.role=="teacher")
-    {
-        response=await Add_Teacher(res);
-        
-    }
-    else{
-        response=await Add_Student(res);
-    }
+    response=await Add_Request(res);
+    console.log(response)
     if(!response.error)
     {
         return new Response(JSON.stringify(response), {
@@ -23,7 +16,7 @@ export async function POST(request: Request) {
     }
     else
     {
-        return new Response(JSON.stringify({ error:response.error }), {
+        return new Response(JSON.stringify(response), {
             status: 400,
             headers: { 'Content-Type': 'application/json' }
           });

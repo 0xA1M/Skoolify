@@ -5,10 +5,10 @@ import { isObjectInArray } from "./checkExistence";
 export async function Add_Student(data:any){
    await dbConnect();
 
-    const is_exist=await Student.find(data)
+    const is_exist=await Student.find({email:data.email})
     const is_inRequestList= await isObjectInArray(data)
 
-  if(is_exist.length!=0 && !is_inRequestList)
+  if(true)
  {
   const newStudent= await new Student(data);
   await newStudent.save();

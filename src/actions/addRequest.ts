@@ -9,21 +9,29 @@ export async function Add_Request(data:any):Promise<any> {
         await dbConnect();
         const is_there= await isObjectInArray(data);
        if(!is_there){ 
-        if(data.subcriber == "student") {
+        if(data.subcriber == "student")
+         {
             console.log("Adding student request");
             await Admin.findByIdAndUpdate(
                 "65df8729868e80a59fcf23f1",
-                { $push:{ requests: "bouhlais" } }
+                { $push:{ requests: data } }
             );
-        } else {
+
+        } 
+        else
+         {
             console.log("Adding teacher request");
             await Admin.findByIdAndUpdate(
                 "65df8729868e80a59fcf23f1",
-                { $push: {requests: "islem" } }
+                { $push: {requests: data} }
             );
-        }}
-        else{
-           console.log("exit !!")
+            return;
+        }
+                }
+        else
+        {
+            let errorMessage = 'This email is already used';
+            return {error:errorMessage}
         }
 
         console.log("Update successful");
