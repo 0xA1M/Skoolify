@@ -1,6 +1,6 @@
 # Skoolify 🎓 - School Management Solution
 
-![Schoolify Logo](./public/LogoDark.png)
+![Skoolify Logo](./public/LogoDark.png)
 
 <!-- ![Skoolify Logo](./public/LogoLight.png) -->
 
@@ -29,7 +29,7 @@ Follow these steps to set up Skoolify locally for development or testing purpose
 1. Clone the repository:
 
    ```
-   git clone https://github.com/CoJutsu/schoolify.git
+   git clone https://github.com/CoJutsu/skoolify.git
    ```
 
 2. Navigate to the project directory:
@@ -50,7 +50,7 @@ Follow these steps to set up Skoolify locally for development or testing purpose
 
      ```
      PORT=3000
-     MONGODB_URI=mongodb://localhost:27017/schoolify
+     MONGODB_URI=mongodb://localhost:27017/skoolify
      ```
 
 5. Start the application:
@@ -73,4 +73,4 @@ Skoolify is licensed under the [MIT](LICENSE) License.
 
 If you encounter any issues or have questions, please open an issue on GitHub.
 
-Thank you for considering Schoolify! We hope this platform adds a splash of color to school management and makes education more fun for everyone. 🌈✨
+Thank you for considering Skoolify! We hope this platform adds a splash of color to school management and makes education more fun for everyone. 🌈✨
