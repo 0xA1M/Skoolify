@@ -17,7 +17,13 @@ import { FormProps } from "../Form";
 /* Second Form: This will retrieve the level, subjects for the teacher as for the student in addition to the previous ones a group will be asked */
 function SecondForm({ formData, setStep, setFormData }: FormProps) {
   const [levels, setLevels] = useState<string[]>([]);
-  const [levelSubjects, setLevelSubjects] = useState<string[]>([]);
+  const [teacherSubjects, setTeacherSubjects] = useState<
+    {
+      level: string;
+      subjects: string[];
+    }[]
+  >([]);
+  const [studentSubjects, setStudentSubjects] = useState<string[]>([]);
   const [groups, setGroups] = useState<string[]>([]);
   const [sessions, setSessions] = useState<string[]>([]);
 
@@ -25,8 +31,37 @@ function SecondForm({ formData, setStep, setFormData }: FormProps) {
     setLevels(event.target.value.split(","));
   };
 
+  const handleTeacherSelectLevelSubjects = (
+    event: ChangeEvent<HTMLSelectElement>
+  ) => {
+    const level = event.target.name;
+    const data = {
+      level,
+      subjects: event.target.value.split(","),
+    };
+
+    setTeacherSubjects((prevSubjects) => {
+      const index = prevSubjects.findIndex(
+        (subject) => subject.level === data.level
+      );
+
+      if (index !== -1) {
+        // If the level already exists in the array, update the subjects array
+        return prevSubjects.map((subject, i) => {
+          if (i === index) {
+            return { ...subject, subjects: data.subjects };
+          }
+          return subject;
+        });
+      } else {
+        // If the level does not exist in the array, append the new object
+        return [...prevSubjects, data];
+      }
+    });
+  };
+
   const handleSelectLevelSubjects = (event: ChangeEvent<HTMLSelectElement>) => {
-    setLevelSubjects(event.target.value.split(","));
+    setStudentSubjects(event.target.value.split(","));
   };
 
   const handleGroupSelect = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -65,33 +100,52 @@ function SecondForm({ formData, setStep, setFormData }: FormProps) {
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const subjects: {
-      subject: string;
-      group: number;
-      sessions: number;
-    }[] = [];
+    if (formData?.role === "student") {
+      /* Student's Data */
+      const subjects: {
+        subject: string;
+        group: number;
+        sessions: number;
+      }[] = [];
 
-    for (let i = 0; i < levelSubjects.length; i++) {
-      subjects.push({
-        subject: levelSubjects[i],
-        group: parseInt(groups[i].split(":")[1]),
-        sessions: parseInt(sessions[i].split(":")[1]),
+      for (let i = 0; i < studentSubjects.length; i++) {
+        subjects.push({
+          subject: studentSubjects[i],
+          group: parseInt(groups[i].split(":")[1]),
+          sessions: parseInt(sessions[i].split(":")[1]),
+        });
+      }
+
+      const data = {
+        levels,
+        subjects,
+      };
+
+      setFormData((prevData) => {
+        return {
+          ...prevData,
+          ...data,
+        };
       });
+    } else if (formData?.role === "teacher") {
+      /* Teacher's Data */
+      const data = {
+        levels,
+        subjects: teacherSubjects,
+      };
+
+      setFormData((prevData) => {
+        return {
+          ...prevData,
+          ...data,
+        };
+      });
+    } else {
+      /* Need to Handle this case */
+      return Error("500: Internal Server Error!");
     }
 
-    const data = {
-      levels,
-      subjects,
-    };
-
     setStep((prevStepCount) => prevStepCount + 1);
-
-    setFormData((prevData) => {
-      return {
-        ...prevData,
-        ...data,
-      };
-    });
   };
 
   const educationLvl = [
@@ -202,8 +256,8 @@ function SecondForm({ formData, setStep, setFormData }: FormProps) {
                     placeholder="Math"
                     isRequired
                     selectionMode="multiple"
-                    name={`level${level.toUpperCase()}`}
-                    onChange={handleSelectLevelSubjects}
+                    name={level}
+                    onChange={handleTeacherSelectLevelSubjects}
                     key={level}
                     className="text-center"
                   >
@@ -268,7 +322,7 @@ function SecondForm({ formData, setStep, setFormData }: FormProps) {
 
             <div className="w-9/12 h-full grid grid-cols-2 grid-rows-1 gap-8 place-items-center">
               {/* Group Selection Menu */}
-              {levelSubjects.map((subject, i) => (
+              {studentSubjects.map((subject, i) => (
                 <div key={i} className="w-full flex item-center gap-4">
                   <Select
                     label={`${

@@ -24,43 +24,33 @@ function ThirdForm({ formData, setStep, setFormData }: FormProps) {
   /* Append the data to the FormData stateful variable */
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setStep((prevStepCount) => prevStepCount + 1);
 
-    const password = event.currentTarget.password.value;
-    const confPassword = event.currentTarget.confPassword.value;
+    const password: string = event.currentTarget.password.value;
+    const confPassword: string = event.currentTarget.confPassword.value;
 
-    if (password != confPassword) {
+    if (password !== confPassword) {
       setPassMatch(false);
-      setStep(2);
+
       return;
     } else {
       if (password.length < 8) {
         setPassLen(false);
-        setStep(2);
+
         return;
       }
     }
 
-    const data: { [key: string]: string | string[] } = {
-      password,
-    };
-
     setFormData((prevData) => {
-      return {
+      const newData = {
         ...prevData,
-        ...data,
+        password,
       };
+
+      return newData;
     });
 
-    submitData();
+    setStep((prevStepCount) => prevStepCount + 1);
   };
-
-  /* This function will be used to send the data to the server */
-  async function submitData() {
-    const data: string = JSON.stringify(formData);
-
-    console.log(data);
-  }
 
   return (
     <>
@@ -101,6 +91,7 @@ function ThirdForm({ formData, setStep, setFormData }: FormProps) {
                 "Make sure your password is at least 8 characters long")
             }
             className="w-full"
+            autoFocus
           />
 
           <Input

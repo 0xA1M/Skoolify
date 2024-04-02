@@ -1,8 +1,18 @@
 /* Components */
 import { Card, CardBody } from "@nextui-org/react";
 
+/* Types */
+import { FormProps } from "../Form";
+
 /* Forth Form: This will display the waiting for validation message to the client */
-function ForthForm() {
+function ForthForm({ formData }: FormProps) {
+  /* This function will be used to send the data to the server */
+  function submitData() {
+    console.log(formData);
+  }
+
+  submitData();
+
   return (
     <>
       <Card className="w-full mt-8 p-4 lg:p-8 h-full lg:h-4/6 ">

@@ -62,6 +62,7 @@ function FirstForm({ setStep, setFormData }: FormProps) {
             type="text"
             name="firstName"
             isRequired
+            autoFocus
             className="w-full"
           />
 

@@ -14,17 +14,22 @@ export type FormDataType = {
   lastName: string;
   dateOfBirth: string;
   email: string;
-  phone: number;
+  phone: string;
   gender: string;
   role: string;
-  level: string | string[];
+  levels: string[];
   subjects:
     | {
+        // Student Subjects Schema
         subject: string;
         group: number;
         sessions: number;
       }[]
-    | string[];
+    | {
+        // Teacher Subjects Schema
+        level: string;
+        subjects: string[];
+      }[];
   password: string;
 }; // This is the data schema that will followed.
 
@@ -57,7 +62,13 @@ function Form({ formData, step, setStep, setFormData }: FormProps) {
         />
       );
     case 3:
-      return <ForthForm />;
+      return (
+        <ForthForm
+          formData={formData}
+          setFormData={setFormData}
+          setStep={setStep}
+        />
+      );
   }
 }
 
