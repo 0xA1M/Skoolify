@@ -26,7 +26,7 @@ function ThemeSwitcher() {
           aria-label="Moon"
           className="bg-transparent hover:bg-primary-500 hover:bg-opacity-20 drop-shadow-lg"
         >
-          <Moon strokeWidth={1.4} />
+          <Sun strokeWidth={1.4} />
         </Button>
       ) : (
         <Button
@@ -35,7 +35,7 @@ function ThemeSwitcher() {
           aria-label="Sun"
           className="bg-transparent hover:bg-primary-500 hover:bg-opacity-20 drop-shadow-lg"
         >
-          <Sun strokeWidth={1.4} />
+          <Moon strokeWidth={1.4} />
         </Button>
       )}
     </>

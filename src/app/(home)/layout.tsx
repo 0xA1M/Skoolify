@@ -22,7 +22,7 @@ interface Props {
 function HomeLayout({ children }: Props) {
   return (
     <Provider>
-      <Nav />
+      <Nav isHome />
       <Container>
         {children}
         <TopButton />
