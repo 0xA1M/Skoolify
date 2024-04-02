@@ -1,12 +1,12 @@
-# Schoolify 🎓 - School Management Solution
+# Skoolify 🎓 - School Management Solution
 
 ![Schoolify Logo](./public/LogoDark.png)
 
-<!-- ![Schoolify Logo](./public/LogoLight.png) -->
+<!-- ![Skoolify Logo](./public/LogoLight.png) -->
 
-Welcome to Schoolify! 🚀
+Welcome to Skoolify! 🚀
 
-Schoolify is not your average school management system; it's a dynamic and open-source web application designed to infuse energy into the management of private schools! 🌟 Our mission is to make school administration enjoyable and efficient, fostering better communication among administrators, educators, and students 📚✨
+Skoolify is not your average school management system; it's a dynamic and open-source web application designed to infuse energy into the management of private schools! 🌟 Our mission is to make school administration enjoyable and efficient, fostering better communication among administrators, educators, and students 📚✨
 
 ## Key Features 🌟
 
@@ -17,11 +17,11 @@ Schoolify is not your average school management system; it's a dynamic and open-
 
 ## Getting Started 🚀
 
-Follow these steps to set up Schoolify locally for development or testing purposes:
+Follow these steps to set up Skoolify locally for development or testing purposes:
 
 ### Prerequisites 🛠️
 
-- Next.js installed on your machine
+- Node.js installed on your machine
 - MongoDB installed locally or a connection to a MongoDB database
 
 ### Installation 🎉
@@ -35,7 +35,7 @@ Follow these steps to set up Schoolify locally for development or testing purpos
 2. Navigate to the project directory:
 
    ```
-   cd schoolify
+   cd skoolify
    ```
 
 3. Install dependencies:
@@ -59,15 +59,15 @@ Follow these steps to set up Schoolify locally for development or testing purpos
    npm start
    ```
 
-6. Open your browser and visit [http://localhost:3000](http://localhost:3000) to access Schoolify.
+6. Open your browser and visit [http://localhost:3000](http://localhost:3000) to access Skoolify.
 
 ## Contributing 🤝
 
-We welcome contributions from the community! To contribute to Schoolify, please follow our contribution guidelines.
+We welcome contributions from the community! To contribute to Skoolify, please follow our contribution guidelines.
 
 ## License 📝
 
-Schoolify is licensed under the [MIT](LICENSE) License.
+Skoolify is licensed under the [MIT](LICENSE) License.
 
 ## Support 🤔
 
