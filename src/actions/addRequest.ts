@@ -9,7 +9,7 @@ export async function Add_Request(data:any):Promise<any> {
         await dbConnect();
         const is_there= await isObjectInArray(data);
        if(!is_there){ 
-        if(data.subcriber == "student")
+        if(data.role == "student")
          {
             console.log("Adding student request");
             await Admin.findByIdAndUpdate(

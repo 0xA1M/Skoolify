@@ -26,10 +26,11 @@ function SignUp() {
     lastName: "",
     dateOfBirth: "",
     email: "",
-    phone: "",
+    phone: 0,
     gender: "",
     role: "",
-    levels: [],
+    level: "",
+
     subjects: [],
     password: "",
   });

@@ -3,8 +3,8 @@ const StudentSchema=new Schema ({
     username:String,
     password:String,
     modules_Groups_sessionNumber:Array,
-    level:Number,
-    phone_number:Number,
+    level:String,
+    phone_number:String,
     email:String,
     gender:String,
     birthday:String

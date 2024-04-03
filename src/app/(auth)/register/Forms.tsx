@@ -464,7 +464,7 @@ export const ThirdForm = ({ formData, setStep, setFormData }: FormProps) => {
       }
     }
     const data: string = JSON.stringify(formData);
-    const Fetchdata= async ()=>{
+   /* const Fetchdata= async ()=>{
       try{
         const response = await fetch(`http://localhost:3000/api/addStudent`, {
         method: 'POST', 
@@ -490,7 +490,7 @@ export const ThirdForm = ({ formData, setStep, setFormData }: FormProps) => {
        
       }}
   Fetchdata();
-    console.log(data);
+    console.log(data);*/
   }
 
   return (
