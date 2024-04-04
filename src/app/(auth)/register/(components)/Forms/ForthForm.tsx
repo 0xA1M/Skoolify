@@ -91,7 +91,7 @@ function ForthForm({ formData }: FormProps) {
 
     case 2:
       return (
-        <div className="w-full mt-8 p-4 lg:p-8 h-full lg:h-4/6 flex item-center justify-center">
+        <div className="w-full h-full flex item-center justify-center">
           <h1>This email is already registered!</h1>
         </div>
       );
