@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 /* Components */
 import { Button } from "@nextui-org/react";
-import { Moon, Sun } from "lucide-react";
+import { LuMoon, LuSun } from "react-icons/lu";
 
 function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
@@ -23,19 +23,19 @@ function ThemeSwitcher() {
         <Button
           onClick={() => setTheme("dark")}
           isIconOnly
-          aria-label="Moon"
+          aria-label="Sun"
           className="bg-transparent hover:bg-primary-500 hover:bg-opacity-20 drop-shadow-lg"
         >
-          <Sun strokeWidth={1.4} />
+          <LuSun strokeWidth={1.4} size={24} />
         </Button>
       ) : (
         <Button
           onClick={() => setTheme("light")}
           isIconOnly
-          aria-label="Sun"
+          aria-label="Moon"
           className="bg-transparent hover:bg-primary-500 hover:bg-opacity-20 drop-shadow-lg"
         >
-          <Moon strokeWidth={1.4} />
+          <LuMoon strokeWidth={1.4} size={24} />
         </Button>
       )}
     </>

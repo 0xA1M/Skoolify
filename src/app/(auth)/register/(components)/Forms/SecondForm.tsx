@@ -351,6 +351,7 @@ function SecondForm({ formData, setStep, setFormData }: FormProps) {
                     type="number"
                     min={1}
                     max={52}
+                    value={sessions[i] ? sessions[i].split(":")[1] : ""}
                     onChange={handleSessionsInput}
                     isRequired
                   />

@@ -1,5 +1,5 @@
 /* Utils */
-import { FormEvent } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 /* Components */
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
@@ -13,25 +13,40 @@ import { FormProps } from "../Form";
 
 /* First Form: This will retrieve all of the details of the client */
 function FirstForm({ setStep, setFormData }: FormProps) {
+  const [formData, setFormState] = useState<{ [key: string]: string }>({
+    firstName: "",
+    lastName: "",
+    dateOfBirth: "",
+    email: "",
+    phone: "",
+    gender: "",
+    role: "",
+  });
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    let { name, value } = e.target;
+
+    if (name == "customRole") {
+      name = "role";
+    }
+
+    setFormState((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   /* Append the data to the FormData stateful variable */
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setStep((prevStepCount) => prevStepCount + 1);
 
-    const data: { [key: string]: string } = {
-      firstName: event.currentTarget.firstName.value,
-      lastName: event.currentTarget.lastName.value,
-      dateOfBirth: event.currentTarget.dateOfBirth.value,
-      email: event.currentTarget.email.value,
-      phone: event.currentTarget.phone.value,
-      gender: event.currentTarget.gender.value,
-      role: event.currentTarget.customRole.value,
-    };
-
     setFormData((prevData) => {
       return {
         ...prevData,
-        ...data,
+        ...formData,
       };
     });
   };
@@ -61,6 +76,8 @@ function FirstForm({ setStep, setFormData }: FormProps) {
             placeholder="John"
             type="text"
             name="firstName"
+            value={formData.firstName}
+            onChange={handleInputChange}
             isRequired
             autoFocus
             className="w-full"
@@ -70,6 +87,8 @@ function FirstForm({ setStep, setFormData }: FormProps) {
             label="Last Name"
             placeholder="Smith"
             type="text"
+            value={formData.lastName}
+            onChange={handleInputChange}
             name="lastName"
             isRequired
             className="w-full"
@@ -81,6 +100,8 @@ function FirstForm({ setStep, setFormData }: FormProps) {
             label="Date of Birth"
             type="date"
             name="dateOfBirth"
+            value={formData.dateOfBirth}
+            onChange={handleInputChange}
             isRequired
             className="w-full"
           />
@@ -89,6 +110,8 @@ function FirstForm({ setStep, setFormData }: FormProps) {
             label="Email"
             placeholder="John@smith.com"
             type="email"
+            value={formData.email}
+            onChange={handleInputChange}
             name="email"
             isRequired
             className="w-full"
@@ -100,12 +123,20 @@ function FirstForm({ setStep, setFormData }: FormProps) {
             label="Phone Number"
             placeholder="123-456-7890"
             type="tel"
+            value={formData.phone}
+            onChange={handleInputChange}
             name="phone"
             isRequired
             className="w-full col-span-2"
           />
 
-          <Select label="Gender" isRequired name="gender">
+          <Select
+            label="Gender"
+            isRequired
+            name="gender"
+            value={formData.gender}
+            onChange={handleInputChange}
+          >
             <SelectItem key="male" value="male">
               Male
             </SelectItem>
@@ -115,7 +146,13 @@ function FirstForm({ setStep, setFormData }: FormProps) {
             </SelectItem>
           </Select>
 
-          <Select label="Role" isRequired name="customRole">
+          <Select
+            label="Role"
+            isRequired
+            name="customRole"
+            value={formData.role}
+            onChange={handleInputChange}
+          >
             <SelectItem key="teacher" value="teacher">
               Teacher
             </SelectItem>

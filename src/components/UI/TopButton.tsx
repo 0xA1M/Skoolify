@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 /* Components */
 import { Button } from "@nextui-org/react";
-import { ChevronUp } from "lucide-react";
+import { LuChevronUp } from "react-icons/lu";
 
 const TopButton = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -55,7 +55,7 @@ const TopButton = () => {
       onClick={scrollToTop}
       aria-label="Up"
     >
-      <ChevronUp strokeWidth={1.5} />
+      <LuChevronUp strokeWidth={1.5} />
     </Button>
   );
 };
