@@ -13,8 +13,15 @@ import { FormProps } from "../Form";
 
 /* Third Form: This will retrieve the password set by the client */
 function ThirdForm({ formData, setStep, setFormData }: FormProps) {
+  // State variables to control password input values
+  const [password, setPassword] = useState("");
+  const [confPassword, setConfPassword] = useState("");
+
+  // State variables for password validation
   const [passMatch, setPassMatch] = useState<boolean>(true);
   const [passLen, setPassLen] = useState<boolean>(true);
+
+  // State variable to toggle password visibility
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const toggleVisibility = () => {
@@ -25,29 +32,18 @@ function ThirdForm({ formData, setStep, setFormData }: FormProps) {
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const password: string = event.currentTarget.password.value;
-    const confPassword: string = event.currentTarget.confPassword.value;
-
     if (password !== confPassword) {
       setPassMatch(false);
-
       return;
-    } else {
-      if (password.length < 8) {
-        setPassLen(false);
-
-        return;
-      }
+    } else if (password.length < 8) {
+      setPassLen(false);
+      return;
     }
 
-    setFormData((prevData) => {
-      const newData = {
-        ...prevData,
-        password,
-      };
-
-      return newData;
-    });
+    setFormData((prevData) => ({
+      ...prevData,
+      password,
+    }));
 
     setStep((prevStepCount) => prevStepCount + 1);
   };
@@ -84,6 +80,8 @@ function ThirdForm({ formData, setStep, setFormData }: FormProps) {
             isRequired
             variant="bordered"
             isInvalid={!passMatch || !passLen}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             color={!passMatch || !passLen ? "danger" : "default"}
             errorMessage={
               (!passMatch && "Password Don't Match") ||
@@ -102,6 +100,8 @@ function ThirdForm({ formData, setStep, setFormData }: FormProps) {
             isRequired
             variant="bordered"
             isInvalid={!passMatch || !passLen}
+            value={confPassword}
+            onChange={(e) => setConfPassword(e.target.value)}
             color={!passMatch || !passLen ? "danger" : "default"}
             errorMessage={
               (!passMatch && "Password Don't Match") ||

@@ -23,19 +23,19 @@ function ThemeSwitcher() {
         <Button
           onClick={() => setTheme("dark")}
           isIconOnly
-          aria-label="Moon"
+          aria-label="Sun"
           className="bg-transparent hover:bg-primary-500 hover:bg-opacity-20 drop-shadow-lg"
         >
-          <LuSun strokeWidth={1.4} />
+          <LuSun strokeWidth={1.4} size={24} />
         </Button>
       ) : (
         <Button
           onClick={() => setTheme("light")}
           isIconOnly
-          aria-label="Sun"
+          aria-label="Moon"
           className="bg-transparent hover:bg-primary-500 hover:bg-opacity-20 drop-shadow-lg"
         >
-          <LuMoon strokeWidth={1.4} />
+          <LuMoon strokeWidth={1.4} size={24} />
         </Button>
       )}
     </>
