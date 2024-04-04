@@ -1,6 +1,11 @@
 /* Components */
 import { Card, CardBody } from "@nextui-org/react";
-import { Apple, ArrowLeft, GraduationCap, UserCog } from "lucide-react";
+import {
+  LuApple,
+  LuArrowLeft,
+  LuGraduationCap,
+  LuUserCog,
+} from "react-icons/lu";
 import Link from "next/link";
 
 /* Custom Components */
@@ -31,7 +36,7 @@ function Login() {
               href="/"
               className="-ml-12 md:ml-0 p-2 rounded-xl transition-background duration-200 ease-in-out hover:bg-primary-500 hover:bg-opacity-20 drop-shadow-lg"
             >
-              <ArrowLeft className="text-foreground" />
+              <LuArrowLeft className="text-foreground" />
             </Link>
 
             <h1 className="text-primary font-bold text-3xl ml-4 md:ml-3">
@@ -53,9 +58,9 @@ function Login() {
                 fullWidth
               >
                 <CardBody className="flex items-center justify-start flex-row">
-                  {client.title == "Admin" && <UserCog size={30} />}
-                  {client.title == "Teacher" && <Apple size={30} />}
-                  {client.title == "Student" && <GraduationCap size={30} />}
+                  {client.title == "Admin" && <LuUserCog size={30} />}
+                  {client.title == "Teacher" && <LuApple size={30} />}
+                  {client.title == "Student" && <LuGraduationCap size={30} />}
 
                   <p className="ml-4 text-lg">{client.title}</p>
                 </CardBody>

@@ -10,7 +10,11 @@ import {
   Textarea,
   Input,
 } from "@nextui-org/react";
-import { Info } from "lucide-react";
+import { LuInfo } from "react-icons/lu";
+
+{
+  /* TODO: Make the mail functionality actually works */
+}
 
 function Contact() {
   return (
@@ -21,7 +25,7 @@ function Contact() {
       <Card className="mx-auto w-5/6 h-80v p-6">
         <CardHeader className="flex justify-between items-center px-8">
           <h2 className="text-3xl">Get in Touch</h2>
-          <Info />
+          <LuInfo />
         </CardHeader>
         <Divider />
         <CardBody className="p-8 grid-cols-1 grid-rows-4 gap-4 overflow-hidden">
@@ -65,7 +69,6 @@ function Contact() {
           />
         </CardBody>
         <CardFooter className="flex justify-center items-center">
-          {/* TODO: Make the mail functionality actually works */}
           <Button size="lg" variant="shadow" color="primary" className="mb-4">
             Send
           </Button>

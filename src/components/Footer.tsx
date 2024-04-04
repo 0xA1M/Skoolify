@@ -1,7 +1,7 @@
 /* Components */
 import { FaInstagram, FaFacebook, FaGithub, FaLinkedin } from "react-icons/fa6";
 import { Link } from "@nextui-org/link";
-import { MapPin } from "lucide-react";
+import { LuMapPin } from "react-icons/lu";
 import { Tooltip } from "@nextui-org/react";
 
 /* Custom Components */
@@ -28,7 +28,7 @@ function Footer() {
           color="primary"
         >
           <Tooltip showArrow content="Amizour - Bejaia, Algeria">
-            <MapPin className="w-6 h-6 sm:w-8 sm:h-8 mx-1.5" />
+            <LuMapPin className="w-6 h-6 sm:w-8 sm:h-8 mx-1.5" />
           </Tooltip>
         </Link>
 

@@ -1,11 +1,11 @@
 /* Components */
 import {
-  CircleCheck,
-  Info,
-  LibraryBig,
-  KeyRound,
-  PartyPopper,
-} from "lucide-react";
+  LuInfo,
+  LuKeyRound,
+  LuPartyPopper,
+  LuCheckCircle2,
+} from "react-icons/lu";
+import { VscLibrary } from "react-icons/vsc";
 
 interface ProgressStepperProps {
   progress: number;
@@ -16,22 +16,22 @@ const ProgressBar: React.FC<ProgressStepperProps> = ({ progress }) => {
     {
       title: "Your Details",
       completed: progress >= 1,
-      icon: <Info size={24} color="currentColor" />,
+      icon: <LuInfo size={24} color="currentColor" />,
     },
     {
       title: "Level & Subjects",
       completed: progress >= 2,
-      icon: <LibraryBig size={24} color="currentColor" />,
+      icon: <VscLibrary size={24} color="currentColor" />,
     },
     {
       title: "Choose a Password",
       completed: progress >= 3,
-      icon: <KeyRound size={24} color="currentColor" />,
+      icon: <LuKeyRound size={24} color="currentColor" />,
     },
     {
       title: "Confirmation",
       completed: progress >= 3,
-      icon: <PartyPopper size={24} color="currentColor" />,
+      icon: <LuPartyPopper size={24} color="currentColor" />,
     },
   ];
 
@@ -46,7 +46,7 @@ const ProgressBar: React.FC<ProgressStepperProps> = ({ progress }) => {
               }`}
             >
               {step.completed ? (
-                <CircleCheck size={24} color="currentColor" />
+                <LuCheckCircle2 size={24} color="currentColor" />
               ) : (
                 step.icon
               )}
