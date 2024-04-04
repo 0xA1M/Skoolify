@@ -1,7 +1,7 @@
 /* Custom Components */
 import Provider from "@/components/UI/Provider";
 import SideNavBar from "@/components/SideNavBar";
-import Nav from "@/components/Nav";
+import DashboardNav from "@/components/DashboardNav";
 
 interface Props {
   children: React.ReactNode;
@@ -10,12 +10,15 @@ interface Props {
 function DashboardLayout({ children }: Props) {
   return (
     <Provider>
-      <Nav isHome={false} />
-
       <main className="w-full h-screen flex">
         <SideNavBar />
 
-        {children}
+        <section className="w-full h-full">
+          <header className="w-full">
+            <DashboardNav />
+          </header>
+          {children}
+        </section>
       </main>
     </Provider>
   );

@@ -4,7 +4,7 @@ import { useState } from "react";
 
 /* Components */
 import { Image, Card, CardHeader, CardBody } from "@nextui-org/react";
-import { ArrowLeft } from "lucide-react";
+import { LuArrowLeft } from "react-icons/lu";
 import Link from "next/link";
 
 /* Custom Components */
@@ -93,7 +93,7 @@ function SignUp() {
                 href="/"
                 className="p-2 rounded-xl transition-background duration-200 ease-in-out hover:bg-primary-500 hover:bg-opacity-20 drop-shadow-lg self-center"
               >
-                <ArrowLeft className="text-foreground" />
+                <LuArrowLeft className="text-foreground" />
               </Link>
 
               <Logo />

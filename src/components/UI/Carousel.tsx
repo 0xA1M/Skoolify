@@ -6,7 +6,7 @@ import Autoplay from "embla-carousel-autoplay";
 
 /* Component */
 import { Button, Image } from "@nextui-org/react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 
 function Carousel() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay()]);
@@ -54,7 +54,7 @@ function Carousel() {
         className="hidden lg:flex justify-center items-center embla__prev shadow-md"
         onClick={scrollPrev}
       >
-        <ChevronLeft />
+        <LuChevronLeft />
       </Button>
 
       <Button
@@ -64,7 +64,7 @@ function Carousel() {
         className="hidden lg:flex justify-center items-center embla__next shadow-md"
         onClick={scrollNext}
       >
-        <ChevronRight />
+        <LuChevronRight />
       </Button>
     </div>
   );

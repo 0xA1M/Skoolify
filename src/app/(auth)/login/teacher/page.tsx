@@ -13,7 +13,13 @@ import {
   CardFooter,
   Divider,
 } from "@nextui-org/react";
-import { ArrowLeft, Eye, EyeOff, Mail, KeyRound } from "lucide-react";
+import {
+  LuArrowLeft,
+  LuEye,
+  LuEyeOff,
+  LuMail,
+  LuKeyRound,
+} from "react-icons/lu";
 import Link from "next/link";
 
 /* Custom Components */
@@ -49,7 +55,7 @@ function TeacherLogin() {
                 href="/login"
                 className="p-2 rounded-xl transition-background duration-200 ease-in-out hover:bg-primary-500 hover:bg-opacity-20 drop-shadow-lg"
               >
-                <ArrowLeft className="text-foreground" />
+                <LuArrowLeft className="text-foreground" />
               </Link>
             </article>
 
@@ -67,7 +73,7 @@ function TeacherLogin() {
               <div className="w-full h-full">
                 <div className="w-full flex items-center justify-center md:px-4">
                   <label htmlFor="email">
-                    <Mail />
+                    <LuMail />
                   </label>
                   <Input
                     id="email"
@@ -82,7 +88,7 @@ function TeacherLogin() {
 
                 <div className="w-full flex items-center justify-center md:px-4">
                   <label htmlFor="pass">
-                    <KeyRound />
+                    <LuKeyRound />
                   </label>
                   <Input
                     id="pass"
@@ -96,9 +102,9 @@ function TeacherLogin() {
                         onClick={toggleVisibility}
                       >
                         {isVisible ? (
-                          <EyeOff className="text-2xl text-default-400 pointer-events-none" />
+                          <LuEyeOff className="text-2xl text-default-400 pointer-events-none" />
                         ) : (
-                          <Eye className="text-2xl text-default-400 pointer-events-none" />
+                          <LuEye className="text-2xl text-default-400 pointer-events-none" />
                         )}
                       </button>
                     }

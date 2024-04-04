@@ -6,7 +6,7 @@ import { FormEvent, useState } from "react";
 import { Button, Input } from "@nextui-org/react";
 
 /* Assets */
-import { Eye, EyeOff } from "lucide-react";
+import { LuEye, LuEyeOff } from "react-icons/lu";
 
 /* Types */
 import { FormProps } from "../Form";
@@ -73,9 +73,9 @@ function ThirdForm({ formData, setStep, setFormData }: FormProps) {
                 onClick={toggleVisibility}
               >
                 {isVisible ? (
-                  <EyeOff className="text-2xl text-default-400 pointer-events-none" />
+                  <LuEyeOff className="text-2xl text-default-400 pointer-events-none" />
                 ) : (
-                  <Eye className="text-2xl text-default-400 pointer-events-none" />
+                  <LuEye className="text-2xl text-default-400 pointer-events-none" />
                 )}
               </button>
             }
