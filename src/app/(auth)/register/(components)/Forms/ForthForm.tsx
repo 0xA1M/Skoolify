@@ -49,6 +49,7 @@ function ForthForm({ formData }: FormProps) {
     };
 
     FetchData();
+    console.log(data);
   }, [data]);
 
   switch (loading) {
