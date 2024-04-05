@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.ps-sidebar-root {
+  border: none !important;
+}
+
 .embla {
   width: 100%;
   height: 100%;
