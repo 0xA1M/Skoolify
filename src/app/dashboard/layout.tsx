@@ -1,6 +1,6 @@
 /* Custom Components */
 import Provider from "@/components/UI/Provider";
-import SideNavBar from "@/components/SideNavBar";
+import SideNavBar from "@/components/UI/SideNavBar";
 
 interface Props {
   children: React.ReactNode;

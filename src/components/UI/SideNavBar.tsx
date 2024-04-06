@@ -2,6 +2,8 @@
 /* Utils */
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
+import { usePathname } from "next/navigation";
+
 /* Components */
 import {
   Badge,
@@ -26,12 +28,14 @@ import {
   FaUsers,
   FaUserGraduate,
   FaChalkboardTeacher,
+  FaUserCheck,
   FaClock,
   FaCalendarAlt,
 } from "react-icons/fa";
+import Link from "next/link";
 
 /* Custom Components */
-import ThemeSwitcher from "./UI/ThemeSwitcher";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 /* Assets */
 import type { Metadata } from "next";
@@ -47,35 +51,49 @@ function SideNavBar() {
   const [notification, setNotification] = useState<number>(5);
   const [mounted, setMounted] = useState<boolean>(false);
   const { theme } = useTheme();
+  const pathname = usePathname();
+
   const menuItems = [
     {
       title: "Dashboard",
       label: "dashboard",
+      link: "/dashboard",
       icon: <MdDashboard size={22} />,
     },
     {
       title: "Staff",
       label: "staff",
+      link: "/dashboard/staff",
       icon: <FaUsers size={22} />,
     },
     {
       title: "Teachers",
       label: "teachers",
+      link: "/dashboard/teachers",
       icon: <FaChalkboardTeacher size={22} />,
     },
     {
       title: "Students",
       label: "student",
+      link: "/dashboard/students",
       icon: <FaUserGraduate size={22} />,
+    },
+    {
+      title: "Check In",
+      label: "check-in",
+      link: "/dashboard/check-in",
+      icon: <FaUserCheck size={22} />,
     },
     {
       title: "Timetable",
       label: "timetable",
+      link: "/dashboard/timetable",
       icon: <FaClock size={22} />,
     },
     {
       title: "Events",
       label: "events",
+      link: "/dashboard/events",
       icon: <FaCalendarAlt size={22} />,
     },
   ];
@@ -110,7 +128,7 @@ function SideNavBar() {
 
   return (
     <Sidebar
-      className="h-full"
+      className="h-full shadow-xl"
       transitionDuration={300}
       collapsed={collapseMenu}
       rootStyles={{
@@ -134,7 +152,7 @@ function SideNavBar() {
 
         {/* Option Menu */}
         <Menu
-          className="w-full h-full my-16 mt-24"
+          className="w-full h-full my-14 mt-18"
           menuItemStyles={{
             button: ({ active }) => {
               let styles: any = {
@@ -175,8 +193,9 @@ function SideNavBar() {
             <MenuItem
               key={index}
               icon={item.icon}
-              active={active === item.label}
+              active={item.link === pathname}
               onClick={() => setActive(item.label)}
+              component={<Link href={item.link} />}
             >
               {item.title}
             </MenuItem>
