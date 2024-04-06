@@ -15,6 +15,7 @@ import type { User } from "@/components/UI/UsersGrid";
 
 function StudentPage() {
   const [search, setSearch] = useState<string>("");
+  const [selectedUser, setSelectedUser] = useState<number>(0);
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -25,10 +26,14 @@ function StudentPage() {
     const users: User[] = [];
     for (let i = 1; i <= count; i++) {
       const user: User = {
-        id: i,
+        id: String(i).padStart(3, "0"),
         fullName: `User Name ${i}`,
+        phone: `+213 0512345678`,
         email: `user${i}@example.com`,
-        level: `level ${i}`,
+        levels: [`${i} HS`],
+        groups: [`Grp ${i}`, `Grp ${i}`, `Grp ${i}`, `Grp ${i}`, `Grp ${i}`],
+        subjects: [`Math`, `Physics`, `Science`, `English`, `Arabic`],
+        role: `Student`,
       };
       users.push(user);
     }
@@ -51,7 +56,7 @@ function StudentPage() {
               color="primary"
               className="shadow-md shadow-primary-300"
             >
-              Add Teacher
+              Add Student
             </Button>
           </div>
 
@@ -61,14 +66,21 @@ function StudentPage() {
             value={search}
             onChange={handleSearch}
             isClearable
+            onClear={() => setSearch("")}
             startContent={<CiSearch size={22} />}
           />
         </CardBody>
       </Card>
 
-      <UsersGrid users={placeholderUsers} role="student" />
+      <UsersGrid
+        users={placeholderUsers}
+        role="student"
+        search={search}
+        selectedUser={selectedUser}
+        setSelectedUser={setSelectedUser}
+      />
 
-      <UserInfo />
+      <UserInfo user={placeholderUsers[selectedUser - 1]} />
     </section>
   );
 }

@@ -9,11 +9,11 @@ interface Props {
 function DashboardLayout({ children }: Props) {
   return (
     <Provider>
-      <div className="w-full h-screen flex">
+      <main className="w-full h-screen flex">
         <SideNavBar />
 
         <main className="w-full h-full p-2">{children}</main>
-      </div>
+      </main>
     </Provider>
   );
 }

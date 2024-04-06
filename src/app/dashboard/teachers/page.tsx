@@ -15,20 +15,31 @@ import type { User } from "@/components/UI/UsersGrid";
 
 function TeachersPage() {
   const [search, setSearch] = useState<string>("");
+  const [selectedUser, setSelectedUser] = useState<number>(0);
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 
-  /* This function is only for testing */
+  /* This function is only for testing, it's purpose is to generate random data */
   const generateUsers = (count: number): User[] => {
     const users: User[] = [];
     for (let i = 1; i <= count; i++) {
       const user: User = {
-        id: i,
+        id: String(i).padStart(3, "0"),
         fullName: `User Name ${i}`,
+        phone: `+213 0512345678`,
         email: `user${i}@example.com`,
+        levels: [
+          `${i} HS`,
+          `${i + 1} HS`,
+          `${i + 2} HS`,
+          `${i + 3} HS`,
+          `${i + 4} HS`,
+        ],
+        groups: [`Grp ${i}`, `Grp ${i}`, `Grp ${i}`, `Grp ${i}`, `Grp ${i}`],
         subjects: [`Math`, `Physics`, `Science`, `English`, `Arabic`],
+        role: `Teacher`,
       };
       users.push(user);
     }
@@ -57,18 +68,25 @@ function TeachersPage() {
 
           <Input
             type="text"
-            placeholder="Search for a teacher"
+            placeholder="Search for a teacher by id, name"
             value={search}
             onChange={handleSearch}
             isClearable
+            onClear={() => setSearch("")}
             startContent={<CiSearch size={22} />}
           />
         </CardBody>
       </Card>
 
-      <UsersGrid users={placeholderUsers} role="teacher" />
+      <UsersGrid
+        users={placeholderUsers}
+        role="teacher"
+        search={search}
+        selectedUser={selectedUser}
+        setSelectedUser={setSelectedUser}
+      />
 
-      <UserInfo />
+      <UserInfo user={placeholderUsers[selectedUser - 1]} />
     </section>
   );
 }

@@ -1,6 +1,13 @@
 "use client";
 /* Utils */
-import { useState, useMemo, useCallback } from "react";
+import {
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
+  Dispatch,
+  SetStateAction,
+} from "react";
 
 /* Components */
 import {
@@ -16,39 +23,68 @@ import {
 
 /* Types */
 export type User = {
+  id: string;
   fullName: string;
-  id: number;
   email: string;
+  phone: string;
+  groups?: string[];
+  profilePic?: string;
   subjects?: string[];
-  level?: string;
+  levels?: string[];
+  role: string;
 };
 
 interface Props {
   users: User[];
   role: string;
+  search: string;
+  selectedUser: number;
+  setSelectedUser: Dispatch<SetStateAction<number>>;
 }
 
-function UsersGrid({ users, role }: Props) {
+function UsersGrid({
+  users,
+  role,
+  search,
+  selectedUser,
+  setSelectedUser,
+}: Props) {
   const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+
   const renderCell = useCallback((user: any, columnKey: any) => {
-    const cellValue = user[columnKey];
+    const cellValue = user[columnKey as keyof User];
 
     switch (columnKey) {
       case "subjects":
-        return cellValue.map((subject: string, index: number) => (
-          <Chip
-            key={index}
-            className="capitalize mx-1"
-            color="secondary"
-            size="md"
-            radius="sm"
-            variant="flat"
-          >
-            {subject}
-          </Chip>
-        ));
+        return (
+          <div className="max-w-[300px] w-full flex">
+            {cellValue.map(
+              (subject: string, index: number) =>
+                index <= 2 && (
+                  <Chip
+                    key={index}
+                    className="capitalize mx-1"
+                    color="secondary"
+                    size="md"
+                    radius="sm"
+                    variant="flat"
+                  >
+                    {subject}
+                  </Chip>
+                )
+            )}
+            {cellValue.length > 3 && (
+              <div className="ml-1 flex items-center gap-1">
+                <div className="w-1 h-1 rounded-full bg-secondary-500"></div>
+                <div className="w-1 h-1 rounded-full bg-secondary-500"></div>
+                <div className="w-1 h-1 rounded-full bg-secondary-500"></div>
+              </div>
+            )}
+          </div>
+        );
 
-      case "level":
+      case "levels":
         return (
           <Chip
             className="capitalize"
@@ -57,8 +93,37 @@ function UsersGrid({ users, role }: Props) {
             radius="sm"
             variant="flat"
           >
-            {cellValue}
+            {cellValue[0]}
           </Chip>
+        );
+
+      case "groups":
+        return (
+          <div className="max-w-[300px] w-full flex">
+            {cellValue.map(
+              (group: string, index: number) =>
+                index <= 2 && (
+                  <Chip
+                    key={index}
+                    className="capitalize mx-1"
+                    color="secondary"
+                    size="md"
+                    radius="sm"
+                    variant="flat"
+                  >
+                    {group}
+                  </Chip>
+                )
+            )}
+
+            {cellValue.length > 3 && (
+              <div className="ml-1 flex items-center gap-1">
+                <div className="w-1 h-1 rounded-full bg-secondary-500"></div>
+                <div className="w-1 h-1 rounded-full bg-secondary-500"></div>
+                <div className="w-1 h-1 rounded-full bg-secondary-500"></div>
+              </div>
+            )}
+          </div>
         );
 
       default:
@@ -68,14 +133,30 @@ function UsersGrid({ users, role }: Props) {
 
   const rowsPerPage = 8;
 
-  const pages = Math.ceil(users.length / rowsPerPage);
-
   const items = useMemo(() => {
+    // Filter users only if a search value exists
+    const filteredUsers = search
+      ? users.filter(
+          (user) =>
+            user.fullName.toLowerCase().includes(search.toLowerCase()) ||
+            parseInt(user.id) == parseInt(search)
+        ) /* to add search by subject
+         ||
+            user.subjects?.includes(
+              search.charAt(0).toUpperCase() + search.slice(1)
+            )  */
+      : users; // Use all users if no search
+
+    // Calculate the total number of pages to display in the pagination
+    const pages = Math.ceil(filteredUsers.length / rowsPerPage);
+    setTotalPages(pages);
+
+    // Perform pagination on the filtered or original user list
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
 
-    return users.slice(start, end);
-  }, [page, users]);
+    return filteredUsers.slice(start, end);
+  }, [page, rowsPerPage, search, users]);
 
   let columns = [
     {
@@ -99,18 +180,30 @@ function UsersGrid({ users, role }: Props) {
     });
   } else {
     columns.push({
-      key: "level",
-      label: "Level",
+      key: "levels",
+      label: "Levels",
+    });
+
+    columns.push({
+      key: "groups",
+      label: "Groups",
     });
   }
+
+  /* Reset The pagination each time the search value is updated */
+  useEffect(() => {
+    setPage(1);
+  }, [search]);
 
   return (
     <Table
       fullWidth
       isStriped
       color="secondary"
+      selectionBehavior="toggle"
       selectionMode="single"
       aria-label="User's Data"
+      onRowAction={(key) => setSelectedUser(parseInt(key.toString()))}
       bottomContent={
         <div className="flex w-full justify-center">
           <Pagination
@@ -121,7 +214,7 @@ function UsersGrid({ users, role }: Props) {
             variant="flat"
             color="primary"
             page={page}
-            total={pages}
+            total={totalPages}
             loop
             onChange={(page) => setPage(page)}
           />
@@ -129,11 +222,10 @@ function UsersGrid({ users, role }: Props) {
       }
       classNames={{
         wrapper: "min-h-full",
-        th: "shadow-md",
       }}
       className="col-span-4 row-span-5 col-start-1 row-start-2"
     >
-      <TableHeader columns={columns}>
+      <TableHeader columns={columns} className="">
         {(column) => (
           <TableColumn
             key={column.key}
@@ -144,12 +236,17 @@ function UsersGrid({ users, role }: Props) {
         )}
       </TableHeader>
 
-      {users.length > 0 ? (
+      {items.length > 0 ? (
         <TableBody items={items}>
           {(item) => (
-            <TableRow key={item.id}>
+            <TableRow
+              key={item.id}
+              className={`rounded-lg relative ${
+                parseInt(item.id) === selectedUser ? "blue-dot" : "remove-dot"
+              }`}
+            >
               {(columnKey) => (
-                <TableCell className="p-4">
+                <TableCell className="p-4 first-of-type:rounded-s-lg last-of-type:rounded-e-lg">
                   {renderCell(item, columnKey)}
                 </TableCell>
               )}

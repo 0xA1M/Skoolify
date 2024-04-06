@@ -1,6 +1,6 @@
 "use client";
 /* Utils */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useTheme } from "next-themes";
 import { usePathname } from "next/navigation";
 
@@ -8,6 +8,8 @@ import { usePathname } from "next/navigation";
 import {
   Badge,
   Button,
+  Card,
+  CardBody,
   cn,
   Divider,
   Dropdown,
@@ -45,10 +47,11 @@ export const metadata: Metadata = {
 };
 
 function SideNavBar() {
+  const [userData, setUserData] = useState(); // Adjust this based on the format of the user's data
   const [collapseMenu, setCollapseMenu] = useState<boolean>(false);
   const [active, setActive] = useState<string>("dashboard");
   const [showDetails, setShowDetails] = useState<boolean>(false);
-  const [notification, setNotification] = useState<number>(5);
+  const [notification, setNotification] = useState<number>(0);
   const [mounted, setMounted] = useState<boolean>(false);
   const { theme } = useTheme();
   const pathname = usePathname();
@@ -102,6 +105,9 @@ function SideNavBar() {
     setCollapseMenu((prevState) => !prevState);
   };
 
+  /* This will be used to get the connected user's data */
+  const getUserData = async () => {};
+
   /* To get the smooth name transition effect in the User component */
   useEffect(() => {
     const delay = 100;
@@ -124,7 +130,12 @@ function SideNavBar() {
   }, []);
 
   /* If the theme isn't resolve display a loading skeleton */
-  if (!mounted) return <div className="h-full w-[300px] p-2"></div>;
+  if (!mounted)
+    return (
+      <Card className="h-full w-[300px] p-2">
+        <CardBody></CardBody>
+      </Card>
+    );
 
   return (
     <Sidebar
@@ -231,8 +242,8 @@ function SideNavBar() {
             <DropdownTrigger>
               <User
                 as="button"
-                name={`${showDetails ? "" : "Zoe Lang"}`}
-                description={`${showDetails ? "" : "Teacher"}`}
+                name={`${showDetails ? "" : "Admin"}`}
+                description={`${showDetails ? "" : "admin"}`}
                 className="transition-transform "
                 classNames={{
                   name: `transition-opacity duration-100 ease ${
@@ -243,8 +254,9 @@ function SideNavBar() {
                   }`,
                 }}
                 avatarProps={{
-                  src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+                  src: "",
                   showFallback: true,
+                  name: "",
                 }}
               />
             </DropdownTrigger>
@@ -254,13 +266,17 @@ function SideNavBar() {
                 <DropdownItem
                   key="settings"
                   startContent={
-                    <Badge
-                      color="danger"
-                      content={notification}
-                      placement="top-left"
-                    >
+                    notification > 0 ? (
+                      <Badge
+                        color="danger"
+                        content={notification}
+                        placement="top-left"
+                      >
+                        <IoNotificationsOutline className="text-xl text-default-500 pointer-events-none flex-shrink-0" />
+                      </Badge>
+                    ) : (
                       <IoNotificationsOutline className="text-xl text-default-500 pointer-events-none flex-shrink-0" />
-                    </Badge>
+                    )
                   }
                 >
                   Notifications
