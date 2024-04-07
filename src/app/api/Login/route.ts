@@ -1,11 +1,25 @@
 import dbConnect from "@/database/ConnectToDB";
 import Admin from "@/models/Admin";
+import Student from "@/models/Student";
+import Teacher from "@/models/Teacher";
 
 export async function POST(request: Request) {
     await dbConnect();
     var response:any;
     const res=await request.json();
-    response=await Admin.findOne(res);
+    if(res.role==="student")
+    {
+        response=await Admin.findOne(res);
+    }
+    else if(res.role==="teacher")
+    {
+        response=await Student.findOne(res);
+    }
+    else
+    {
+        response=await Teacher.findOne(res);
+    }    
+    
     if(response)
     {
         return new Response(JSON.stringify("Success"), {

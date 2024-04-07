@@ -38,7 +38,8 @@ function AdminLogin() {
     const password: string = event.currentTarget.password.value;
     const data=JSON.stringify({
       email:email,
-      password:password
+      password:password,
+      role:"admin"
     })
     try {
       const response = await fetch(`http://localhost:3000/api/Login`, {

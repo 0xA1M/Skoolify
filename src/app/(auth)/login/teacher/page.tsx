@@ -12,6 +12,7 @@ import {
   CardBody,
   CardFooter,
   Divider,
+  Spinner,
 } from "@nextui-org/react";
 import {
   LuArrowLeft,
@@ -24,17 +25,52 @@ import Link from "next/link";
 
 /* Custom Components */
 import ThemeSwitcher from "@/components/UI/ThemeSwitcher";
+import { useRouter } from "next/navigation";
+
 
 function TeacherLogin() {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
-
+  const[Loading,setLoading]=useState(false);
+  const router = useRouter();
+  const[error,setError]=useState("")
   async function submitData(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     const email: string = event.currentTarget.email.value;
     const password: string = event.currentTarget.password.value;
+    const data=JSON.stringify({
+      email:email,
+      password:password,
+      role:"teacher"
+    })
+    try {
+      const response = await fetch(`http://localhost:3000/api/Login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: data,
+      });
 
-    console.log("data will be passed to the server");
-  }
+      const Data = await response.json();
+      setLoading(true);
+      if (response.status == 400)
+      {
+        throw new Error(Data.error);
+      } 
+      else 
+      {
+         setTimeout(() => {setLoading(false);router.push('/Admin')}, 3000);
+        
+          
+         
+        
+      }
+    } catch (error: any) {
+      setTimeout(() => {setLoading(false);setError("Email or Password are incorrect")}, 3000);
+    }
+  };
+  
 
   return (
     <section className="w-full h-screen flex justify-center items-center flex-col mx-auto max-w-6xl">
@@ -66,7 +102,6 @@ function TeacherLogin() {
           <Divider />
           <CardBody>
             <form
-              method="POST"
               onSubmit={submitData}
               className="w-full h-full flex flex-col justify-between items-center py-6 md:py-12 px-6 md:px-0"
             >
@@ -115,16 +150,30 @@ function TeacherLogin() {
                 </div>
               </div>
 
-              <Button
+              { 
+             Loading ?
+             <Spinner size="lg" color="primary" />
+             :
+             <Button
                 variant="shadow"
                 color="primary"
                 className="m-4 py-6 px-8 mt-10 md:mt-0"
                 size="lg"
+                type="submit"
               >
                 Login
               </Button>
+             }
             </form>
           </CardBody>
+          {
+              Loading ?
+              ""
+              :
+            <div className=" w-full  flex justify-center pb-10">
+            <h4 className=" text-red-600">{error}</h4>
+            </div>
+             }
           <CardFooter className="text-center">
             <p>
               Don&apos;t have an account?{" "}

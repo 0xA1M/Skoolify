@@ -1,11 +1,15 @@
 "use client";
 /* Utils */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useTheme } from "next-themes";
+import { usePathname } from "next/navigation";
+
 /* Components */
 import {
   Badge,
   Button,
+  Card,
+  CardBody,
   cn,
   Divider,
   Dropdown,
@@ -26,12 +30,14 @@ import {
   FaUsers,
   FaUserGraduate,
   FaChalkboardTeacher,
+  FaUserCheck,
   FaClock,
   FaCalendarAlt,
 } from "react-icons/fa";
+import Link from "next/link";
 
 /* Custom Components */
-import ThemeSwitcher from "./UI/ThemeSwitcher";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 /* Assets */
 import type { Metadata } from "next";
@@ -41,41 +47,56 @@ export const metadata: Metadata = {
 };
 
 function SideNavBar() {
+  const [userData, setUserData] = useState(); // Adjust this based on the format of the user's data
   const [collapseMenu, setCollapseMenu] = useState<boolean>(false);
   const [active, setActive] = useState<string>("dashboard");
   const [showDetails, setShowDetails] = useState<boolean>(false);
-  const [notification, setNotification] = useState<number>(5);
+  const [notification, setNotification] = useState<number>(0);
   const [mounted, setMounted] = useState<boolean>(false);
   const { theme } = useTheme();
+  const pathname = usePathname();
+
   const menuItems = [
     {
       title: "Dashboard",
       label: "dashboard",
+      link: "/dashboard",
       icon: <MdDashboard size={22} />,
     },
     {
       title: "Staff",
       label: "staff",
+      link: "/dashboard/staff",
       icon: <FaUsers size={22} />,
     },
     {
       title: "Teachers",
       label: "teachers",
+      link: "/dashboard/teachers",
       icon: <FaChalkboardTeacher size={22} />,
     },
     {
       title: "Students",
       label: "student",
+      link: "/dashboard/students",
       icon: <FaUserGraduate size={22} />,
+    },
+    {
+      title: "Check In",
+      label: "check-in",
+      link: "/dashboard/check-in",
+      icon: <FaUserCheck size={22} />,
     },
     {
       title: "Timetable",
       label: "timetable",
+      link: "/dashboard/timetable",
       icon: <FaClock size={22} />,
     },
     {
       title: "Events",
       label: "events",
+      link: "/dashboard/events",
       icon: <FaCalendarAlt size={22} />,
     },
   ];
@@ -83,6 +104,9 @@ function SideNavBar() {
   const toggleCollapseMenu = () => {
     setCollapseMenu((prevState) => !prevState);
   };
+
+  /* This will be used to get the connected user's data */
+  const getUserData = async () => {};
 
   /* To get the smooth name transition effect in the User component */
   useEffect(() => {
@@ -106,11 +130,16 @@ function SideNavBar() {
   }, []);
 
   /* If the theme isn't resolve display a loading skeleton */
-  if (!mounted) return <div className="h-full w-[300px] p-2"></div>;
+  if (!mounted)
+    return (
+      <Card className="h-full w-[300px] p-2">
+        <CardBody></CardBody>
+      </Card>
+    );
 
   return (
     <Sidebar
-      className="h-full"
+      className="h-full shadow-xl"
       transitionDuration={300}
       collapsed={collapseMenu}
       rootStyles={{
@@ -134,7 +163,7 @@ function SideNavBar() {
 
         {/* Option Menu */}
         <Menu
-          className="w-full h-full my-16 mt-24"
+          className="w-full h-full my-14 mt-18"
           menuItemStyles={{
             button: ({ active }) => {
               let styles: any = {
@@ -175,8 +204,9 @@ function SideNavBar() {
             <MenuItem
               key={index}
               icon={item.icon}
-              active={active === item.label}
+              active={item.link === pathname}
               onClick={() => setActive(item.label)}
+              component={<Link href={item.link} />}
             >
               {item.title}
             </MenuItem>
@@ -212,8 +242,8 @@ function SideNavBar() {
             <DropdownTrigger>
               <User
                 as="button"
-                name={`${showDetails ? "" : "Zoe Lang"}`}
-                description={`${showDetails ? "" : "Teacher"}`}
+                name={`${showDetails ? "" : "Admin"}`}
+                description={`${showDetails ? "" : "admin"}`}
                 className="transition-transform "
                 classNames={{
                   name: `transition-opacity duration-100 ease ${
@@ -224,8 +254,9 @@ function SideNavBar() {
                   }`,
                 }}
                 avatarProps={{
-                  src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+                  src: "",
                   showFallback: true,
+                  name: "",
                 }}
               />
             </DropdownTrigger>
@@ -235,13 +266,17 @@ function SideNavBar() {
                 <DropdownItem
                   key="settings"
                   startContent={
-                    <Badge
-                      color="danger"
-                      content={notification}
-                      placement="top-left"
-                    >
+                    notification > 0 ? (
+                      <Badge
+                        color="danger"
+                        content={notification}
+                        placement="top-left"
+                      >
+                        <IoNotificationsOutline className="text-xl text-default-500 pointer-events-none flex-shrink-0" />
+                      </Badge>
+                    ) : (
                       <IoNotificationsOutline className="text-xl text-default-500 pointer-events-none flex-shrink-0" />
-                    </Badge>
+                    )
                   }
                 >
                   Notifications

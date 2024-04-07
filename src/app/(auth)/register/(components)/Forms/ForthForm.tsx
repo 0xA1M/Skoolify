@@ -53,7 +53,12 @@ function ForthForm({ formData }: FormProps) {
     };
 
     FetchData();
+<<<<<<< HEAD
   }, []);
+=======
+    console.log(data);
+  }, [data]);
+>>>>>>> 117858e62aed628c6594a8fe91e7ab0362ea09c3
 
   switch (loading) {
     case 0:
