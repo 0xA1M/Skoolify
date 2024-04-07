@@ -11,10 +11,14 @@ import { FormProps } from "../Form";
 /* Forth Form: This will display the waiting for validation message to the client */
 function ForthForm({ formData }: FormProps) {
   const [loading, setLoading] = useState<number>(0);
+  var level:number;
+  if(formData?.levels.length==1)
+    {
+      
+    }
+
   const data: string = JSON.stringify({
-    username: formData
-      ? `${String(formData.firstName)} ${String(formData.lastName)}`
-      : "",
+    username: formData? `${String(formData.firstName)} ${String(formData.lastName)}`: "",
     email: String(formData?.email || ""),
     phone_number: formData?.phone || "",
     gender: String(formData?.gender || ""),
@@ -22,9 +26,9 @@ function ForthForm({ formData }: FormProps) {
     password: String(formData?.password || ""),
     modules_Groups_sessionNumber: formData?.subjects,
     role: String(formData?.role || ""),
-    level: formData?.levels[0],
+     level: formData?.levels.length === 1 ? formData.levels[0] : formData?.levels,
   });
-
+ console.log(formData)
   useEffect(() => {
     const FetchData = async () => {
       try {
@@ -49,7 +53,7 @@ function ForthForm({ formData }: FormProps) {
     };
 
     FetchData();
-  }, [data]);
+  }, []);
 
   switch (loading) {
     case 0:
@@ -91,7 +95,7 @@ function ForthForm({ formData }: FormProps) {
 
     case 2:
       return (
-        <div className="w-full h-full flex item-center justify-center">
+        <div className="w-full h-[500px] flex item-center justify-center">
           <h1>This email is already registered!</h1>
         </div>
       );

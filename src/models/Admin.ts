@@ -1,6 +1,7 @@
 import {model ,Schema,models} from "mongoose"
 const AdminSchema=new Schema ({
     username:String,
+    email:String,
     password:String,
    requests:Array,
 })

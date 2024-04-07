@@ -8,18 +8,19 @@ import Teacher from "@/models/Teacher";
 export async function Add_Student(data: any): Promise<any> {
     await dbConnect();
     await Admin.findByIdAndUpdate(
-        "65df8729868e80a59fcf23f1",
+        "6611cb9a82ab92f250989a74",
         { $pull:{ requests: data.info } }
     );
     try {
 
-        if (data.subcriber == "student" && data.state) {
+        if (data.role== "student" && data.state) {
             await new Student(data.info).save();
         } else {
             await new Teacher(data.info).save();
         }
         return;
-    } catch (error) {
+    } catch (error)
+     {
         console.error(error);
         throw new Error('Failed to add student.');
     }

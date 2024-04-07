@@ -32,7 +32,7 @@ function StudentLogin() {
   async function submitData(event: FormEvent<HTMLFormElement>) {
     const email: string = event.currentTarget.email.value;
     const password: string = event.currentTarget.password.value;
-
+     console.log(email,password)
     console.log("data will be passed to the server");
   }
 
@@ -120,6 +120,7 @@ function StudentLogin() {
                 color="primary"
                 className="m-4 py-6 px-8 mt-10 md:mt-0"
                 size="lg"
+                type="submit"
               >
                 Login
               </Button>
