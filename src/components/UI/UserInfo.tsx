@@ -1,7 +1,5 @@
 /* Components */
 import {
-  Accordion,
-  AccordionItem,
   Avatar,
   Button,
   Card,
@@ -15,8 +13,7 @@ import { IoMailOutline } from "react-icons/io5";
 import { CiCircleInfo, CiPhone } from "react-icons/ci";
 import { TbBooks } from "react-icons/tb";
 import { GiMaterialsScience } from "react-icons/gi";
-import { GrGroup } from "react-icons/gr";
-import { FaGraduationCap } from "react-icons/fa";
+import { LiaChalkboardTeacherSolid } from "react-icons/lia";
 import { FiEdit } from "react-icons/fi";
 
 /* Type */
@@ -101,115 +98,121 @@ function UserInfo({ user }: Props) {
 
           <Card key={user.role} className="w-full h-full p-2">
             <CardHeader className="flex items-center justify-between">
-              <h3>{user.role}</h3>
+              <h3 className="flex items-center gap-3">
+                {user.role}
+                {user.role === "Student" && (
+                  <Chip size="md" radius="sm" variant="flat" color="primary">
+                    {user.levels && user.levels[0]}
+                  </Chip>
+                )}
+              </h3>
+
               <TbBooks size={24} />
             </CardHeader>
 
             <Divider />
 
-            <CardBody className="px-0 overflow-hidden">
-              <Accordion
-                variant="splitted"
-                motionProps={{
-                  variants: {
-                    enter: {
-                      y: 0,
-                      opacity: 1,
-                      height: "auto",
-                      transition: {
-                        height: {
-                          type: "spring",
-                          stiffness: 500,
-                          damping: 30,
-                          duration: 1,
-                        },
-                        opacity: {
-                          easings: "ease",
-                          duration: 1,
-                        },
-                      },
-                    },
-                    exit: {
-                      y: -10,
-                      opacity: 0,
-                      height: 0,
-                      transition: {
-                        height: {
-                          easings: "ease",
-                          duration: 0.25,
-                        },
-                        opacity: {
-                          easings: "ease",
-                          duration: 0.3,
-                        },
-                      },
-                    },
-                  },
-                }}
-              >
-                <AccordionItem
-                  key="1"
-                  aria-label="Levels"
-                  title={
-                    <p className="flex items-center">
-                      <span className="flex gap-1">
-                        <FaGraduationCap size={22} />
-                        Levels
-                      </span>
-                    </p>
-                  }
-                >
-                  <div className="flex flex-wrap gap-2 items-center">
+            <CardBody className="px-0 overflow-hidden gap-2">
+              {user.role === "Teacher" ? (
+                <Card className="p-2 mx-3">
+                  <CardHeader className="flex items-center gap-1">
+                    <LiaChalkboardTeacherSolid size={22} />
+                    Teaches
+                  </CardHeader>
+
+                  <Divider />
+
+                  <CardBody aria-label="Levels" className="flex flex-col gap-2">
                     {user.levels?.map((level, index) => (
-                      <Chip key={index} size="md" radius="sm" variant="flat">
-                        {level}
-                      </Chip>
-                    ))}
-                  </div>
-                </AccordionItem>
+                      <div key={index} className="flex gap-2 items-center">
+                        <Chip
+                          key={index}
+                          size="md"
+                          radius="sm"
+                          variant="flat"
+                          color="primary"
+                        >
+                          {level}
+                        </Chip>
 
-                <AccordionItem
-                  key="2"
-                  aria-label="Subjects"
-                  title={
-                    <p className="flex items-center">
-                      <span className="flex gap-1">
-                        <GiMaterialsScience size={22} />
-                        Subjects
-                      </span>
-                    </p>
-                  }
-                >
-                  <div className="flex flex-wrap gap-2 items-center">
-                    {user.subjects?.map((subject, index) => (
-                      <Chip key={index} size="md" radius="sm" variant="flat">
-                        {subject}
-                      </Chip>
-                    ))}
-                  </div>
-                </AccordionItem>
+                        <Chip
+                          key={`Group-${index}`}
+                          size="md"
+                          radius="sm"
+                          variant="flat"
+                        >
+                          {user.subjects && user.subjects[index].group}
+                        </Chip>
 
-                <AccordionItem
-                  key="3"
-                  aria-label="Groups"
-                  title={
-                    <p className="flex items-center">
-                      <span className="flex gap-1">
-                        <GrGroup size={22} />
-                        Groups
-                      </span>
-                    </p>
-                  }
-                >
-                  <div className="flex flex-wrap gap-2 items-center">
-                    {user.groups?.map((group, index) => (
-                      <Chip key={index} size="md" radius="sm" variant="flat">
-                        {group}
-                      </Chip>
+                        <Chip
+                          key={`Subject-${index}`}
+                          size="md"
+                          radius="sm"
+                          variant="flat"
+                          color="secondary"
+                        >
+                          {user.subjects && user.subjects[index].subject}
+                        </Chip>
+                      </div>
                     ))}
-                  </div>
-                </AccordionItem>
-              </Accordion>
+                  </CardBody>
+                </Card>
+              ) : (
+                <Card className="p-2 mx-3">
+                  <CardHeader className="flex items-center gap-1">
+                    <GiMaterialsScience size={22} />
+                    Subjects
+                  </CardHeader>
+
+                  <Divider />
+
+                  <CardBody
+                    aria-label="Subjects"
+                    className="flex flex-col gap-2"
+                  >
+                    {user.subjects?.map((obj, index) => (
+                      <div key={index} className="flex gap-2 items-center">
+                        <Chip
+                          key={`${obj.group}-${index}`}
+                          size="md"
+                          color="secondary"
+                          radius="sm"
+                          variant="flat"
+                        >
+                          {obj.group}
+                        </Chip>
+
+                        <Chip
+                          key={`${obj.subject}-${index}`}
+                          size="md"
+                          radius="sm"
+                          variant="flat"
+                        >
+                          {obj.subject}
+                        </Chip>
+
+                        {obj.sessions !== undefined && (
+                          <Chip
+                            key={`${obj.sessions}-${index}`}
+                            size="md"
+                            color={
+                              obj.sessions && obj.sessions >= 3
+                                ? "success"
+                                : obj.sessions === 2 || obj.sessions === 1
+                                ? "warning"
+                                : "danger"
+                            }
+                            radius="sm"
+                            variant="flat"
+                          >
+                            Sessions {obj.sessions}
+                          </Chip>
+                        )}
+                      </div>
+                    ))}
+                  </CardBody>
+                </Card>
+              )}
             </CardBody>
           </Card>
         </CardBody>

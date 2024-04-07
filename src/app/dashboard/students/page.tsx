@@ -4,6 +4,7 @@ import { useState, ChangeEvent } from "react";
 
 /* Components */
 import { Button, Card, CardBody, Input } from "@nextui-org/react";
+import Link from "next/link";
 import { CiSearch } from "react-icons/ci";
 
 /* Custom Components */
@@ -31,8 +32,33 @@ function StudentPage() {
         phone: `+213 0512345678`,
         email: `user${i}@example.com`,
         levels: [`${i} HS`],
-        groups: [`Grp ${i}`, `Grp ${i}`, `Grp ${i}`, `Grp ${i}`, `Grp ${i}`],
-        subjects: [`Math`, `Physics`, `Science`, `English`, `Arabic`],
+        subjects: [
+          {
+            subject: "Math",
+            group: `Grp ${i}`,
+            sessions: i - 1,
+          },
+          {
+            subject: "Physics",
+            group: `Grp ${i}`,
+            sessions: i,
+          },
+          {
+            subject: "Science",
+            group: `Grp ${i}`,
+            sessions: i,
+          },
+          {
+            subject: "English",
+            group: `Grp ${i}`,
+            sessions: i,
+          },
+          {
+            subject: "Arabic",
+            group: `Grp ${i}`,
+            sessions: i,
+          },
+        ],
         role: `Student`,
       };
       users.push(user);
@@ -51,6 +77,8 @@ function StudentPage() {
               Export CSV
             </Button>
             <Button
+              as={Link}
+              href="/dashboard/students/add"
               variant="solid"
               radius="sm"
               color="primary"

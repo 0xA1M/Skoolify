@@ -4,14 +4,16 @@ import {
   LuKeyRound,
   LuPartyPopper,
   LuCheckCircle2,
+  LuXCircle,
 } from "react-icons/lu";
 import { VscLibrary } from "react-icons/vsc";
 
 interface ProgressStepperProps {
   progress: number;
+  loading: number;
 }
 
-const ProgressBar: React.FC<ProgressStepperProps> = ({ progress }) => {
+const ProgressBar: React.FC<ProgressStepperProps> = ({ progress, loading }) => {
   const steps = [
     {
       title: "Your Details",
@@ -42,10 +44,16 @@ const ProgressBar: React.FC<ProgressStepperProps> = ({ progress }) => {
           <div key={index} className="flex-1">
             <div
               className={`w-10 h-10 mx-auto rounded-full text-lg flex items-center justify-center relative ${
-                step.completed ? "text-success-500" : ""
+                loading == 2
+                  ? "text-danger-500"
+                  : step.completed
+                  ? "text-success-500"
+                  : ""
               }`}
             >
-              {step.completed ? (
+              {loading == 2 ? (
+                <LuXCircle size={24} color="currentColor" />
+              ) : step.completed ? (
                 <LuCheckCircle2 size={24} color="currentColor" />
               ) : (
                 step.icon

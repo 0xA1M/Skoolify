@@ -1,6 +1,7 @@
 "use client";
 /* Utils */
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 /* Components */
 import { Card, CardBody, Spinner } from "@nextui-org/react";
@@ -9,8 +10,11 @@ import { Card, CardBody, Spinner } from "@nextui-org/react";
 import { FormProps } from "../Form";
 
 /* Forth Form: This will display the waiting for validation message to the client */
-function ForthForm({ formData }: FormProps) {
-  const [loading, setLoading] = useState<number>(0);
+function ForthForm({ formData, loading, setLoading }: FormProps) {
+  const router = useRouter();
+  const [redirect, setRedirect] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const data: string = JSON.stringify({
     username: formData
       ? `${String(formData.firstName)} ${String(formData.lastName)}`
@@ -36,21 +40,36 @@ function ForthForm({ formData }: FormProps) {
           body: data,
         });
 
-        const Data = await response.json();
+        const responseJson = await response.json();
 
-        if (response.status == 400) {
-          throw new Error(Data.error);
+        if (response.status === 200) {
+          // Success case (handle successful registration)
+          setLoading(1);
+          setRedirect(true);
+        } else if (response.status === 400) {
+          // Error case (e.g., email already exists)
+          setLoading(3);
+          setRedirect(true);
         } else {
-          setTimeout(() => setLoading(1), 3000);
+          // Handle unexpected status codes
+          throw new Error("Unexpected response status");
         }
-      } catch (error: any) {
-        setTimeout(() => setLoading(2), 3000);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setErrorMessage("An error occurred. Please try again later.");
+        setLoading(0);
+        router.push("/");
       }
     };
 
     FetchData();
-    console.log(data);
-  }, [data]);
+  }, [data, router, setLoading]);
+
+  if (redirect && loading === 1) {
+    router.push("/login"); // Redirect only on success
+  } else if (redirect && loading === 2) {
+    router.push("/register");
+  }
 
   switch (loading) {
     case 0:
@@ -78,10 +97,11 @@ function ForthForm({ formData }: FormProps) {
               </h2>
               <p className="text-lg lg:indent-10 lg:px-4">
                 Our team will now review the information you provided. This
-                process usually takes 24 hours. Once your account is approved,
-                you will receive a confirmation email at the address you
-                provided during registration. If you have any urgent inquiries
-                or need assistance, feel free to contact us at{" "}
+                process usually takes less than 24 hours. Once your account is
+                approved, you will receive a confirmation email at the address
+                you provided during registration. For now you will be redirected
+                to the login page .If you have any urgent inquiries or need
+                assistance, feel free to contact us at{" "}
                 <span className="italic">contact@skoolify.com</span>. Thank you
                 for choosing <span>SKOOLIFY</span>!
               </p>
@@ -92,8 +112,14 @@ function ForthForm({ formData }: FormProps) {
 
     case 2:
       return (
-        <div className="w-full h-full flex item-center justify-center">
-          <h1>This email is already registered!</h1>
+        <div className="w-full h-full flex flex-col items-center justify-center mb-24">
+          <h1 className="text-danger font-bold text-3xl text-center">
+            This email is already registered!
+          </h1>
+
+          <h2 className="text-lg font-semibold text-zinc-700 text-center">
+            You will redirected to the register page
+          </h2>
         </div>
       );
   }

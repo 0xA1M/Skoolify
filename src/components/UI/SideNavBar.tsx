@@ -204,7 +204,11 @@ function SideNavBar() {
             <MenuItem
               key={index}
               icon={item.icon}
-              active={item.link === pathname}
+              active={
+                item.link === pathname ||
+                ((item.label === "teachers" || item.label === "student") &&
+                  `${item.link}/add` === pathname)
+              }
               onClick={() => setActive(item.label)}
               component={<Link href={item.link} />}
             >

@@ -17,6 +17,9 @@ import ProgressBar from "@/components/ProgressBar";
 import type { FormDataType } from "./(components)/Form";
 
 function SignUp() {
+  // Keep track of the server response after send the data
+  const [loading, setLoading] = useState<number>(0);
+
   // Keep track of the progress of the client
   const [step, setStep] = useState<number>(0);
 
@@ -106,9 +109,11 @@ function SignUp() {
               formData={formData}
               setStep={setStep}
               setFormData={setFormData}
+              loading={loading}
+              setLoading={setLoading}
             />
 
-            <ProgressBar progress={step} />
+            <ProgressBar progress={step} loading={loading} />
           </CardBody>
         </Card>
       </article>

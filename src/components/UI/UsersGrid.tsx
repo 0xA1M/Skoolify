@@ -27,9 +27,12 @@ export type User = {
   fullName: string;
   email: string;
   phone: string;
-  groups?: string[];
   profilePic?: string;
-  subjects?: string[];
+  subjects?: {
+    subject: string;
+    group: string;
+    sessions?: number;
+  }[];
   levels?: string[];
   role: string;
 };
@@ -52,84 +55,86 @@ function UsersGrid({
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
 
-  const renderCell = useCallback((user: any, columnKey: any) => {
-    const cellValue = user[columnKey as keyof User];
+  const renderCell = useCallback(
+    (user: any, columnKey: any) => {
+      const cellValue = user[columnKey as keyof User];
+      interface SubjectProps {
+        value: { subject: string; group: string }[];
+      }
 
-    switch (columnKey) {
-      case "subjects":
-        return (
-          <div className="max-w-[300px] w-full flex">
-            {cellValue.map(
-              (subject: string, index: number) =>
-                index <= 2 && (
-                  <Chip
-                    key={index}
-                    className="capitalize mx-1"
-                    color="secondary"
-                    size="md"
-                    radius="sm"
-                    variant="flat"
-                  >
-                    {subject}
-                  </Chip>
-                )
-            )}
-            {cellValue.length > 3 && (
-              <div className="ml-1 flex items-center gap-1">
-                <div className="w-1 h-1 rounded-full bg-secondary-500"></div>
-                <div className="w-1 h-1 rounded-full bg-secondary-500"></div>
-                <div className="w-1 h-1 rounded-full bg-secondary-500"></div>
-              </div>
-            )}
-          </div>
-        );
+      const TeacherSubjects = ({ value }: SubjectProps) => (
+        <>
+          {value.slice(0, 3).map((obj, index) => (
+            <Chip
+              key={index}
+              className="capitalize mx-1"
+              color="secondary"
+              size="md"
+              radius="sm"
+              variant="flat"
+            >
+              {obj.subject}
+            </Chip>
+          ))}
+        </>
+      );
 
-      case "levels":
-        return (
-          <Chip
-            className="capitalize"
-            color="secondary"
-            size="md"
-            radius="sm"
-            variant="flat"
-          >
-            {cellValue[0]}
-          </Chip>
-        );
+      const StudentSubjects = ({ value }: SubjectProps) => (
+        <>
+          {value.slice(0, 3).map((obj, index) => (
+            <Chip
+              key={index}
+              className="capitalize mx-1"
+              color="secondary"
+              size="md"
+              radius="sm"
+              variant="flat"
+            >
+              {obj.group}
+            </Chip>
+          ))}
+        </>
+      );
 
-      case "groups":
-        return (
-          <div className="max-w-[300px] w-full flex">
-            {cellValue.map(
-              (group: string, index: number) =>
-                index <= 2 && (
-                  <Chip
-                    key={index}
-                    className="capitalize mx-1"
-                    color="secondary"
-                    size="md"
-                    radius="sm"
-                    variant="flat"
-                  >
-                    {group}
-                  </Chip>
-                )
-            )}
+      switch (columnKey) {
+        case "subjects":
+          return (
+            <div className="max-w-[300px] w-full flex">
+              {role === "teacher" ? (
+                <TeacherSubjects value={cellValue} />
+              ) : (
+                <StudentSubjects value={cellValue} />
+              )}
 
-            {cellValue.length > 3 && (
-              <div className="ml-1 flex items-center gap-1">
-                <div className="w-1 h-1 rounded-full bg-secondary-500"></div>
-                <div className="w-1 h-1 rounded-full bg-secondary-500"></div>
-                <div className="w-1 h-1 rounded-full bg-secondary-500"></div>
-              </div>
-            )}
-          </div>
-        );
+              {cellValue.length > 3 && (
+                <div className="ml-1 flex items-center gap-1">
+                  <div className="w-1 h-1 rounded-full bg-secondary-500"></div>
+                  <div className="w-1 h-1 rounded-full bg-secondary-500"></div>
+                  <div className="w-1 h-1 rounded-full bg-secondary-500"></div>
+                </div>
+              )}
+            </div>
+          );
 
-      default:
-        return cellValue;
-    }
-  }, []);
+        case "levels":
+          return (
+            <Chip
+              className="capitalize"
+              color="primary"
+              size="md"
+              radius="sm"
+              variant="flat"
+            >
+              {cellValue[0]}
+            </Chip>
+          );
+
+        default:
+          return cellValue;
+      }
+    },
+    [role]
+  );
 
   const rowsPerPage = 8;
 
@@ -185,7 +190,7 @@ function UsersGrid({
     });
 
     columns.push({
-      key: "groups",
+      key: "subjects",
       label: "Groups",
     });
   }
