@@ -36,21 +36,37 @@ export type FormDataType = {
 export interface FormProps {
   step?: number;
   formData?: FormDataType;
+  loading?: number;
+  setLoading: Dispatch<SetStateAction<number>>;
   setStep: Dispatch<SetStateAction<number>>;
   setFormData: Dispatch<SetStateAction<FormDataType>>;
 } // Function Parameters Types
 
-function Form({ formData, step, setStep, setFormData }: FormProps) {
+function Form({
+  formData,
+  step,
+  setStep,
+  setFormData,
+  loading,
+  setLoading,
+}: FormProps) {
   /* Display the correct form according to the progress of the client */
   switch (step) {
     case 0:
-      return <FirstForm setStep={setStep} setFormData={setFormData} />;
+      return (
+        <FirstForm
+          setStep={setStep}
+          setFormData={setFormData}
+          setLoading={setLoading}
+        />
+      );
     case 1:
       return (
         <SecondForm
           formData={formData}
           setStep={setStep}
           setFormData={setFormData}
+          setLoading={setLoading}
         />
       );
     case 2:
@@ -59,6 +75,7 @@ function Form({ formData, step, setStep, setFormData }: FormProps) {
           formData={formData}
           setStep={setStep}
           setFormData={setFormData}
+          setLoading={setLoading}
         />
       );
     case 3:
@@ -67,6 +84,8 @@ function Form({ formData, step, setStep, setFormData }: FormProps) {
           formData={formData}
           setFormData={setFormData}
           setStep={setStep}
+          loading={loading}
+          setLoading={setLoading}
         />
       );
   }

@@ -4,6 +4,7 @@ import { useState, ChangeEvent, useEffect } from "react";
 
 /* Components */
 import { Button, Card, CardBody, Input } from "@nextui-org/react";
+import Link from "next/link";
 import { CiSearch } from "react-icons/ci";
 
 /* Custom Components */
@@ -45,23 +46,15 @@ function StudentPage() {
   const generateUsers = (): User[] => {
     var users: User[] = [];
   users= Data?.map((std:any,i:Number)=>
-    {
-        let groups: string[] = [];
-        let subjects: string[] = [];
-
-   // Extract group and subject attributes into separate arrays To respect you format
-   std.modules_Groups_sessionNumber.forEach((item: { group: string; subject: string; }) => {
-  groups.push(item.group);
-  subjects.push(item.subject);
-                        });
+    { 
+       
     return {
       id: String(i).padStart(3, "0"),
       fullName: std.username,
       phone: std.phone_number,
       email: std.email,
       levels: [std.level],
-      groups: groups,
-      subjects: subjects,
+      subjects:std.modules_Groups_sessionNumber ,
       role: `Student`,
   }
    })
@@ -80,6 +73,8 @@ function StudentPage() {
               Export CSV
             </Button>
             <Button
+              as={Link}
+              href="/dashboard/students/add"
               variant="solid"
               radius="sm"
               color="primary"

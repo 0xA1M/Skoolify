@@ -4,6 +4,7 @@ import { useState, ChangeEvent } from "react";
 
 /* Components */
 import { Button, Card, CardBody, Input } from "@nextui-org/react";
+import Link from "next/link";
 import { CiSearch } from "react-icons/ci";
 
 /* Custom Components */
@@ -37,8 +38,28 @@ function TeachersPage() {
           `${i + 3} HS`,
           `${i + 4} HS`,
         ],
-        groups: [`Grp ${i}`, `Grp ${i}`, `Grp ${i}`, `Grp ${i}`, `Grp ${i}`],
-        subjects: [`Math`, `Physics`, `Science`, `English`, `Arabic`],
+        subjects: [
+          {
+            subject: "Math",
+            group: `Grp ${i}`,
+          },
+          {
+            subject: "Physics",
+            group: `Grp ${i}`,
+          },
+          {
+            subject: "Science",
+            group: `Grp ${i}`,
+          },
+          {
+            subject: "English",
+            group: `Grp ${i}`,
+          },
+          {
+            subject: "Arabic",
+            group: `Grp ${i}`,
+          },
+        ],
         role: `Teacher`,
       };
       users.push(user);
@@ -57,6 +78,8 @@ function TeachersPage() {
               Export CSV
             </Button>
             <Button
+              as={Link}
+              href="/dashboard/teachers/add"
               variant="solid"
               radius="sm"
               color="primary"
