@@ -41,6 +41,7 @@ Follow these steps to set up Skoolify locally for development or testing purpose
 3. Install dependencies:
 
    ```
+   npm i create-next-app@latest
    npm install
    ```
 
