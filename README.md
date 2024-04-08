@@ -56,7 +56,7 @@ Follow these steps to set up Skoolify locally for development or testing purpose
 5. Start the application:
 
    ```
-   npm start
+   npm run dev
    ```
 
 6. Open your browser and visit [http://localhost:3000](http://localhost:3000) to access Skoolify.
