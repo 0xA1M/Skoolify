@@ -107,6 +107,7 @@ function TeachersPage() {
         search={search}
         selectedUser={selectedUser}
         setSelectedUser={setSelectedUser}
+        enrolled
       />
 
       <UserInfo user={placeholderUsers[selectedUser - 1]} />

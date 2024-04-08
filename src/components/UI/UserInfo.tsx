@@ -124,7 +124,10 @@ function UserInfo({ user }: Props) {
 
                   <CardBody aria-label="Levels" className="flex flex-col gap-2">
                     {user.levels?.map((level, index) => (
-                      <div key={index} className="flex gap-2 items-center">
+                      <div
+                        key={index}
+                        className="flex gap-2 items-center overflow-hidden"
+                      >
                         <Chip
                           key={index}
                           size="md"
@@ -171,7 +174,10 @@ function UserInfo({ user }: Props) {
                     className="flex flex-col gap-2"
                   >
                     {user.subjects?.map((obj, index) => (
-                      <div key={index} className="flex gap-2 items-center">
+                      <div
+                        key={index}
+                        className="flex gap-2 items-center  overflow-hidden"
+                      >
                         <Chip
                           key={`${obj.group}-${index}`}
                           size="md"

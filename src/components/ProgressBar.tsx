@@ -44,14 +44,14 @@ const ProgressBar: React.FC<ProgressStepperProps> = ({ progress, loading }) => {
           <div key={index} className="flex-1">
             <div
               className={`w-10 h-10 mx-auto rounded-full text-lg flex items-center justify-center relative ${
-                loading == 2
+                loading == 2 || loading == 3
                   ? "text-danger-500"
                   : step.completed
                   ? "text-success-500"
                   : ""
               }`}
             >
-              {loading == 2 ? (
+              {loading == 2 || loading == 3 ? (
                 <LuXCircle size={24} color="currentColor" />
               ) : step.completed ? (
                 <LuCheckCircle2 size={24} color="currentColor" />

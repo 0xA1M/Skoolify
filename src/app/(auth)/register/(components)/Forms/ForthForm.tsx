@@ -12,8 +12,6 @@ import { FormProps } from "../Form";
 /* Forth Form: This will display the waiting for validation message to the client */
 function ForthForm({ formData, loading, setLoading }: FormProps) {
   const router = useRouter();
-  const [redirect, setRedirect] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const data: string = JSON.stringify({
     username: formData
@@ -30,6 +28,10 @@ function ForthForm({ formData, loading, setLoading }: FormProps) {
   });
 
   useEffect(() => {
+    const handleRedirect = (path: string) => {
+      router.push(path);
+    };
+
     const FetchData = async () => {
       try {
         const response = await fetch(`http://localhost:3000/api/addRequest`, {
@@ -40,36 +42,37 @@ function ForthForm({ formData, loading, setLoading }: FormProps) {
           body: data,
         });
 
-        const responseJson = await response.json();
+        const jsonData = await response.json();
 
         if (response.status === 200) {
           // Success case (handle successful registration)
           setLoading(1);
-          setRedirect(true);
+
+          setTimeout(() => {
+            handleRedirect("/login");
+          }, 10000);
         } else if (response.status === 400) {
           // Error case (e.g., email already exists)
-          setLoading(3);
-          setRedirect(true);
+          setLoading(2);
+
+          setTimeout(() => {
+            handleRedirect("/register");
+          }, 10000);
         } else {
           // Handle unexpected status codes
           throw new Error("Unexpected response status");
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
-        setErrorMessage("An error occurred. Please try again later.");
-        setLoading(0);
-        router.push("/");
+        setLoading(3);
+
+        setTimeout(() => {
+          handleRedirect("/");
+        }, 5000);
       }
     };
 
     FetchData();
   }, [data, router, setLoading]);
-
-  if (redirect && loading === 1) {
-    router.push("/login"); // Redirect only on success
-  } else if (redirect && loading === 2) {
-    router.push("/register");
-  }
 
   switch (loading) {
     case 0:
@@ -119,6 +122,19 @@ function ForthForm({ formData, loading, setLoading }: FormProps) {
 
           <h2 className="text-lg font-semibold text-zinc-700 text-center">
             You will redirected to the register page
+          </h2>
+        </div>
+      );
+
+    case 3:
+      return (
+        <div className="w-full h-full flex flex-col items-center justify-center mb-24">
+          <h1 className="text-danger font-bold text-3xl text-center">
+            Internal Server Error
+          </h1>
+
+          <h2 className="text-lg font-semibold text-zinc-700 text-center">
+            You will redirected to the home page
           </h2>
         </div>
       );
