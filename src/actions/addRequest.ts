@@ -24,19 +24,18 @@ export async function Add_Request(data:any):Promise<any> {
                 "6611cb9a82ab92f250989a74",
                 { $push: {requests: data} }
             );
-            return;
+            return "added";
         }
                 }
         else
         {
-            let errorMessage = 'This email is already used';
-            return {error:errorMessage}
+            return {error: 'This email is already used'}
         }
 
-        console.log("Update successful");
-    } catch (error) {
-        console.error("Error updating document:", error);
-        throw error; // Rethrow or handle as needed
+    } catch (error)
+     {
+            return {error:'Unkonwn Error'}
+        return 
     }
 }
 

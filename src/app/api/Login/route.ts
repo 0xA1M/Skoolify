@@ -9,17 +9,20 @@ export async function POST(request: Request) {
     const res=await request.json();
     if(res.role==="student")
     {
-        response=await Admin.findOne(res);
+        delete res.role
+        response=await Student.findOne(res);
+
     }
     else if(res.role==="teacher")
     {
-        response=await Student.findOne(res);
+        delete res.role
+        response=await Teacher.findOne(res);
     }
     else
-    {
-        response=await Teacher.findOne(res);
+    {   delete res.role
+        response=await Admin.findOne(res);
     }    
-    
+   
     if(response)
     {
         return new Response(JSON.stringify("Success"), {

@@ -8,11 +8,12 @@ import { Card, CardBody, Spinner } from "@nextui-org/react";
 /* Types */
 import { FormProps } from "../Form";
 import { useRouter } from "next/navigation";
+import { error } from "console";
 
 /* Forth Form: This will display the waiting for validation message to the client */
 function ForthForm({ formData, loading, setLoading }: FormProps) {
   const router = useRouter();
-
+  const [error_,setError]=useState("")
   const data: string = JSON.stringify({
     username: formData? `${String(formData.firstName)} ${String(formData.lastName)}`: "",
     email: String(formData?.email || ""),
@@ -40,37 +41,35 @@ function ForthForm({ formData, loading, setLoading }: FormProps) {
           body: data,
         });
 
-        const jsonData = await response.json();
-
-        if (response.status === 200) {
+        if (response.ok)
+           {
           // Success case (handle successful registration)
           setLoading(1);
 
           setTimeout(() => {
             handleRedirect("/login");
-          }, 10000);
-        } else if (response.status === 400) {
-          // Error case (e.g., email already exists)
-          setLoading(2);
-
-          setTimeout(() => {
-            handleRedirect("/register");
-          }, 10000);
-        } else {
-          // Handle unexpected status codes
-          throw new Error("Unexpected response status");
-        }
-      } catch (error) {
-        setLoading(3);
+          }, 3000);
+        } 
+        else 
+           {
+            const jsonData = await response.json();
+            //console.log(jsonData)
+            throw new Error(jsonData);
+           }
+   
+        } 
+       catch (error:any) {
+        console.log(error.message)
+        setError(error.message)
+        setLoading(2);
 
         setTimeout(() => {
           handleRedirect("/");
         }, 5000);
-      }
-    };
-
+      }}
+    
     FetchData();
-  }, [data, router, setLoading]);
+  }, []);
 
   switch (loading) {
     case 0:
@@ -114,7 +113,7 @@ function ForthForm({ formData, loading, setLoading }: FormProps) {
       return (
         <div className="w-full h-full flex flex-col items-center justify-center mb-24">
           <h1 className="text-danger font-bold text-3xl text-center">
-            This email is already registered!
+            {error_}
           </h1>
 
           <h2 className="text-lg font-semibold text-zinc-700 text-center">
@@ -138,3 +137,4 @@ function ForthForm({ formData, loading, setLoading }: FormProps) {
   }
 }
 export default ForthForm;
+// This email is already registered!
