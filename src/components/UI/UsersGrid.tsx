@@ -19,7 +19,10 @@ import {
   TableCell,
   Pagination,
   Chip,
+  Button,
 } from "@nextui-org/react";
+import { LuCheckCircle, LuXCircle } from "react-icons/lu";
+import { GiConsoleController } from "react-icons/gi";
 
 /* Types */
 export type User = {
@@ -42,6 +45,7 @@ interface Props {
   role: string;
   search: string;
   selectedUser: number;
+  enrolled?: boolean;
   setSelectedUser: Dispatch<SetStateAction<number>>;
 }
 
@@ -51,9 +55,20 @@ function UsersGrid({
   search,
   selectedUser,
   setSelectedUser,
+  enrolled,
 }: Props) {
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
+
+  // Approve Student' Enrollment
+  const handleApprove = () => {
+    console.log("Enrollment Approved");
+  };
+
+  // Discard Student's Enrollment
+  const handleDiscard = () => {
+    console.log("Enrollment Discarded");
+  };
 
   const renderCell = useCallback(
     (user: any, columnKey: any) => {
@@ -129,6 +144,33 @@ function UsersGrid({
             </Chip>
           );
 
+        case "actions":
+          return (
+            <div className="flex items-center gap-1">
+              <Button
+                aria-label="Approve"
+                isIconOnly
+                size="sm"
+                variant="light"
+                color="success"
+                onClick={handleApprove}
+              >
+                <LuCheckCircle size={24} />
+              </Button>
+
+              <Button
+                aria-label="Discard"
+                isIconOnly
+                size="sm"
+                variant="light"
+                color="danger"
+                onClick={handleDiscard}
+              >
+                <LuXCircle size={24} />
+              </Button>
+            </div>
+          );
+
         default:
           return cellValue;
       }
@@ -136,7 +178,7 @@ function UsersGrid({
     [role]
   );
 
-  const rowsPerPage = 8;
+  const rowsPerPage = enrolled ? 8 : 7;
 
   const items = useMemo(() => {
     // Filter users only if a search value exists
@@ -178,6 +220,25 @@ function UsersGrid({
     },
   ];
 
+  let enrolledColumns = [
+    {
+      key: "fullName",
+      label: "Full Name",
+    },
+    {
+      key: "email",
+      label: "Email",
+    },
+    {
+      key: "levels",
+      label: "Level",
+    },
+    {
+      key: "actions",
+      label: "Actions",
+    },
+  ];
+
   if (role === "teacher") {
     columns.push({
       key: "subjects",
@@ -200,14 +261,14 @@ function UsersGrid({
     setPage(1);
   }, [search]);
 
-  return (
+  return enrolled ? (
     <Table
       fullWidth
       isStriped
       color="secondary"
       selectionBehavior="toggle"
       selectionMode="single"
-      aria-label="User's Data"
+      aria-label="Enrolled Users Data"
       onRowAction={(key) => setSelectedUser(parseInt(key.toString()))}
       bottomContent={
         <div className="flex w-full justify-center">
@@ -230,7 +291,69 @@ function UsersGrid({
       }}
       className="col-span-4 row-span-5 col-start-1 row-start-2"
     >
-      <TableHeader columns={columns} className="">
+      <TableHeader columns={columns}>
+        {(column) => (
+          <TableColumn
+            key={column.key}
+            className="p-4 text-medium bg-primary-500 text-white"
+          >
+            {column.label}
+          </TableColumn>
+        )}
+      </TableHeader>
+
+      {items.length > 0 ? (
+        <TableBody items={items}>
+          {(item) => (
+            <TableRow
+              key={item.id}
+              className={`rounded-lg relative ${
+                parseInt(item.id) === selectedUser ? "blue-dot" : "remove-dot"
+              }`}
+            >
+              {(columnKey) => (
+                <TableCell className="p-4 first-of-type:rounded-s-lg last-of-type:rounded-e-lg">
+                  {renderCell(item, columnKey)}
+                </TableCell>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
+      ) : (
+        <TableBody emptyContent={"There is nothing here!"}>{[]}</TableBody>
+      )}
+    </Table>
+  ) : (
+    <Table
+      fullWidth
+      isStriped
+      color="secondary"
+      selectionBehavior="toggle"
+      selectionMode="single"
+      aria-label="Non Enrolled Users Data"
+      onRowAction={(key) => setSelectedUser(parseInt(key.toString()))}
+      bottomContent={
+        <div className="flex w-full justify-center mb-4">
+          <Pagination
+            isCompact
+            size="sm"
+            showControls
+            showShadow
+            variant="flat"
+            color="primary"
+            page={page}
+            total={totalPages}
+            loop
+            onChange={(page) => setPage(page)}
+          />
+        </div>
+      }
+      classNames={{
+        wrapper: "min-h-full",
+      }}
+      className="col-span-4 row-span-5 col-start-1 row-start-2"
+    >
+      <TableHeader columns={role === "teacher" ? columns : enrolledColumns}>
         {(column) => (
           <TableColumn
             key={column.key}
