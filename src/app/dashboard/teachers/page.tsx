@@ -110,7 +110,7 @@ function TeachersPage() {
         enrolled
       />
 
-      <UserInfo user={placeholderUsers[selectedUser - 1]} />
+      <UserInfo user={placeholderUsers[selectedUser - 1]} enrolled />
     </section>
   );
 }

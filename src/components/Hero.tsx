@@ -11,9 +11,10 @@ function Hero() {
         </h1>
 
         <p className="text-lg lg:text-xl mb-9">
-          Revolutionize school management with Skoolify! Streamline tasks,
-          empower educators, and engage students like never before.{" "}
-          <span className="font-bold">Welcome to the future of education!</span>
+          Join us at Skoolify and unlock your full potential. Together,
+          we&apos;ll embark on a journey of discovery, growth and achievement.
+          Welcome to a school where every student matters and every success{" "}
+          story begins
         </p>
 
         <Button

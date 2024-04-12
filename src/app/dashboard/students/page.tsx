@@ -15,14 +15,15 @@ import UsersGrid from "@/components/UI/UsersGrid";
 /* Types */
 import type { User } from "@/components/UI/UsersGrid";
 import { Status } from "@/enums/Status";
+import { emit } from "process";
 
 function StudentPage() {
   const [search, setSearch] = useState<string>("");
   const [selectedUser, setSelectedUser] = useState<number>(0);
-  const [Data,setData]=useState([]);
+  const [Data, setData] = useState([]);
   // i create enum (class for constants) to ensure that in backend we will recievre wo staus predefined(eccepted,request)
-  // create toggle <accepted,request>to define wich category of sudent to show (accepted or in request) 
-  const [status,Setstatus]=useState<Status>(Status.accepted)
+  // create toggle <accepted,request>to define wich category of sudent to show (accepted or in request)
+  const [status, Setstatus] = useState<Status>(Status.accepted);
   const [areEnrolled, setAreEnrolled] = useState<boolean>(false);
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,38 +31,36 @@ function StudentPage() {
   };
 
   /* This function is only for testing */
-  useEffect(()=>{
-   const FechData=async () => {
+  useEffect(() => {
+    const FechData = async () => {
       const response = await fetch(`http://localhost:3000/api/getStudents`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body:JSON.stringify({status:status})
+        body: JSON.stringify({ status: status }),
       });
 
       const Data_ = await response.json();
-      setData(Data_)
-       }
-  FechData();
-  },[])
- // console.log(Data)
+      setData(Data_);
+    };
+    FechData();
+  }, []);
+  // console.log(Data)
   const generateUsers = (): User[] => {
     var users: User[] = [];
-  users= Data?.map((std:any,i:Number)=>
-    { 
-       
-    return {
-      id: String(i).padStart(3, "0"),
-      fullName: std.username,
-      phone: std.phone_number,
-      email: std.email,
-      levels: [std.level],
-      subjects:std.modules_Groups_sessionNumber ,
-      role: `Student`,
-  }
-   })
-     
+    users = Data?.map((std: any, i: Number) => {
+      return {
+        id: String(i).padStart(3, "0"),
+        fullName: std.username,
+        phone: std.phone_number,
+        email: std.email,
+        levels: [std.level],
+        subjects: std.modules_Groups_sessionNumber,
+        role: `Student`,
+      };
+    });
+
     return users;
   };
 
@@ -135,7 +134,11 @@ function StudentPage() {
         />
       )}
 
-     {<UserInfo user={placeholderUsers[selectedUser ]} /> }
+      {!areEnrolled ? (
+        <UserInfo user={placeholderUsers[selectedUser]} enrolled />
+      ) : (
+        <UserInfo user={placeholderUsers[selectedUser]} enrolled={false} />
+      )}
     </section>
   );
 }

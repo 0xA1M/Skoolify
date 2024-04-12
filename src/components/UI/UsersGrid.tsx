@@ -22,7 +22,6 @@ import {
   Button,
 } from "@nextui-org/react";
 import { LuCheckCircle, LuXCircle } from "react-icons/lu";
-import { GiConsoleController } from "react-icons/gi";
 
 /* Types */
 export type User = {

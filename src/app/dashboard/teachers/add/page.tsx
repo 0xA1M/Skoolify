@@ -103,7 +103,7 @@ function AddTeacher() {
               <LuArrowLeft className="text-white" size={24} />
             </Button>
 
-            <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+            <Modal isOpen={isOpen} onOpenChange={onOpenChange} hideCloseButton>
               <ModalContent>
                 {(onClose) => (
                   <>
