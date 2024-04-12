@@ -3,7 +3,14 @@
 import { useState, ChangeEvent, useEffect } from "react";
 
 /* Components */
-import { Button, Card, CardBody, Input, Switch } from "@nextui-org/react";
+import {
+  Button,
+  Card,
+  CardBody,
+  Input,
+  Switch,
+  Tooltip,
+} from "@nextui-org/react";
 import Link from "next/link";
 import { CiSearch, CiTimer } from "react-icons/ci";
 import { FaGraduationCap } from "react-icons/fa6";
@@ -15,7 +22,6 @@ import UsersGrid from "@/components/UI/UsersGrid";
 /* Types */
 import type { User } from "@/components/UI/UsersGrid";
 import { Status } from "@/enums/Status";
-import { emit } from "process";
 
 function StudentPage() {
   const [search, setSearch] = useState<string>("");
@@ -87,20 +93,33 @@ function StudentPage() {
               </Button>
             </div>
 
-            <Switch
-              isSelected={areEnrolled}
-              onValueChange={() => {
-                setAreEnrolled(!areEnrolled);
-                setSelectedUser(0);
-              }}
-              thumbIcon={({ isSelected, className }) =>
-                !isSelected ? (
-                  <FaGraduationCap className={className} />
-                ) : (
-                  <CiTimer className={className} />
-                )
+            <Tooltip
+              showArrow
+              content={
+                areEnrolled
+                  ? "Show Enrolled Students"
+                  : "Show Unenrolled Students"
               }
-            />
+              color="primary"
+              placement="left"
+            >
+              <div>
+                <Switch
+                  isSelected={areEnrolled}
+                  onValueChange={() => {
+                    setAreEnrolled(!areEnrolled);
+                    setSelectedUser(0);
+                  }}
+                  thumbIcon={({ isSelected, className }) =>
+                    !isSelected ? (
+                      <FaGraduationCap className={className} />
+                    ) : (
+                      <CiTimer className={className} />
+                    )
+                  }
+                />
+              </div>
+            </Tooltip>
           </div>
 
           <Input
