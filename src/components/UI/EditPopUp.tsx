@@ -671,6 +671,7 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
                   setEdit("");
                   setLevels(user.levels!);
                 }}
+               
               >
                 Cancel
               </Button>
@@ -682,6 +683,7 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
                   setEdit("");
                   handleSubmitEdit(e);
                 }}
+                onClick={()=>console.log(user.email,user.phone)}
               >
                 Save
               </Button>

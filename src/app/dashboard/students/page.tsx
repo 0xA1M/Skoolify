@@ -36,7 +36,6 @@ function StudentPage() {
     setSearch(e.target.value);
   };
 
-  /* This function is only for testing */
   useEffect(() => {
     const FechData = async () => {
       const response = await fetch(`http://localhost:3000/api/getStudents`, {
@@ -52,12 +51,12 @@ function StudentPage() {
     };
     FechData();
   }, []);
-  // console.log(Data)
+ 
   const generateUsers = (): User[] => {
     var users: User[] = [];
-    users = Data?.map((std: any, i: Number) => {
+    users = Data?.map((std: any, i: number) => {
       return {
-        id: String(i).padStart(3, "0"),
+        id: String(i+1).padStart(3, "0"),
         fullName: std.username,
         phone: std.phone_number,
         email: std.email,
@@ -156,7 +155,7 @@ function StudentPage() {
       {!areEnrolled ? (
         <UserInfo user={placeholderUsers[selectedUser]} enrolled />
       ) : (
-        <UserInfo user={placeholderUsers[selectedUser]} enrolled={false} />
+        <UserInfo user={placeholderUsers[selectedUser ]} enrolled={false} />
       )}
     </section>
   );

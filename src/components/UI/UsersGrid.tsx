@@ -78,7 +78,7 @@ function UsersGrid({
 
       const TeacherSubjects = ({ value }: SubjectProps) => (
         <>
-          {value.slice(0, 3).map((obj, index) => (
+          {value?.slice(0, 3).map((obj, index) => (
             <Chip
               key={index}
               className="capitalize mx-1"
@@ -120,7 +120,7 @@ function UsersGrid({
                 <StudentSubjects value={cellValue} />
               )}
 
-              {cellValue.length > 3 && (
+              {cellValue?.length > 3 && (
                 <div className="ml-1 flex items-center gap-1">
                   <div className="w-1 h-1 rounded-full bg-secondary-500"></div>
                   <div className="w-1 h-1 rounded-full bg-secondary-500"></div>
@@ -268,7 +268,7 @@ function UsersGrid({
       selectionBehavior="toggle"
       selectionMode="single"
       aria-label="Enrolled Users Data"
-      onRowAction={(key) => setSelectedUser(parseInt(key.toString()))}
+      onRowAction={(key) => {setSelectedUser(parseInt(key.toString())-1);console.log(selectedUser)}}
       bottomContent={
         <div className="flex w-full justify-center">
           <Pagination
@@ -307,7 +307,7 @@ function UsersGrid({
             <TableRow
               key={item.id}
               className={`rounded-lg relative ${
-                parseInt(item.id) === selectedUser ? "blue-dot" : "remove-dot"
+                parseInt(item.id) === selectedUser+1 ? "blue-dot" : "remove-dot"
               }`}
             >
               {(columnKey) => (
@@ -330,7 +330,7 @@ function UsersGrid({
       selectionBehavior="toggle"
       selectionMode="single"
       aria-label="Non Enrolled Users Data"
-      onRowAction={(key) => setSelectedUser(parseInt(key.toString()))}
+      onRowAction={(key) => setSelectedUser(parseInt(key.toString())-1)}
       bottomContent={
         <div className="flex w-full justify-center mb-4">
           <Pagination

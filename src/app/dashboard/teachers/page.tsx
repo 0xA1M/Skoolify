@@ -1,6 +1,6 @@
 "use client";
 /* Utils */
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 
 /* Components */
 import { Button, Card, CardBody, Input } from "@nextui-org/react";
@@ -15,6 +15,7 @@ import UsersGrid from "@/components/UI/UsersGrid";
 import type { User } from "@/components/UI/UsersGrid";
 
 function TeachersPage() {
+  const [Data, setData] = useState([]);
   const [search, setSearch] = useState<string>("");
   const [selectedUser, setSelectedUser] = useState<number>(0);
 
@@ -22,52 +23,42 @@ function TeachersPage() {
     setSearch(e.target.value);
   };
 
-  /* This function is only for testing, it's purpose is to generate random data */
-  const generateUsers = (count: number): User[] => {
-    const users: User[] = [];
-    for (let i = 1; i <= count; i++) {
-      const user: User = {
-        id: String(i).padStart(3, "0"),
-        fullName: `User Name ${i}`,
-        phone: `+213 0512345678`,
-        email: `user${i}@example.com`,
-        levels: [
-          `${i} HS`,
-          `${i + 1} HS`,
-          `${i + 2} HS`,
-          `${i + 3} HS`,
-          `${i + 4} HS`,
-        ],
-        subjects: [
-          {
-            subject: "Math",
-            group: `Grp ${i}`,
-          },
-          {
-            subject: "Physics",
-            group: `Grp ${i}`,
-          },
-          {
-            subject: "Science",
-            group: `Grp ${i}`,
-          },
-          {
-            subject: "English",
-            group: `Grp ${i}`,
-          },
-          {
-            subject: "Arabic",
-            group: `Grp ${i}`,
-          },
-        ],
-        role: `Teacher`,
+ 
+  useEffect(() => {
+    const FechData = async () => {
+      const response = await fetch(`http://localhost:3000/api/getTeachers`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+    //    body: JSON.stringify({ status: status }),
+      });
+
+      const Data_ = await response.json();
+      setData(Data_);
+    };
+    FechData();
+  }, []);
+ 
+  const generateUsers = (): User[] => {
+    var users: User[] = [];
+    users = Data?.map((std: any, i: number) => {
+      return {
+        id: String(i+1).padStart(3, "0"),
+        fullName: std.username,
+        phone: std.phone_number,
+        email: std.email,
+        levels: std.level,
+        subjects: std.modules_Groups_sessionNumber,
+        role: `Student`,
       };
-      users.push(user);
-    }
+    });
+
     return users;
   };
 
-  const placeholderUsers: User[] = generateUsers(25);
+
+  const placeholderUsers: User[] = generateUsers();
 
   return (
     <section className="w-full h-full grid grid-cols-6 grid-rows-6 gap-4 px-2">
@@ -110,7 +101,7 @@ function TeachersPage() {
         enrolled
       />
 
-      <UserInfo user={placeholderUsers[selectedUser - 1]} enrolled />
+      <UserInfo user={placeholderUsers[selectedUser ]} enrolled />
     </section>
   );
 }
