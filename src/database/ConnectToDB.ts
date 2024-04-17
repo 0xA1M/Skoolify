@@ -2,8 +2,7 @@ import mongoose from "mongoose";
 
 export default async function dbConnect() {
   // const db_url:string=<string>process.env.MONGODB_URL;,
-  const db_url: string =
-    "mongodb+srv://mbouhlais:w3Okhop01eaqgctJ@cluster0.0r8ocpy.mongodb.net/project?retryWrites=true&w=majority&appName=Cluster0";
+  const db_url: string = process.env.MONGO_KEY!;
 
   // Connection exists
   if (mongoose.connection.readyState) {
