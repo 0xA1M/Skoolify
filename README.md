@@ -45,22 +45,13 @@ Follow these steps to set up Skoolify locally for development or testing purpose
    npm install
    ```
 
-4. Set up environment variables:
-
-   - Create a `.env` file in the root directory and configure the following variables:
-
-     ```
-     PORT=3000
-     MONGODB_URI=mongodb://localhost:27017/skoolify
-     ```
-
-5. Start the application:
+4. Start the application:
 
    ```
    npm run dev
    ```
 
-6. Open your browser and visit [http://localhost:3000](http://localhost:3000) to access Skoolify.
+5. Open your browser and visit [http://localhost:3000](http://localhost:3000) to access Skoolify.
 
 ## Contributing 🤝
 
