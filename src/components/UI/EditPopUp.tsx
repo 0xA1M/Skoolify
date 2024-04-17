@@ -1,13 +1,6 @@
 "use client";
 /* Utils */
-import {
-  useState,
-  useRef,
-  Dispatch,
-  SetStateAction,
-  ChangeEvent,
-  use,
-} from "react";
+import { useState, useRef, Dispatch, SetStateAction, ChangeEvent } from "react";
 
 /* Components */
 import {
@@ -43,12 +36,6 @@ interface Props {
   setEditPanel: Dispatch<SetStateAction<boolean>>;
 }
 
-/*
-  MARK: - Fix levels bug the subjects are rendered from the old data
-        - Make the add feature works
-        - Don't finalize the changes on the role specific details until hit save
-*/
-
 function EditPopUp({ user, editPanel, setEditPanel }: Props) {
   const [edit, setEdit] = useState<string>("");
   const [levels, setLevels] = useState<string[]>(user.levels!);
@@ -57,8 +44,8 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
       subject: string;
       group: string;
       sessions?: number | undefined;
-    }[]
-  >(user.subjects!);
+    }[] // parse and stringify are used to copy the object and not referencing it
+  >(JSON.parse(JSON.stringify(user.subjects)));
   const [values, setValues] = useState<{ name: string; value: string }[]>([]);
   const [fullName, setFullName] = useState<string>(user.fullName);
   const [email, setEmail] = useState<string>(user.email);
@@ -97,8 +84,13 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
 
   const handleRemoveLevel = (e: any) => {
     const levelToRemove = e.currentTarget.name;
+    const index = levels.findIndex((level) => level == levelToRemove);
+    const subjectToRemove = subjects[index];
 
     setLevels(levels?.filter((level) => level != levelToRemove));
+    setSubjects(
+      subjects.filter((obj) => obj.subject != subjectToRemove.subject)
+    );
   };
 
   const handleRemoveSubject = (e: any) => {
@@ -107,19 +99,18 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
     setSubjects(subjects.filter((obj) => obj.subject != subjectToRemove));
   };
 
-  /* Finalize the role specific details edit */
   const handleInput = () => {
     values.forEach((data) => {
       const nameParts: string[] = data.name.split("-");
 
-      if (nameParts[0] === "Level" && user.levels) {
-        user.levels[parseInt(nameParts[1])] = data.value; // Update level value
-      } else if (user.subjects) {
+      if (nameParts[0] === "Level" && levels) {
+        levels[parseInt(nameParts[1])] = data.value; // Update level value
+      } else if (subjects) {
         const subjectIndex = parseInt(nameParts[1]);
         // Check if subject exists at the index before updating
-        if (user.subjects[subjectIndex]) {
-          user.subjects[subjectIndex] = {
-            ...user.subjects[subjectIndex],
+        if (subjects[subjectIndex]) {
+          subjects[subjectIndex] = {
+            ...subjects[subjectIndex],
             [nameParts[0].toLowerCase()]: data.value, // Use dynamic key
           };
         }
@@ -129,12 +120,37 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
     setEdit("");
   };
 
-  /* Update the user's data in db */
+  const addDetail = () => {
+    setEdit("details");
+
+    if (user.role === "Teacher") {
+      setLevels((levels) => [...levels, ""]);
+      setSubjects((subjects) => [
+        ...subjects,
+        {
+          subject: "",
+          group: "",
+        },
+      ]);
+    } else if (user.role === "Student") {
+      setSubjects((subjects) => [
+        ...subjects,
+        {
+          subject: "",
+          group: "",
+          sessions: 4,
+        },
+      ]);
+    }
+  };
+
+  /* Update the user's data */
   const handleSubmitEdit = (e: any) => {
     user.fullName = fullName;
     user.email = email;
     user.phone = phone;
     user.levels = levels;
+    user.subjects = subjects;
 
     console.log(e);
   };
@@ -410,6 +426,7 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
 
                 <CardBody>
                   <div className="flex items-center justify-between px-2 mb-4">
+                    {/* Edit Button */}
                     {user.role === "Teacher" ? (
                       <p className="w-full text-lg flex gap-1">
                         <LiaChalkboardTeacherSolid size={26} />
@@ -424,6 +441,7 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
 
                     {edit === "details" ? (
                       <>
+                        {/* Edit Current Detail */}
                         <Button
                           isIconOnly
                           variant="light"
@@ -434,6 +452,7 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
                           <IoIosCheckmark size={64} strokeWidth={0.5} />
                         </Button>
 
+                        {/* Cancel Edit Current Detail */}
                         <Button
                           isIconOnly
                           variant="light"
@@ -457,7 +476,13 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
                       </Button>
                     )}
 
-                    <Button isIconOnly variant="light" color="primary">
+                    {/* Add Button */}
+                    <Button
+                      isIconOnly
+                      variant="light"
+                      color="primary"
+                      onClick={addDetail}
+                    >
                       <IoAddCircleOutline size={26} />
                     </Button>
                   </div>
@@ -489,9 +514,7 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
                                 color="primary"
                                 radius="sm"
                                 variant="bordered"
-                                defaultValue={
-                                  user.subjects && user.subjects[index].group
-                                }
+                                defaultValue={subjects && subjects[index].group}
                                 onChange={handleInputChange}
                               />
 
@@ -503,7 +526,7 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
                                 color="primary"
                                 variant="bordered"
                                 defaultValue={
-                                  user.subjects && user.subjects[index].subject
+                                  subjects && subjects[index].subject
                                 }
                                 onChange={handleInputChange}
                               />
@@ -527,7 +550,7 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
                                 variant="bordered"
                                 className="border-primary-500 outline-none"
                               >
-                                {user.subjects && user.subjects[index].group}
+                                {subjects && subjects[index].group}
                               </Chip>
 
                               <Chip
@@ -537,7 +560,7 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
                                 variant="bordered"
                                 className="border-primary-500 outline-none"
                               >
-                                {user.subjects && user.subjects[index].subject}
+                                {subjects && subjects[index].subject}
                               </Chip>
                             </div>
                           )}
@@ -559,6 +582,7 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
                       ))}
                     </div>
                   ) : (
+                    /* Role === Student */
                     <div className="mx-auto grid grid-cols-2 grid-rows-1 gap-4">
                       {subjects?.map((obj, index) => (
                         <div
@@ -670,6 +694,7 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
                   onClose();
                   setEdit("");
                   setLevels(user.levels!);
+                  setSubjects(user.subjects!);
                 }}
                
               >
