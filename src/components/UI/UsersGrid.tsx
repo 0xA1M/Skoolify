@@ -61,12 +61,12 @@ function UsersGrid({
 
   // Approve Student' Enrollment
   const handleApprove = () => {
-    console.log("Enrollment Approved");
+    console.log(users[selectedUser]);
   };
 
   // Discard Student's Enrollment
   const handleDiscard = () => {
-    console.log("Enrollment Discarded");
+    console.log(users[selectedUser]);
   };
 
   const renderCell = useCallback(
