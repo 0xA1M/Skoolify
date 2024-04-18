@@ -70,25 +70,7 @@ function StudentPage() {
     return users;
   };
 
-  const users: User[] = [
-    {
-      id: "003",
-      fullName: "Aichour Mokrane",
-      phone: "055555555",
-      email: "m_aichour@estin.dz",
-      levels: ["2 HS"],
-      subjects: [
-        {
-          subject: "MAth",
-          group: "3",
-          sessions: 4,
-        },
-      ],
-      role: `Student`,
-    },
-  ];
-
-  const placeholderUsers: User[] = users;
+  const placeholderUsers: User[] = generateUsers();
 
   return (
     <section className="w-full h-full grid grid-cols-6 grid-rows-6 gap-4 px-2">
