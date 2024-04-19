@@ -13,7 +13,7 @@ export async function Add_Student(data: any): Promise<any> {
     );
     try {
 
-        if (data.role== "student" && data.state) {
+        if (data.role== "student" && data.status) {
             await new Student(data.info).save();
         } else {
             await new Teacher(data.info).save();

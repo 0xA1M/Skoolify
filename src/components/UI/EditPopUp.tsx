@@ -151,8 +151,7 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
     user.phone = phone;
     user.levels = levels;
     user.subjects = subjects;
-
-    console.log(e);
+    
   };
 
   return (

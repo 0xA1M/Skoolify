@@ -101,7 +101,20 @@ function TeachersPage() {
         enrolled
       />
 
+<<<<<<< HEAD
       <UserInfo user={placeholderUsers[selectedUser ]} enrolled />
+=======
+      <UserInfo
+        user={
+          placeholderUsers[
+            placeholderUsers.findIndex(
+              (obj) => parseInt(obj.id) === selectedUser
+            )
+          ]
+        }
+        enrolled
+      />
+>>>>>>> 87bcec7da4c6c1e643fd8fc275fa936bbc517074
     </section>
   );
 }

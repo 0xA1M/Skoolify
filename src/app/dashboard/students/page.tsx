@@ -24,6 +24,7 @@ import UsersGrid from "@/components/UI/UsersGrid";
 import type { User } from "@/components/UI/UsersGrid";
 import { Status } from "@/enums/Status";
 
+
 function StudentPage() {
   const [search, setSearch] = useState<string>("");
   const [selectedUser, setSelectedUser] = useState<number>(0);
@@ -36,7 +37,6 @@ function StudentPage() {
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
-
   useEffect(() => {
     const FechData1 = async () => {
       SetisLoading(true)

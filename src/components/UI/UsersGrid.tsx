@@ -66,12 +66,20 @@ function UsersGrid({
     console.log(selectedUser)
   }
   const handleApprove = () => {
+<<<<<<< HEAD
     handleRequest();
+=======
+    console.log(users[selectedUser]);
+>>>>>>> 87bcec7da4c6c1e643fd8fc275fa936bbc517074
   };
 
   // Discard Student's Enrollment
   const handleDiscard = () => {
+<<<<<<< HEAD
     handleRequest();
+=======
+    console.log(users[selectedUser]);
+>>>>>>> 87bcec7da4c6c1e643fd8fc275fa936bbc517074
   };
 
   const renderCell = useCallback(
