@@ -48,7 +48,7 @@ function ForthForm({ formData, loading, setLoading }: FormProps) {
 
           setTimeout(() => {
             handleRedirect("/login");
-          }, 3000);
+          }, 8000);
         } 
         else 
            {

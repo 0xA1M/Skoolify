@@ -8,6 +8,7 @@ import {
   Card,
   CardBody,
   Input,
+  Spinner,
   Switch,
   Tooltip,
 } from "@nextui-org/react";
@@ -31,13 +32,14 @@ function StudentPage() {
   // create toggle <accepted,request>to define wich category of sudent to show (accepted or in request)
   const [status, Setstatus] = useState<Status>(Status.accepted);
   const [areEnrolled, setAreEnrolled] = useState<boolean>(false);
-
+  const [isLoading,SetisLoading] = useState<boolean>(false);
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 
   useEffect(() => {
-    const FechData = async () => {
+    const FechData1 = async () => {
+      SetisLoading(true)
       const response = await fetch(`http://localhost:3000/api/getStudents`, {
         method: "POST",
         headers: {
@@ -49,8 +51,9 @@ function StudentPage() {
       const Data_ = await response.json();
       setData(Data_);
     };
-    FechData();
-  }, []);
+    FechData1();
+    setTimeout(() => {SetisLoading(false)}, 5000);
+  }, [status]);
  
   const generateUsers = (): User[] => {
     var users: User[] = [];
@@ -68,7 +71,9 @@ function StudentPage() {
 
     return users;
   };
-
+useEffect(()=>{
+  console.log(selectedUser)
+},[selectedUser])
   const placeholderUsers: User[] = generateUsers();
 
   return (
@@ -107,6 +112,8 @@ function StudentPage() {
                   isSelected={areEnrolled}
                   onValueChange={() => {
                     setAreEnrolled(!areEnrolled);
+                    // Now swich is work perfecly
+                    status===Status.accepted ? Setstatus(Status.request) : Setstatus(Status.accepted)
                     setSelectedUser(0);
                   }}
                   thumbIcon={({ isSelected, className }) =>
@@ -132,25 +139,30 @@ function StudentPage() {
           />
         </CardBody>
       </Card>
-
-      {!areEnrolled ? (
-        <UsersGrid
-          users={placeholderUsers}
-          role="student"
-          search={search}
-          selectedUser={selectedUser}
-          setSelectedUser={setSelectedUser}
-          enrolled
-        />
-      ) : (
-        <UsersGrid
-          users={placeholderUsers}
-          role="student"
-          search={search}
-          selectedUser={selectedUser}
-          setSelectedUser={setSelectedUser}
-        />
-      )}
+    {!isLoading ? (
+       areEnrolled ? (
+      <UsersGrid
+        users={placeholderUsers}
+        role="student"
+        search={search}
+        selectedUser={selectedUser}
+        setSelectedUser={setSelectedUser}
+      />
+    ) :  (
+    <UsersGrid
+      users={placeholderUsers}
+      role="student"
+      search={search}
+      selectedUser={selectedUser}
+      setSelectedUser={setSelectedUser}
+      enrolled
+    />
+  )
+) : (
+  <div className=" w-[800px] h-[500px] flex justify-center items-center">
+  <Spinner size="lg" color="primary" />
+  </div>
+)}
 
       {!areEnrolled ? (
         <UserInfo user={placeholderUsers[selectedUser]} enrolled />

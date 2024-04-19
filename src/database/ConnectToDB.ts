@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 export default async function dbConnect() {
   // const db_url:string=<string>process.env.MONGODB_URL;,
-  const db_url: string = process.env.MONGO_KEY!;
+  const db_url: string = process.env.MONGODB_URL!;
 
   // Connection exists
   if (mongoose.connection.readyState) {

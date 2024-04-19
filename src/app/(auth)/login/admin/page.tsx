@@ -58,7 +58,7 @@ function AdminLogin() {
       } 
       else 
       {
-         setTimeout(() => {setLoading(false);router.push('/Admin')}, 3000);
+         setTimeout(() => {setLoading(false);router.push('/dashboard')}, 3000);
         
           
          

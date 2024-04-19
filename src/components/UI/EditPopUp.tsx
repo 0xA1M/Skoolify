@@ -45,7 +45,7 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
       group: string;
       sessions?: number | undefined;
     }[] // parse and stringify are used to copy the object and not referencing it
-  >(JSON.parse(JSON.stringify(user.subjects)));
+  >(JSON.parse(JSON.stringify(user.subjects)) || []);
   const [values, setValues] = useState<{ name: string; value: string }[]>([]);
   const [fullName, setFullName] = useState<string>(user.fullName);
   const [email, setEmail] = useState<string>(user.email);

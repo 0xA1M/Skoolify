@@ -60,13 +60,18 @@ function UsersGrid({
   const [totalPages, setTotalPages] = useState<number>(1);
 
   // Approve Student' Enrollment
+  const handleRequest=() => {
+    //const User_=users[selectedUser];
+    //console.log(User_)
+    console.log(selectedUser)
+  }
   const handleApprove = () => {
-    console.log("Enrollment Approved");
+    handleRequest();
   };
 
   // Discard Student's Enrollment
   const handleDiscard = () => {
-    console.log("Enrollment Discarded");
+    handleRequest();
   };
 
   const renderCell = useCallback(
@@ -369,7 +374,7 @@ function UsersGrid({
             <TableRow
               key={item.id}
               className={`rounded-lg relative ${
-                parseInt(item.id) === selectedUser ? "blue-dot" : "remove-dot"
+                parseInt(item.id) === selectedUser+1 ? "blue-dot" : "remove-dot"
               }`}
             >
               {(columnKey) => (
