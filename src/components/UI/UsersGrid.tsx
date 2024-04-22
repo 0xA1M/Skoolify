@@ -60,13 +60,13 @@ function UsersGrid({
   const [totalPages, setTotalPages] = useState<number>(1);
 
   // Approve Student' Enrollment
-  const handleApprove = () => {
-    console.log(users[selectedUser]);
+  const handleApprove = (id: string) => {
+    console.log(users[parseInt(id) - 1]);
   };
 
   // Discard Student's Enrollment
-  const handleDiscard = () => {
-    console.log(users[selectedUser]);
+  const handleDiscard = (id: string) => {
+    console.log(users[parseInt(id) - 1]);
   };
 
   const renderCell = useCallback(
@@ -152,7 +152,7 @@ function UsersGrid({
                 size="sm"
                 variant="light"
                 color="success"
-                onClick={handleApprove}
+                onClick={() => handleApprove(user.id)}
               >
                 <LuCheckCircle size={24} />
               </Button>
@@ -163,7 +163,7 @@ function UsersGrid({
                 size="sm"
                 variant="light"
                 color="danger"
-                onClick={handleDiscard}
+                onClick={() => handleDiscard(user.id)}
               >
                 <LuXCircle size={24} />
               </Button>

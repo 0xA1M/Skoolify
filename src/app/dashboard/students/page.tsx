@@ -70,7 +70,38 @@ function StudentPage() {
     return users;
   };
 
-  const placeholderUsers: User[] = generateUsers();
+  const placeholderUsers: User[] = [
+    {
+      id: "001",
+      fullName: "asdasd",
+      email: "asd@asd.com",
+      phone: "123123",
+      levels: ["2g"],
+      subjects: [
+        {
+          subject: "math",
+          group: "12",
+          sessions: 3,
+        },
+      ],
+      role: "Student",
+    },
+    {
+      id: "002",
+      fullName: "123asd",
+      email: "asd@asd.com",
+      phone: "123123",
+      levels: ["2g"],
+      subjects: [
+        {
+          subject: "math",
+          group: "12",
+          sessions: 3,
+        },
+      ],
+      role: "Student",
+    },
+  ];
 
   return (
     <section className="w-full h-full grid grid-cols-6 grid-rows-6 gap-4 px-2">
