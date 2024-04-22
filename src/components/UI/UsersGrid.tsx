@@ -59,16 +59,6 @@ function UsersGrid({
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
 
-  // Approve Student' Enrollment
-  const handleApprove = (id: string) => {
-    console.log(users[parseInt(id) - 1]);
-  };
-
-  // Discard Student's Enrollment
-  const handleDiscard = (id: string) => {
-    console.log(users[parseInt(id) - 1]);
-  };
-
   const renderCell = useCallback(
     (user: any, columnKey: any) => {
       const cellValue = user[columnKey as keyof User];
@@ -109,6 +99,16 @@ function UsersGrid({
           ))}
         </>
       );
+
+      // Approve Student' Enrollment
+      const handleApprove = (id: string) => {
+        console.log(users[parseInt(id) - 1]);
+      };
+
+      // Discard Student's Enrollment
+      const handleDiscard = (id: string) => {
+        console.log(users[parseInt(id) - 1]);
+      };
 
       switch (columnKey) {
         case "subjects":
@@ -174,7 +174,7 @@ function UsersGrid({
           return cellValue;
       }
     },
-    [role]
+    [role, users]
   );
 
   const rowsPerPage = enrolled ? 8 : 7;

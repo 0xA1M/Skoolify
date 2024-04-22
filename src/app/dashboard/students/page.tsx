@@ -27,9 +27,10 @@ function StudentPage() {
   const [search, setSearch] = useState<string>("");
   const [selectedUser, setSelectedUser] = useState<number>(0);
   const [Data, setData] = useState([]);
-  // i create enum (class for constants) to ensure that in backend we will recievre wo staus predefined(eccepted,request)
-  // create toggle <accepted,request>to define wich category of sudent to show (accepted or in request)
-  const [status, Setstatus] = useState<Status>(Status.accepted);
+
+  // I'll create an enum (a class for constants) to ensure that in the backend, we will receive two predefined statuses (accepted, requested).
+  // Then, I'll create a toggle <accepted, requested> to define which category of students to show (accepted or in request).
+  const [status, setStatus] = useState<Status>(Status.accepted);
   const [areEnrolled, setAreEnrolled] = useState<boolean>(false);
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +39,7 @@ function StudentPage() {
 
   /* This function is only for testing */
   useEffect(() => {
-    const FechData = async () => {
+    const fetchData = async () => {
       const response = await fetch(`http://localhost:3000/api/getStudents`, {
         method: "POST",
         headers: {
@@ -50,8 +51,8 @@ function StudentPage() {
       const Data_ = await response.json();
       setData(Data_);
     };
-    FechData();
-  }, []);
+    fetchData();
+  }, [status]);
   // console.log(Data)
   const generateUsers = (): User[] => {
     var users: User[] = [];
@@ -70,38 +71,7 @@ function StudentPage() {
     return users;
   };
 
-  const placeholderUsers: User[] = [
-    {
-      id: "001",
-      fullName: "asdasd",
-      email: "asd@asd.com",
-      phone: "123123",
-      levels: ["2g"],
-      subjects: [
-        {
-          subject: "math",
-          group: "12",
-          sessions: 3,
-        },
-      ],
-      role: "Student",
-    },
-    {
-      id: "002",
-      fullName: "123asd",
-      email: "asd@asd.com",
-      phone: "123123",
-      levels: ["2g"],
-      subjects: [
-        {
-          subject: "math",
-          group: "12",
-          sessions: 3,
-        },
-      ],
-      role: "Student",
-    },
-  ];
+  const users: User[] = generateUsers();
 
   return (
     <section className="w-full h-full grid grid-cols-6 grid-rows-6 gap-4 px-2">
@@ -167,7 +137,7 @@ function StudentPage() {
 
       {!areEnrolled ? (
         <UsersGrid
-          users={placeholderUsers}
+          users={users}
           role="student"
           search={search}
           selectedUser={selectedUser}
@@ -176,7 +146,7 @@ function StudentPage() {
         />
       ) : (
         <UsersGrid
-          users={placeholderUsers}
+          users={users}
           role="student"
           search={search}
           selectedUser={selectedUser}
@@ -187,22 +157,14 @@ function StudentPage() {
       {!areEnrolled ? (
         <UserInfo
           user={
-            placeholderUsers[
-              placeholderUsers.findIndex(
-                (obj) => parseInt(obj.id) === selectedUser
-              )
-            ]
+            users[users.findIndex((obj) => parseInt(obj.id) === selectedUser)]
           }
           enrolled
         />
       ) : (
         <UserInfo
           user={
-            placeholderUsers[
-              placeholderUsers.findIndex(
-                (obj) => parseInt(obj.id) === selectedUser
-              )
-            ]
+            users[users.findIndex((obj) => parseInt(obj.id) === selectedUser)]
           }
           enrolled={false}
         />
