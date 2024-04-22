@@ -11,7 +11,7 @@ export default async function dbConnect() {
   }
   // Using a new database connection
   mongoose
-    .connect(db_url, { serverSelectionTimeoutMS: 30000 })
+    .connect(db_url, { serverSelectionTimeoutMS: 600000 })
     .then(() => console.log("MongoDB connected successfully."))
     .catch((err) => console.error("MongoDB connection error:", err));
 }

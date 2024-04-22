@@ -6,10 +6,10 @@ import Student from "@/models/Student";
 export async function POST(request: Request) {
     await dbConnect();
     const res=await request.json();
-    var response;
+    var response=[];
     if(res.status===Status.accepted)
     {
-     response= await Student.find(); 
+     response= await Student.find();
     }
     else
     {
