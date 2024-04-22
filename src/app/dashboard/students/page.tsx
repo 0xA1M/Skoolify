@@ -125,7 +125,7 @@ function StudentPage() {
 
           <Input
             type="text"
-            placeholder="Search for a teacher"
+            placeholder="Search for a student"
             value={search}
             onChange={handleSearch}
             isClearable
