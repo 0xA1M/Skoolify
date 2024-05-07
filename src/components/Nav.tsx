@@ -37,10 +37,10 @@ function Nav() {
       link: "#features",
       label: "Features",
     },
-    {
+    /*  {
       link: "#events",
       label: "Upcoming Events",
-    },
+    }, */
     {
       link: "#contact",
       label: "Contact Us",

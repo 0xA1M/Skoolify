@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@internationalized/date": "^3.5.2",
     "@nextui-org/react": "^2.2.10",
     "create-next-app": "^14.1.4",
     "embla-carousel-autoplay": "^8.0.0",

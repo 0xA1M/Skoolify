@@ -130,6 +130,7 @@ function UserInfo({ user, enrolled }: Props) {
 
               <CardBody className="px-0 overflow-hidden gap-2">
                 {user.role === "Teacher" ? (
+                  /* Teacher */
                   <Card className="p-2 mx-3">
                     <CardHeader className="flex items-center gap-1">
                       <LiaChalkboardTeacherSolid size={22} />
@@ -176,7 +177,8 @@ function UserInfo({ user, enrolled }: Props) {
                       ))}
                     </CardBody>
                   </Card>
-                ) : (
+                ) : user.role === "Student" ? (
+                  /* Student */
                   <Card className="p-2 mx-3">
                     <CardHeader className="flex items-center gap-1">
                       <GiMaterialsScience size={22} />
@@ -231,6 +233,9 @@ function UserInfo({ user, enrolled }: Props) {
                       ))}
                     </CardBody>
                   </Card>
+                ) : (
+                  /* Staff */
+                  <></>
                 )}
               </CardBody>
             </Card>

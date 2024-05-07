@@ -19,6 +19,20 @@
   transition: transform 200ms ease;
 }
 
+.red-dot::after {
+  content: "";
+  position: absolute;
+  top: 20%;
+  left: 24%;
+  transform: translateX(15%) scale(1);
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: #ff4719;
+  transition: transform 200ms ease;
+  outline: background;
+}
+
 .remove-dot::after {
   content: "";
   position: absolute;
@@ -29,6 +43,19 @@
   height: 0.5rem;
   border-radius: 50%;
   background-color: #008af4;
+  transition: transform 200ms ease;
+}
+
+.remove-red-dot::after {
+  content: "";
+  position: absolute;
+  top: 20%;
+  left: 24%;
+  transform: translateX(15%) scale(0);
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: #ff4719;
   transition: transform 200ms ease;
 }
 

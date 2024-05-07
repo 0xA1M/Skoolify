@@ -47,7 +47,7 @@ function Form({
   step,
   setStep,
   setFormData,
- loading,
+  loading,
   setLoading,
 }: FormProps) {
   /* Display the correct form according to the progress of the client */
@@ -57,7 +57,7 @@ function Form({
         <FirstForm
           setStep={setStep}
           setFormData={setFormData}
-         setLoading={setLoading}
+          setLoading={setLoading}
         />
       );
     case 1:
@@ -66,7 +66,7 @@ function Form({
           formData={formData}
           setStep={setStep}
           setFormData={setFormData}
-        setLoading={setLoading}
+          setLoading={setLoading}
         />
       );
     case 2:

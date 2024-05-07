@@ -6,11 +6,9 @@ import Provider from "@/components/UI/Provider";
 
 function Loading() {
   return (
-    <Provider>
-      <main className="w-full h-screen flex justify-center items-center">
-        <Spinner size="lg" color="primary" />
-      </main>
-    </Provider>
+    <div className="w-full h-full flex items-center justify-center">
+      <Spinner size="lg" color="primary" />
+    </div>
   );
 }
 

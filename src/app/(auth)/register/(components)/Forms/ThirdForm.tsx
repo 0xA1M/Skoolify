@@ -12,7 +12,7 @@ import { LuEye, LuEyeOff } from "react-icons/lu";
 import { FormProps } from "../Form";
 
 /* Third Form: This will retrieve the password set by the client */
-function ThirdForm({ formData, setStep, setFormData }: FormProps) {
+function ThirdForm({ setStep, setFormData }: FormProps) {
   // State variables to control password input values
   const [password, setPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");

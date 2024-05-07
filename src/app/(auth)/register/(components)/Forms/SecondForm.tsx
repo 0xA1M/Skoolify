@@ -213,19 +213,17 @@ function SecondForm({ formData, setStep, setFormData }: FormProps) {
     <>
       <form
         onSubmit={onSubmit}
-        className={`w-full ${
+        className={`w-full flex flex-col items-center lg:gap-4 ${
           formData?.role == "teacher" ? "h-full lg:h-5/6" : "h-unit-7xl"
-        } flex flex-col items-center ${
-          formData?.role == "teacher" ? "" : "justify-center"
-        } lg:gap-4`}
+        }`}
       >
         {formData?.role == "teacher" && (
-          <div className="w-full flex items-center justify-center flex-col">
+          <div className="w-full flex flex-col items-center justify-center mt-5 gap-2">
             <h1 className="text-2xl lg:text-3xl text-center">
               👋 Hello Dear Teacher!
             </h1>
 
-            <div className="w-unit-6xl lg:px-6 flex items-center justify-center m-6">
+            <div className="w-80 lg:px-6 flex items-center justify-center ml-12 m-8">
               <Select
                 label="Choose the levels you want to teach"
                 labelPlacement="outside"
@@ -234,7 +232,7 @@ function SecondForm({ formData, setStep, setFormData }: FormProps) {
                 selectionMode="multiple"
                 name="level"
                 onChange={handleSelectLevels}
-                className="w-full text-center"
+                className="w-full"
               >
                 {educationLvl.map((level, _) => (
                   <SelectSection key={level.education} title={level.education}>
@@ -274,7 +272,7 @@ function SecondForm({ formData, setStep, setFormData }: FormProps) {
         )}
 
         {formData?.role == "student" && (
-          <div className="w-full h-full flex flex-col items-center justify-center mt-20">
+          <div className="w-full h-full flex flex-col items-center justify-center mt-5">
             <h1 className="text-4xl lg:text-5xl text-center lg:my-0">
               👋 Hello Dear Student!
             </h1>

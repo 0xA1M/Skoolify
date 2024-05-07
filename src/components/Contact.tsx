@@ -1,3 +1,7 @@
+"use client";
+/* Utils */
+import { ChangeEvent, useState } from "react";
+
 /* Components */
 import {
   Card,
@@ -11,12 +15,50 @@ import {
   Input,
 } from "@nextui-org/react";
 import { LuInfo } from "react-icons/lu";
+import { IoIosSend } from "react-icons/io";
 
-{
-  /* TODO: Make the mail functionality actually works */
-}
+/* Types */
+type ContactFormData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  message: string;
+};
 
 function Contact() {
+  const [userInfo, setUserInfo] = useState<ContactFormData>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    message: "",
+  });
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+
+    setUserInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
+  };
+
+  const handleSubmit = () => {
+    if (Object.values(userInfo).every((value) => value.trim() !== "")) return;
+
+    console.log(userInfo);
+    setLoading(true);
+
+    setTimeout(() => {
+      setUserInfo({
+        firstName: "",
+        lastName: "",
+        email: "",
+        message: "",
+      });
+      setLoading(false);
+    }, 3000);
+  };
+
   return (
     <section
       id="contact"
@@ -25,7 +67,7 @@ function Contact() {
       <Card className="mx-auto w-5/6 h-80v p-6">
         <CardHeader className="flex justify-between items-center px-8">
           <h2 className="text-3xl">Get in Touch</h2>
-          <LuInfo />
+          <LuInfo size={24} />
         </CardHeader>
         <Divider />
         <CardBody className="p-8 grid-cols-1 grid-rows-4 gap-4 overflow-hidden">
@@ -34,8 +76,11 @@ function Contact() {
               variant="underlined"
               type="text"
               label="First Name"
+              name="firstName"
               labelPlacement="inside"
-              required
+              value={userInfo.firstName}
+              onChange={handleInputChange}
+              isRequired
               isClearable
             />
 
@@ -43,8 +88,11 @@ function Contact() {
               variant="underlined"
               type="text"
               label="Last Name"
+              name="lastName"
+              value={userInfo.lastName}
+              onChange={handleInputChange}
               labelPlacement="inside"
-              required
+              isRequired
               isClearable
             />
           </div>
@@ -53,9 +101,12 @@ function Contact() {
             variant="underlined"
             type="email"
             label="Email"
+            value={userInfo.email}
+            name="email"
+            onChange={handleInputChange}
             labelPlacement="inside"
             radius="sm"
-            required
+            isRequired
             isClearable
             className="mb-6"
           />
@@ -63,14 +114,25 @@ function Contact() {
           <Textarea
             variant="underlined"
             label="What can we help with?"
-            required
+            isRequired
+            value={userInfo.message}
+            name="message"
+            onChange={handleInputChange}
             minRows={6}
             className="row-span-2"
           />
         </CardBody>
         <CardFooter className="flex justify-center items-center">
-          <Button size="lg" variant="shadow" color="primary" className="mb-4">
-            Send
+          <Button
+            size="lg"
+            variant="shadow"
+            color="primary"
+            className="text-lg flex items-center justify-center gap-2 mb-4"
+            onClick={handleSubmit}
+            isLoading={loading}
+          >
+            {!loading && "Send"}
+            {!loading && <IoIosSend size={24} />}
           </Button>
         </CardFooter>
       </Card>

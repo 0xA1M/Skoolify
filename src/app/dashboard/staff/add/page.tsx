@@ -33,29 +33,6 @@ function AddStaff() {
     [key: string]: string;
   }>({});
 
-  const subjects = [
-    {
-      label: "Math",
-      value: "math",
-    },
-    {
-      label: "Physics",
-      value: "physics",
-    },
-    {
-      label: "Science",
-      value: "science",
-    },
-    {
-      label: "English",
-      value: "english",
-    },
-    {
-      label: "Arabic",
-      value: "arabic",
-    },
-  ];
-
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -73,7 +50,7 @@ function AddStaff() {
 
     console.log(formData);
 
-    router.push("/dashboard/students");
+    router.push("/dashboard/staff");
   };
 
   return (
@@ -83,7 +60,7 @@ function AddStaff() {
           <>
             <Button
               as={Link}
-              href="/dashboard/students"
+              href="/dashboard/staff"
               isIconOnly
               variant="shadow"
               color="primary"
@@ -121,7 +98,7 @@ function AddStaff() {
                       </Button>
                       <Button
                         as={Link}
-                        href="/dashboard/students"
+                        href="/dashboard/staff"
                         color="primary"
                         onPress={onClose}
                       >
@@ -136,7 +113,7 @@ function AddStaff() {
         )}
 
         <h1 className="text-4xl mx-auto text-primary-500 font-semibold drop-shadow-lg">
-          Add Student
+          Add Staff
         </h1>
       </CardHeader>
 
@@ -241,22 +218,6 @@ function AddStaff() {
               <SelectItem key="female" value="female">
                 Female
               </SelectItem>
-            </Select>
-
-            <Select
-              label="Subject(s)"
-              isRequired
-              name="subjects"
-              selectionMode="multiple"
-              value={formData.subjects}
-              onChange={handleInputChange}
-              className="w-full text-sm"
-            >
-              {subjects.map((subject, _) => (
-                <SelectItem key={subject.value} value={subject.value}>
-                  {subject.label}
-                </SelectItem>
-              ))}
             </Select>
           </div>
 
