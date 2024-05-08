@@ -17,24 +17,12 @@ import { FiEdit } from "react-icons/fi";
 import { FaCheck } from "react-icons/fa6";
 import { FaXmark } from "react-icons/fa6";
 
-/* It's going to be a scheduler, with the ability to choose levels and edit the current time plan for each level and save those changes, how to edit same as in google calendar, and each time the admin changes the timetable we should send a notification to all teacher and student in that level informing them about the new time plan. */
-
-/* Types */
-
-type GroupPlan = {
-  group: string;
-  studyHours: string[];
-};
-
-type TimePlan = {
-  level: string;
-  timePlan: GroupPlan[];
-};
+/* Custom Components */
+import Scheduler from "@/components/UI/Scheduler";
 
 function TimeTable() {
   const [level, setLevel] = useState<Selection>(new Set(["1hs"]));
   const [editMode, setEditMode] = useState<boolean>(false);
-  const [timePlan, setTimePlan] = useState<TimePlan[]>([]);
 
   const educationLvl = [
     {
@@ -126,7 +114,9 @@ function TimeTable() {
           )}
         </aside>
       </CardHeader>
-      <CardBody></CardBody>
+      <CardBody>
+        <Scheduler level={level.valueOf()} />
+      </CardBody>
     </Card>
   );
 }

@@ -117,3 +117,49 @@
     transform: translateY(0);
   }
 }
+
+/* Scheduler-x Component Styles */
+.sx__week-grid__date--is-today .sx__week-grid__day-name {
+  color: #4169e1 !important;
+}
+
+.sx__week-grid__date--is-today .sx__week-grid__date-number {
+  background-color: #4169e1 !important;
+}
+
+.sx__chevron-wrapper:focus {
+  background-color: #d9e6fd !important;
+}
+
+.sx__chevron-wrapper:hover {
+  background-color: #d9e6fd !important;
+}
+
+.sx__calendar-header-content {
+  width: 100% !important;
+}
+
+.sx__calendar-header-content:nth-of-type(2) {
+  display: none !important;
+}
+
+.sx__today-button {
+  order: 3 !important;
+  margin-left: auto !important;
+  border: 1px solid #4169e1 !important;
+  transition: background-color 100ms ease, color 100ms ease !important;
+  border-radius: 0.5rem !important;
+}
+
+.sx__today-button:hover {
+  background-color: #4169e1 !important;
+  color: white;
+}
+
+.sx__forward-backward-navigation {
+  order: 1 !important;
+}
+
+.sx__range-heading {
+  order: 2 !important;
+}
