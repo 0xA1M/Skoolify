@@ -60,7 +60,7 @@ function TeacherLogin() {
       } 
       else 
       {
-         setTimeout(() => {setLoading(false);router.push('/Admin')}, 3000);
+         setTimeout(() => {setLoading(false);router.push('/teacher')}, 3000);
         
           
          

@@ -1,7 +1,7 @@
 "use client";
 /* Utils */
 import { FormEvent, useEffect, useState } from "react";
-
+import Cookies from 'js-cookie';
 /* Components */
 import {
   Input,
@@ -36,20 +36,21 @@ function AdminLogin() {
     event.preventDefault();
     const email: string = event.currentTarget.email.value;
     const password: string = event.currentTarget.password.value;
+    var response;
     const data=JSON.stringify({
       email:email,
       password:password,
       role:"admin"
     })
     try {
-      const response = await fetch(`http://localhost:3000/api/Login`, {
+      response = await fetch(`http://localhost:3000/api/Login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: data,
       });
-
+    
       const Data = await response.json();
       setLoading(true);
       if (response.status == 400)
@@ -58,11 +59,11 @@ function AdminLogin() {
       } 
       else 
       {
+        const oneDay = 24 * 60 * 60 * 1000
+        const token=String(Data);
+        console.log(token)
+        Cookies.set("token",token,{ expires: Date.now() - oneDay })
          setTimeout(() => {setLoading(false);router.push('/dashboard')}, 3000);
-        
-          
-         
-        
       }
     } catch (error: any) {
       setTimeout(() => {setLoading(false);setError("Email or Password are incorrect")}, 3000);

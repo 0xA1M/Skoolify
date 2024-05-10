@@ -7,7 +7,7 @@ function removeLeadingZeros(input: number): number {
  export async function POST(request:Request){
     const res=await request.json();
     const response=await Student.find();
-    const ID=removeLeadingZeros(res.id)
+    const ID=removeLeadingZeros(res.id)-1;
     console.log(ID)
     const DocumentID=response[ID]._id
     const result = await Student.findByIdAndUpdate(

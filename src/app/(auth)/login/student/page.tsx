@@ -1,7 +1,7 @@
 "use client";
 /* Utils */
 import { FormEvent, useState } from "react";
-
+import Cookies from 'js-cookie';
 /* Components */
 import {
   Input,
@@ -59,11 +59,11 @@ function StudentLogin() {
       } 
       else 
       {
-         setTimeout(() => {setLoading(false);router.push('/Admin')}, 3000);
-        
-          
-         
-        
+        const oneDay = 24 * 60 * 60 * 1000
+        const token=String(Data);
+        console.log(token)
+        Cookies.set("token",token,{ expires: Date.now() - oneDay })
+         setTimeout(() => {setLoading(false);router.push('/student')}, 3000);    
       }
     } catch (error: any) {
       setTimeout(() => {setLoading(false);setError("Email or Password are incorrect")}, 3000);

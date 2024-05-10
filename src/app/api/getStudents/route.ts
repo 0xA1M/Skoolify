@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     else
     {
      response= await Admin.find();
-     response=response[0].requests
+     response=response[0].requests.filter((request:any) => request.role === 'student');
     }
     console.log(response)
      return Response.json(response)

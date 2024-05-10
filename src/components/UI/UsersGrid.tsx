@@ -20,8 +20,10 @@ import {
   Pagination,
   Chip,
   Button,
+  Spinner,
 } from "@nextui-org/react";
 import { LuCheckCircle, LuXCircle } from "react-icons/lu";
+import { Status } from "@/enums/Status";
 
 /* Types */
 export type User = {
@@ -30,7 +32,7 @@ export type User = {
   email: string;
   phone: string;
   profilePic?: string;
-  subjects?: {
+  subjects? : {
     subject: string;
     group: string;
     sessions?: number;
@@ -58,17 +60,20 @@ function UsersGrid({
 }: Props) {
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
-
-  // Approve Student' Enrollment
-  const handleApprove = () => {
-    console.log(users[selectedUser]);
-  };
-
-  // Discard Student's Enrollment
-  const handleDiscard = () => {
-    console.log(users[selectedUser]);
-  };
-
+  const [Loading,setLoading]=useState<boolean>(false)
+ 
+  const handleStudent = async (id:string,status:Status) => 
+    {
+     setLoading(true)
+      const response = await fetch(`http://localhost:3000/api/acceptStudent`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({id:parseInt(id) - 1,status:status}),
+      });
+      setTimeout(() => {setLoading(false)}, 3000);
+      };           
   const renderCell = useCallback(
     (user: any, columnKey: any) => {
       const cellValue = user[columnKey as keyof User];
@@ -78,7 +83,7 @@ function UsersGrid({
 
       const TeacherSubjects = ({ value }: SubjectProps) => (
         <>
-          {value.slice(0, 3).map((obj, index) => (
+          {value?.slice(0, 3).map((obj, index) => (
             <Chip
               key={index}
               className="capitalize mx-1"
@@ -92,10 +97,10 @@ function UsersGrid({
           ))}
         </>
       );
-
+      console.log(cellValue)
       const StudentSubjects = ({ value }: SubjectProps) => (
         <>
-          {value.slice(0, 3).map((obj, index) => (
+          {value?.slice(0, 3).map((obj, index) => (
             <Chip
               key={index}
               className="capitalize mx-1"
@@ -109,6 +114,16 @@ function UsersGrid({
           ))}
         </>
       );
+       
+      // Approve Student' Enrollment
+      const handleApprove = (id: string) => {
+        handleStudent(id,Status.accepted)
+      };
+
+      // Discard Student's Enrollment
+      const handleDiscard = (id: string) => {
+        handleStudent(id,Status.request) // i used Status.request thats mean the admin do not want accept the user
+      };
 
       switch (columnKey) {
         case "subjects":
@@ -120,7 +135,7 @@ function UsersGrid({
                 <StudentSubjects value={cellValue} />
               )}
 
-              {cellValue.length > 3 && (
+              {cellValue?.length > 3 && (
                 <div className="ml-1 flex items-center gap-1">
                   <div className="w-1 h-1 rounded-full bg-secondary-500"></div>
                   <div className="w-1 h-1 rounded-full bg-secondary-500"></div>
@@ -139,7 +154,7 @@ function UsersGrid({
               radius="sm"
               variant="flat"
             >
-              {cellValue[0]}
+              {cellValue[0]} 
             </Chip>
           );
 
@@ -152,7 +167,7 @@ function UsersGrid({
                 size="sm"
                 variant="light"
                 color="success"
-                onClick={handleApprove}
+                onClick={() =>  handleApprove(user.id)}
               >
                 <LuCheckCircle size={24} />
               </Button>
@@ -163,7 +178,7 @@ function UsersGrid({
                 size="sm"
                 variant="light"
                 color="danger"
-                onClick={handleDiscard}
+                onClick={() => handleDiscard(user.id)}
               >
                 <LuXCircle size={24} />
               </Button>
@@ -174,7 +189,7 @@ function UsersGrid({
           return cellValue;
       }
     },
-    [role]
+    [role, users]
   );
 
   const rowsPerPage = enrolled ? 8 : 7;
@@ -259,8 +274,16 @@ function UsersGrid({
   useEffect(() => {
     setPage(1);
   }, [search]);
-
-  return enrolled ? (
+ if(Loading)
+  {
+    return(
+    <div className="  h-[700px] w-[400px] flex items-center m-auto ">
+       <Spinner size="lg" color="primary" />
+    </div>
+   
+    )
+  }
+  return enrolled  ? (
     <Table
       fullWidth
       isStriped
@@ -384,7 +407,7 @@ function UsersGrid({
         <TableBody emptyContent={"There is nothing here!"}>{[]}</TableBody>
       )}
     </Table>
-  );
-}
+  )};
+//}
 
 export default UsersGrid;

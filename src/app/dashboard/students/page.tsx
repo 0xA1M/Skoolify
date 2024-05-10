@@ -28,9 +28,10 @@ function StudentPage() {
   const [search, setSearch] = useState<string>("");
   const [selectedUser, setSelectedUser] = useState<number>(0);
   const [Data, setData] = useState([]);
-  // i create enum (class for constants) to ensure that in backend we will recievre wo staus predefined(eccepted,request)
-  // create toggle <accepted,request>to define wich category of sudent to show (accepted or in request)
-  const [status, Setstatus] = useState<Status>(Status.accepted);
+
+  // I'll create an enum (a class for constants) to ensure that in the backend, we will receive two predefined statuses (accepted, requested).
+  // Then, I'll create a toggle <accepted, requested> to define which category of students to show (accepted or in request).
+  const [status, setStatus] = useState<Status>(Status.accepted);
   const [areEnrolled, setAreEnrolled] = useState<boolean>(false);
   const [isLoading,SetisLoading] = useState<boolean>(false);
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -58,7 +59,7 @@ function StudentPage() {
     var users: User[] = [];
     users = Data?.map((std: any, i: Number) => {
       return {
-        id: String(i).padStart(3, "0"),
+        id: String(Number(i)+1).padStart(3, "0"),
         fullName: std.username,
         phone: std.phone_number,
         email: std.email,
@@ -73,8 +74,7 @@ function StudentPage() {
 useEffect(()=>{
   console.log(selectedUser)
 },[selectedUser])
-  const placeholderUsers: User[] = generateUsers();
-
+const users: User[] = generateUsers();
   return (
     <section className="w-full h-full grid grid-cols-6 grid-rows-6 gap-4 px-2">
       <Card className="col-span-4">
@@ -111,7 +111,7 @@ useEffect(()=>{
                   isSelected={areEnrolled}
                   onValueChange={() => {
                     setAreEnrolled(!areEnrolled);
-                    status===Status.accepted ? Setstatus(Status.request) : Setstatus(Status.accepted)
+                    status===Status.accepted ? setStatus(Status.request) : setStatus(Status.accepted)
                     setSelectedUser(0);
 
                   }}
@@ -129,7 +129,7 @@ useEffect(()=>{
 
           <Input
             type="text"
-            placeholder="Search for a teacher"
+            placeholder="Search for a student"
             value={search}
             onChange={handleSearch}
             isClearable
@@ -142,7 +142,7 @@ useEffect(()=>{
      (
       !areEnrolled ? (
         <UsersGrid
-          users={placeholderUsers}
+          users={users}
           role="student"
           search={search}
           selectedUser={selectedUser}
@@ -151,7 +151,7 @@ useEffect(()=>{
         />
       ) : (
         <UsersGrid
-          users={placeholderUsers}
+          users={users}
           role="student"
           search={search}
           selectedUser={selectedUser}
@@ -165,27 +165,19 @@ useEffect(()=>{
       </div>
     )}
       {!areEnrolled ? (
-        <UserInfo
-          user={
-            placeholderUsers[
-              placeholderUsers.findIndex(
-                (obj) => parseInt(obj.id) === selectedUser
-              )
-            ]
-          }
-          enrolled
-        />
-      ) : (
-        <UserInfo
-          user={
-            placeholderUsers[
-              placeholderUsers.findIndex(
-                (obj) => parseInt(obj.id) === selectedUser
-              )
-            ]
-          }
-          enrolled={false}
-        />
+         <UserInfo
+         user={
+           users[users.findIndex((obj) => parseInt(obj.id) === selectedUser)]
+         }
+         enrolled
+       />
+     ) : (
+       <UserInfo
+         user={
+           users[users.findIndex((obj) => parseInt(obj.id) === selectedUser)]
+         }
+         enrolled={false}
+       />
       )}
     </section>
   );

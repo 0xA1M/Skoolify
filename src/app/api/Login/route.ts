@@ -2,6 +2,7 @@ import dbConnect from "@/database/ConnectToDB";
 import Admin from "@/models/Admin";
 import Student from "@/models/Student";
 import Teacher from "@/models/Teacher";
+import { encrypt } from "@/Authorization/Encry_Dcry";
 
 export async function POST(request: Request) {
     await dbConnect();
@@ -25,9 +26,12 @@ export async function POST(request: Request) {
    
     if(response)
     {
-        return new Response(JSON.stringify("Success"), {
+
+        return new Response(JSON.stringify(encrypt(String(response._id))), {
             status: 200,
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 
+            'Content-Type': 'application/json'
+             }
           });
     }
     else

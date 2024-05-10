@@ -42,12 +42,12 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
   const [levels, setLevels] = useState<string[]>(user.levels!);
   const [isLoading,setIsLoading]=useState<boolean>(false)
   const [subjects, setSubjects] = useState<
-    {
-      subject: string;
-      group: string;
-      sessions?: number | undefined;
-    }[] // parse and stringify are used to copy the object and not referencing it
-  >(JSON.parse(JSON.stringify(user.subjects)));
+  {
+    subject: string;
+    group: string;
+    sessions?: number | undefined;
+  }[] // parse and stringify are used to copy the object and not referencing it
+>(JSON.parse(JSON.stringify(user.subjects)));
   const [values, setValues] = useState<{ name: string; value: string }[]>([]);
   const [fullName, setFullName] = useState<string>(user.fullName);
   const [email, setEmail] = useState<string>(user.email);
@@ -91,14 +91,14 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
 
     setLevels(levels?.filter((level) => level != levelToRemove));
     setSubjects(
-      subjects.filter((obj) => obj.subject != subjectToRemove.subject)
+      subjects.filter((obj:any) => obj.subject != subjectToRemove.subject)
     );
   };
 
   const handleRemoveSubject = (e: any) => {
     const subjectToRemove = e.currentTarget.name;
 
-    setSubjects(subjects.filter((obj) => obj.subject != subjectToRemove));
+    setSubjects(subjects.filter((obj:any) => obj.subject != subjectToRemove));
   };
 
   const handleInput = () => {
@@ -127,7 +127,7 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
 
     if (user.role === "Teacher") {
       setLevels((levels) => [...levels, ""]);
-      setSubjects((subjects) => [
+      setSubjects((subjects:any) => [
         ...subjects,
         {
           subject: "",
@@ -135,7 +135,7 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
         },
       ]);
     } else if (user.role === "Student") {
-      setSubjects((subjects) => [
+      setSubjects((subjects:any) => [
         ...subjects,
         {
           subject: "",
