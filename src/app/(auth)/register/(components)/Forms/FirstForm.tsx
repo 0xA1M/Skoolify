@@ -1,5 +1,5 @@
 /* Utils */
-import { ChangeEvent, FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 
 /* Components */
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";

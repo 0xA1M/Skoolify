@@ -1,6 +1,6 @@
 "use client";
 /* Utils */
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 
 /* Components */
 import {
@@ -28,19 +28,19 @@ import { useRouter } from "next/navigation";
 
 function AdminLogin() {
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const[Loading,setLoading]=useState(false);
+  const [Loading, setLoading] = useState(false);
   const router = useRouter();
-  const[error,setError]=useState("")
+  const [error, setError] = useState("");
   const toggleVisibility = () => setIsVisible(!isVisible);
   async function submitData(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const email: string = event.currentTarget.email.value;
     const password: string = event.currentTarget.password.value;
-    const data=JSON.stringify({
-      email:email,
-      password:password,
-      role:"admin"
-    })
+    const data = JSON.stringify({
+      email: email,
+      password: password,
+      role: "admin",
+    });
     try {
       const response = await fetch(`http://localhost:3000/api/Login`, {
         method: "POST",
@@ -52,23 +52,22 @@ function AdminLogin() {
 
       const Data = await response.json();
       setLoading(true);
-      if (response.status == 400)
-      {
+      if (response.status == 400) {
         throw new Error(Data.error);
-      } 
-      else 
-      {
-         setTimeout(() => {setLoading(false);router.push('/Admin')}, 3000);
-        
-          
-         
-        
+      } else {
+        setTimeout(() => {
+          setLoading(false);
+          router.push("/Admin");
+        }, 3000);
       }
     } catch (error: any) {
-      setTimeout(() => {setLoading(false);setError("Email or Password are incorrect")}, 3000);
+      setTimeout(() => {
+        setLoading(false);
+        setError("Email or Password are incorrect");
+      }, 3000);
     }
-  };
-  
+  }
+
   return (
     <section className="w-full h-screen flex justify-center items-center flex-col mx-auto max-w-6xl">
       <section className="p-4 grid grid-cols-1 md:grid-cols-2 grid-rows-1 gap-4">
@@ -99,7 +98,7 @@ function AdminLogin() {
           <Divider />
           <CardBody>
             <form
-             // method="POST"
+              // method="POST"
               onSubmit={submitData}
               className="w-full h-full flex flex-col justify-between items-center py-6 md:py-12 px-6 md:px-0"
             >
@@ -148,32 +147,29 @@ function AdminLogin() {
                 </div>
               </div>
 
-             { 
-             Loading ?
-             <Spinner size="lg" color="primary" />
-             :
-             <Button
-                variant="shadow"
-                color="primary"
-                className="m-4 py-6 px-8 mt-10 md:mt-0"
-                size="lg"
-                type="submit"
-              >
-                Login
-              </Button>
-             }          
+              {Loading ? (
+                <Spinner size="lg" color="primary" />
+              ) : (
+                <Button
+                  variant="shadow"
+                  color="primary"
+                  className="m-4 py-6 px-8 mt-10 md:mt-0"
+                  size="lg"
+                  type="submit"
+                >
+                  Login
+                </Button>
+              )}
             </form>
-            {
-              Loading ?
+            {Loading ? (
               ""
-              :
-            <div className=" w-full  flex justify-center pb-10">
-            <h4 className=" text-red-600">{error}</h4>
-            </div>
-             }
+            ) : (
+              <div className=" w-full  flex justify-center pb-10">
+                <h4 className=" text-red-600">{error}</h4>
+              </div>
+            )}
           </CardBody>
-         </Card>
-        
+        </Card>
       </section>
     </section>
   );

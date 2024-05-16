@@ -22,7 +22,6 @@ import { LiaChalkboardTeacherSolid } from "react-icons/lia";
 import { FiEdit } from "react-icons/fi";
 
 /* Custom Components */
-
 import EditPopUp from "./EditPopUp";
 
 /* Type */
