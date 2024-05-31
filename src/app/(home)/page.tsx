@@ -9,7 +9,7 @@ function Home() {
     <>
       <Hero />
       <Features />
-      <UpcomingEvents /> {/* <-- I think this part is useless to be fair */}
+      {/* <UpcomingEvents /> */}
       <Contact />
     </>
   );

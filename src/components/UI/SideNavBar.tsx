@@ -22,9 +22,6 @@ import {
 } from "@nextui-org/react";
 import { Sidebar, Menu, MenuItem, sidebarClasses } from "react-pro-sidebar";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { IoSettingsOutline } from "react-icons/io5";
-import { CiLogout } from "react-icons/ci";
-import { IoNotificationsOutline } from "react-icons/io5";
 import { MdDashboard } from "react-icons/md";
 import {
   FaUsers,
@@ -35,6 +32,9 @@ import {
   FaCalendarAlt,
 } from "react-icons/fa";
 import Link from "next/link";
+import { IoSettingsOutline } from "react-icons/io5";
+import { CiLogout } from "react-icons/ci";
+import { IoNotificationsOutline } from "react-icons/io5";
 
 /* Custom Components */
 import ThemeSwitcher from "./ThemeSwitcher";
@@ -47,7 +47,6 @@ export const metadata: Metadata = {
 };
 
 function SideNavBar() {
-  const [userData, setUserData] = useState(); // Adjust this based on the format of the user's data
   const [collapseMenu, setCollapseMenu] = useState<boolean>(false);
   const [active, setActive] = useState<string>("dashboard");
   const [showDetails, setShowDetails] = useState<boolean>(false);
@@ -56,7 +55,7 @@ function SideNavBar() {
   const { theme } = useTheme();
   const pathname = usePathname();
 
-  const menuItems = [
+  let menuItems = [
     {
       title: "Dashboard",
       label: "dashboard",
@@ -93,20 +92,17 @@ function SideNavBar() {
       link: "/dashboard/timetable",
       icon: <FaClock size={22} />,
     },
-    {
+    /* {
       title: "Events",
       label: "events",
       link: "/dashboard/events",
       icon: <FaCalendarAlt size={22} />,
-    },
+    }, */
   ];
 
   const toggleCollapseMenu = () => {
     setCollapseMenu((prevState) => !prevState);
   };
-
-  /* This will be used to get the connected user's data */
-  const getUserData = async () => {};
 
   /* To get the smooth name transition effect in the User component */
   useEffect(() => {
@@ -132,7 +128,7 @@ function SideNavBar() {
   /* If the theme isn't resolve display a loading skeleton */
   if (!mounted)
     return (
-      <Card className="h-full w-[300px] p-2">
+      <Card className="h-full w-[300px]" radius="none">
         <CardBody></CardBody>
       </Card>
     );
@@ -144,7 +140,7 @@ function SideNavBar() {
       collapsed={collapseMenu}
       rootStyles={{
         [`.${sidebarClasses.container}`]: {
-          backgroundColor: `${theme === "light" ? "#f8f9fa" : "#0f0f0f"}`,
+          backgroundColor: `${theme === "light" ? "#f8f9fa" : "#0c0c0c"}`,
         },
       }}
     >
@@ -176,7 +172,7 @@ function SideNavBar() {
                 justifyContent: "center",
                 alignItems: "center",
                 transition: "transform 100ms linear, color 100ms linear",
-                color: "#6c757d",
+                color: `${theme === "light" ? "#00000099" : "#ffffff99"}`,
                 ":hover": {
                   color: `${theme === "light" ? "black" : "white"}`,
                   background: "transparent",
@@ -188,7 +184,7 @@ function SideNavBar() {
                 styles = {
                   ...styles,
                   transform: "scale(1.1)",
-                  color: "#2F50C1",
+                  color: `${theme === "light" ? "#2F50C1" : "#4169E1"}`,
                   ":hover": {
                     background: "transparent",
                     transform: "scale(1.1)",
@@ -206,7 +202,9 @@ function SideNavBar() {
               icon={item.icon}
               active={
                 item.link === pathname ||
-                ((item.label === "teachers" || item.label === "student") &&
+                ((item.label === "teachers" ||
+                  item.label === "student" ||
+                  item.label === "staff") &&
                   `${item.link}/add` === pathname)
               }
               onClick={() => setActive(item.label)}
@@ -243,12 +241,17 @@ function SideNavBar() {
 
           {/* User Menu */}
           <Dropdown placement="top">
-            <DropdownTrigger>
+            <DropdownTrigger
+              className="p-1.5 flex justify-start items-center shadow-sm"
+              style={{
+                backgroundColor: `${theme === "light" ? "#fff" : "#0c0c0c"}`,
+              }}
+            >
               <User
                 as="button"
-                name={`${showDetails ? "" : "Admin"}`}
-                description={`${showDetails ? "" : "admin"}`}
-                className="transition-transform "
+                name={`${showDetails ? "" : "Guest"}`}
+                description={`${showDetails ? "" : "Welcome, guest!"}`}
+                className="transition-transform -ml-1"
                 classNames={{
                   name: `transition-opacity duration-100 ease ${
                     !showDetails ? "opacity-100" : "opacity-0"
@@ -265,10 +268,11 @@ function SideNavBar() {
               />
             </DropdownTrigger>
 
-            <DropdownMenu variant="faded" aria-label="Static Actions">
+            <DropdownMenu variant="flat" aria-label="Static Actions">
               <DropdownSection showDivider>
                 <DropdownItem
                   key="settings"
+                  href={"/dashboard/notifications"}
                   startContent={
                     notification > 0 ? (
                       <Badge
@@ -288,6 +292,7 @@ function SideNavBar() {
 
                 <DropdownItem
                   key="settings"
+                  href={"/dashboard/settings"}
                   startContent={
                     <IoSettingsOutline className="text-xl text-default-500 pointer-events-none flex-shrink-0" />
                   }
@@ -298,6 +303,7 @@ function SideNavBar() {
 
               <DropdownItem
                 key="logout"
+                href="/"
                 className="text-danger"
                 color="danger"
                 startContent={
@@ -316,7 +322,7 @@ function SideNavBar() {
 
           {/* Theme Toggler */}
           <div
-            className={`absolute -right-2 transition-all duration-150 delay-50 transform ${
+            className={`absolute -right-0 transition-all duration-150 delay-50 transform ${
               collapseMenu
                 ? "translate-x-2 opacity-0 pointer-events-none cursor-default"
                 : ""

@@ -9,7 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@internationalized/date": "^3.5.2",
     "@nextui-org/react": "^2.2.10",
+    "@schedule-x/drag-and-drop": "^1.39.0",
+    "@schedule-x/event-modal": "^1.39.0",
+    "@schedule-x/react": "^1.36.0",
+    "@schedule-x/resize": "^1.39.0",
+    "@schedule-x/theme-default": "^1.38.0",
     "create-next-app": "^14.1.4",
     "embla-carousel-autoplay": "^8.0.0",
     "embla-carousel-react": "^8.0.0",

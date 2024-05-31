@@ -20,6 +20,7 @@ import {
   SelectItem,
   useDisclosure,
   Button,
+  SelectSection,
 } from "@nextui-org/react";
 import Link from "next/link";
 import { FiEdit } from "react-icons/fi";
@@ -33,26 +34,40 @@ function AddTeacher() {
     [key: string]: string;
   }>({});
 
-  const subjects = [
+  const levels = [
     {
-      label: "Math",
-      value: "math",
+      education: "HS",
+      levels: [
+        {
+          label: "1HS",
+          value: "1hs",
+        },
+        {
+          label: "2HS",
+          value: "2hs",
+        },
+        {
+          label: "3HS",
+          value: "3hs",
+        },
+      ],
     },
     {
-      label: "Physics",
-      value: "physics",
-    },
-    {
-      label: "Science",
-      value: "science",
-    },
-    {
-      label: "English",
-      value: "english",
-    },
-    {
-      label: "Arabic",
-      value: "arabic",
+      education: "MS",
+      levels: [
+        {
+          label: "1MS",
+          value: "1ms",
+        },
+        {
+          label: "2MS",
+          value: "2ms",
+        },
+        {
+          label: "3MS",
+          value: "3ms",
+        },
+      ],
     },
   ];
 
@@ -244,18 +259,22 @@ function AddTeacher() {
             </Select>
 
             <Select
-              label="Subject(s)"
+              label="Level(s)"
               isRequired
-              name="subjects"
+              name="levels"
               selectionMode="multiple"
-              value={formData.subjects}
+              value={formData.levels}
               onChange={handleInputChange}
               className="w-full text-sm"
             >
-              {subjects.map((subject, _) => (
-                <SelectItem key={subject.value} value={subject.value}>
-                  {subject.label}
-                </SelectItem>
+              {levels.map((level, _) => (
+                <SelectSection key={level.education} title={level.education}>
+                  {level.levels.map((level, _) => (
+                    <SelectItem key={level.value} value={level.value}>
+                      {level.label}
+                    </SelectItem>
+                  ))}
+                </SelectSection>
               ))}
             </Select>
           </div>

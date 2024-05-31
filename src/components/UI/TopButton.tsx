@@ -55,7 +55,7 @@ const TopButton = () => {
       onClick={scrollToTop}
       aria-label="Up"
     >
-      <LuChevronUp strokeWidth={1.5} />
+      <LuChevronUp strokeWidth={1.5} size={24} />
     </Button>
   );
 };

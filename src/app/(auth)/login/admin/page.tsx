@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import Cookies from "js-cookie";
 
+
 /* Components */
 import {
   Input,
@@ -45,6 +46,7 @@ function AdminLogin() {
       pauseOnFocusLoss: false,
       theme: theme,
     });
+
 
   async function submitData(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -88,6 +90,7 @@ function AdminLogin() {
     } catch (error: any) {
       setTimeout(() => {
         setLoading(false);
+
         notify("Email or Password are incorrect!", "error");
       }, 3000);
     }
@@ -172,6 +175,7 @@ function AdminLogin() {
                   />
                 </div>
               </div>
+
 
               <div className="m-4 w-full flex flex-col items-center justify-center">
                 <Button

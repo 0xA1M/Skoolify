@@ -258,7 +258,7 @@ function UsersGrid({
       key: "subjects",
       label: "Subjects",
     });
-  } else {
+  } else if (role === "student") {
     columns.push({
       key: "levels",
       label: "Levels",
@@ -267,6 +267,11 @@ function UsersGrid({
     columns.push({
       key: "subjects",
       label: "Groups",
+    });
+  } else {
+    columns.push({
+      key: "phone",
+      label: "Phone",
     });
   }
 

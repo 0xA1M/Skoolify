@@ -12,10 +12,14 @@ import { useRouter } from "next/navigation";
 /* Forth Form: This will display the waiting for validation message to the client */
 function ForthForm({ formData, loading, setLoading }: FormProps) {
   const router = useRouter();
-  const [error_,setError]=useState("")
+  
+  const [error_, setError] = useState("");
   const [loading2,setLoading2]=useState(0)
+  
   const data: string = JSON.stringify({
-    username: formData? `${String(formData.firstName)} ${String(formData.lastName)}`: "",
+    username: formData
+      ? `${String(formData.firstName)} ${String(formData.lastName)}`
+      : "",
     email: String(formData?.email || ""),
     phone_number: String(formData?.phone || ""),
     gender: String(formData?.gender || ""),
@@ -23,7 +27,8 @@ function ForthForm({ formData, loading, setLoading }: FormProps) {
     password: String(formData?.password || ""),
     modules_Groups_sessionNumber: formData?.subjects,
     role: String(formData?.role || ""),
-     level: formData?.levels.length === 1 ? formData.levels[0] : formData?.levels,
+    level:
+      formData?.levels.length === 1 ? formData.levels[0] : formData?.levels,
   });
   const hasFetched = useRef(false);
   useEffect(() => {
@@ -44,33 +49,28 @@ function ForthForm({ formData, loading, setLoading }: FormProps) {
           body: data,
         });
 
-        if (response.ok)
-           {
+        if (response.ok) {
           // Success case (handle successful registration)
           setLoading2(1);
 
           setTimeout(() => {
             handleRedirect("/login");
-          }, 8000);
-        } 
-        else 
-           {
-            const jsonData = await response.json();
-            //console.log(jsonData)
-            throw new Error(jsonData);
-           }
-   
-        } 
-       catch (error:any) {
-        console.log(error.message)
-        setError(error.message)
-        setLoading2(2);
+          }, 3000);
+        } else {
+          const jsonData = await response.json();
+          throw new Error(jsonData);
+        }
+      } catch (error: any) {
+        console.log(error.message);
+        setError(error.message);
+        setLoading(2);
 
         setTimeout(() => {
           handleRedirect("/");
         }, 5000);
-      }}
-    
+      }
+    };
+
     FetchData();
   }, []);
 
@@ -140,4 +140,3 @@ function ForthForm({ formData, loading, setLoading }: FormProps) {
   }
 }
 export default ForthForm;
-// This email is already registered!

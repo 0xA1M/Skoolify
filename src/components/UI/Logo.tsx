@@ -15,7 +15,7 @@ interface Props {
 }
 
 function Logo({ isIndependent }: Props) {
-  const [mounted, setMounted] = useState(false);
+  const [mounted, setMounted] = useState<boolean>(false);
   const { resolvedTheme } = useTheme();
 
   let Logo = resolvedTheme == "light" ? logoLight : logoDark;

@@ -32,11 +32,11 @@ function Footer() {
           </Tooltip>
         </Link>
 
-        <Link isExternal href="instagram.com" color="foreground">
+        <Link isExternal href="https://instagram.com" color="foreground">
           <FaInstagram className="w-6 h-6 sm:w-8 sm:h-8 mx-1.5" />
         </Link>
 
-        <Link isExternal href="facebook.com" color="foreground">
+        <Link isExternal href="https://facebook.com" color="foreground">
           <FaFacebook className="w-6 h-6 sm:w-8 sm:h-8 mx-1.5" />
         </Link>
 
@@ -48,7 +48,7 @@ function Footer() {
           <FaGithub className="w-6 h-6 sm:w-8 sm:h-8 mx-1.5" />
         </Link>
 
-        <Link isExternal href="linkedin.com" color="foreground">
+        <Link isExternal href="https://linkedin.com" color="foreground">
           <FaLinkedin className="w-6 h-6 sm:w-8 sm:h-8 mx-1.5" />
         </Link>
       </section>
