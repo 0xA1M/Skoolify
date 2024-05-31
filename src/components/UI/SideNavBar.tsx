@@ -87,7 +87,7 @@ function SideNavBar() {
       icon: <FaUserCheck size={22} />,
     },
     {
-      title: "Timetable",
+      title: "Notifications",
       label: "timetable",
       link: "/dashboard/timetable",
       icon: <FaClock size={22} />,

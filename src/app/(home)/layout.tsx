@@ -10,7 +10,6 @@ import Footer from "@/components/Footer";
 
 /* Assets */
 import type { Metadata } from "next";
-
 export const metadata: Metadata = {
   title: "Skoolify | The School Management Tool",
 };
@@ -18,8 +17,8 @@ export const metadata: Metadata = {
 interface Props {
   children: React.ReactNode;
 }
-
 function HomeLayout({ children }: Props) {
+
   return (
     <Provider>
       <Nav />

@@ -1,6 +1,6 @@
 "use client";
 /* Utils */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /* Components */
 import { Card, CardBody, Spinner } from "@nextui-org/react";
@@ -12,7 +12,10 @@ import { useRouter } from "next/navigation";
 /* Forth Form: This will display the waiting for validation message to the client */
 function ForthForm({ formData, loading, setLoading }: FormProps) {
   const router = useRouter();
+  
   const [error_, setError] = useState("");
+  const [loading2,setLoading2]=useState(0)
+  
   const data: string = JSON.stringify({
     username: formData
       ? `${String(formData.firstName)} ${String(formData.lastName)}`
@@ -27,13 +30,16 @@ function ForthForm({ formData, loading, setLoading }: FormProps) {
     level:
       formData?.levels.length === 1 ? formData.levels[0] : formData?.levels,
   });
-
+  const hasFetched = useRef(false);
   useEffect(() => {
     const handleRedirect = (path: string) => {
       router.push(path);
+      
     };
-
+   
     const FetchData = async () => {
+      if (hasFetched.current) return;
+      hasFetched.current = true;
       try {
         const response = await fetch(`http://localhost:3000/api/addRequest`, {
           method: "POST",
@@ -45,7 +51,7 @@ function ForthForm({ formData, loading, setLoading }: FormProps) {
 
         if (response.ok) {
           // Success case (handle successful registration)
-          setLoading(1);
+          setLoading2(1);
 
           setTimeout(() => {
             handleRedirect("/login");
@@ -68,7 +74,7 @@ function ForthForm({ formData, loading, setLoading }: FormProps) {
     FetchData();
   }, []);
 
-  switch (loading) {
+  switch (loading2) {
     case 0:
       return (
         <div className="w-full mt-8 p-4 lg:p-8 h-full lg:h-4/6 flex item-center justify-center">

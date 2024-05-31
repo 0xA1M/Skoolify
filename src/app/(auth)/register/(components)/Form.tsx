@@ -37,6 +37,7 @@ export interface FormProps {
   step?: number;
   formData?: FormDataType;
   loading?: number;
+  error_?:String;
   setLoading: Dispatch<SetStateAction<number>>;
   setStep: Dispatch<SetStateAction<number>>;
   setFormData: Dispatch<SetStateAction<FormDataType>>;
@@ -49,6 +50,7 @@ function Form({
   setFormData,
   loading,
   setLoading,
+
 }: FormProps) {
   /* Display the correct form according to the progress of the client */
   switch (step) {

@@ -32,9 +32,10 @@ interface Props {
   enrolled: boolean;
 }
 
+
 function UserInfo({ user, enrolled }: Props) {
   const [editPanel, setEditPanel] = useState<boolean>(false);
-
+  console.log(user)
   if (user) {
     return (
       <>

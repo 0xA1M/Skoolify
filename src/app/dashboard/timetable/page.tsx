@@ -409,5 +409,4 @@ function TimeTable() {
     </Card>
   );
 }
-
 export default TimeTable;

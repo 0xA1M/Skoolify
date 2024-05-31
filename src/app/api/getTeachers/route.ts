@@ -1,7 +1,7 @@
 import dbConnect from "@/database/ConnectToDB";
 import { Status } from "@/enums/Status";
 import Admin from "@/models/Admin";
-import Student from "@/models/Student";
+import Teacher from "@/models/Teacher";
 
 export async function POST(request: Request) {
     await dbConnect();
@@ -9,13 +9,13 @@ export async function POST(request: Request) {
     var response=[];
     if(res.status===Status.accepted)
     {
-     response= await Student.find();
+     response= await Teacher.find();
     }
     else
     {
      response= await Admin.find();
-     response=response[0].requests.filter((request:any) => request.role === 'student');
+     response= response[0].requests.filter((request:any) => request.role == 'teacher');
     }
-    console.log(response)
+    console.log("request get it")
      return Response.json(response)
      }

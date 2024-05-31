@@ -17,6 +17,7 @@ import {
   ModalFooter,
   chip,
   Input,
+  Spinner,
 } from "@nextui-org/react";
 import { IoIosCheckmark, IoIosCloseCircleOutline } from "react-icons/io";
 import { MdOutlineModeEdit } from "react-icons/md";
@@ -39,13 +40,14 @@ interface Props {
 function EditPopUp({ user, editPanel, setEditPanel }: Props) {
   const [edit, setEdit] = useState<string>("");
   const [levels, setLevels] = useState<string[]>(user.levels!);
+  const [isLoading,setIsLoading]=useState<boolean>(false)
   const [subjects, setSubjects] = useState<
-    {
-      subject: string;
-      group: string;
-      sessions?: number | undefined;
-    }[] // parse and stringify are used to copy the object and not referencing it
-  >(JSON.parse(JSON.stringify(user.subjects)));
+  {
+    subject: string;
+    group: string;
+    sessions?: number | undefined;
+  }[] // parse and stringify are used to copy the object and not referencing it
+>(JSON.parse(JSON.stringify(user.subjects)));
   const [values, setValues] = useState<{ name: string; value: string }[]>([]);
   const [fullName, setFullName] = useState<string>(user.fullName);
   const [email, setEmail] = useState<string>(user.email);
@@ -89,14 +91,14 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
 
     setLevels(levels?.filter((level) => level != levelToRemove));
     setSubjects(
-      subjects.filter((obj) => obj.subject != subjectToRemove.subject)
+      subjects.filter((obj:any) => obj.subject != subjectToRemove.subject)
     );
   };
 
   const handleRemoveSubject = (e: any) => {
     const subjectToRemove = e.currentTarget.name;
 
-    setSubjects(subjects.filter((obj) => obj.subject != subjectToRemove));
+    setSubjects(subjects.filter((obj:any) => obj.subject != subjectToRemove));
   };
 
   const handleInput = () => {
@@ -125,7 +127,7 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
 
     if (user.role === "Teacher") {
       setLevels((levels) => [...levels, ""]);
-      setSubjects((subjects) => [
+      setSubjects((subjects:any) => [
         ...subjects,
         {
           subject: "",
@@ -133,7 +135,7 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
         },
       ]);
     } else if (user.role === "Student") {
-      setSubjects((subjects) => [
+      setSubjects((subjects:any) => [
         ...subjects,
         {
           subject: "",
@@ -145,17 +147,43 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
   };
 
   /* Update the user's data */
-  const handleSubmitEdit = (e: any) => {
+  const handleSubmitEdit = async (e: any) => {
+    setIsLoading(true)
     user.fullName = fullName;
     user.email = email;
     user.phone = phone;
     user.levels = levels;
     user.subjects = subjects;
+    const data={
+      id:user.id,
+      std:{
+        username:user.fullName,
+        email:user.email,
+        phone_number:user.phone,
+        level:user.levels[0],
+        modules_Groups_sessionNumber:user.subjects
+        }
+    }
+    console.log(user)
+    console.log(data)
+    const response = await fetch(`http://localhost:3000/api/updateStudent`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    setTimeout(() => {setIsLoading(false);}, 3000);
+    };
 
-    console.log(e);
-  };
-
+  // switch(isLoading)
+  // {case true:
+  //   return( <div className=" w-[800px] h-[500px] flex justify-center items-center">
+  //   <Spinner size="lg" color="primary" />
+  //   </div>)
+  // case false :
   return (
+    
     <Modal
       isDismissable={false}
       isKeyboardDismissDisabled
@@ -691,7 +719,7 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
                 color="danger"
                 variant="light"
                 onPress={() => {
-                  onClose();
+                !isLoading && onClose() 
                   setEdit("");
                   setLevels(user.levels!);
                   setSubjects(user.subjects!);
@@ -700,22 +728,22 @@ function EditPopUp({ user, editPanel, setEditPanel }: Props) {
                 Cancel
               </Button>
               <Button
-                color="primary"
+                color={`${!isLoading ? "primary" : "default"}`}
                 variant="shadow"
                 onPress={(e: any) => {
-                  onClose();
+                  if(isLoading){onClose();}
                   setEdit("");
                   handleSubmitEdit(e);
                 }}
               >
-                Save
+               {isLoading ? (<Spinner size="sm" color="primary" />):(<h1>Save</h1>)} 
               </Button>
             </ModalFooter>
           </>
         )}
       </ModalContent>
     </Modal>
-  );
-}
+  )};
 
-export default EditPopUp;
+
+export default EditPopUp

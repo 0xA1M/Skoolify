@@ -1,6 +1,7 @@
 "use client";
 /* Utils */
 import { ChangeEvent, useState } from "react";
+import { useTheme } from "next-themes";
 
 /* Components */
 import {
@@ -16,6 +17,10 @@ import {
 } from "@nextui-org/react";
 import { LuInfo } from "react-icons/lu";
 import { IoIosSend } from "react-icons/io";
+import { ToastContainer, TypeOptions, toast } from "react-toastify";
+
+/* Styles */
+import "react-toastify/dist/ReactToastify.css";
 
 /* Types */
 type ContactFormData = {
@@ -26,6 +31,8 @@ type ContactFormData = {
 };
 
 function Contact() {
+  const { theme } = useTheme();
+  
   const [userInfo, setUserInfo] = useState<ContactFormData>({
     firstName: "",
     lastName: "",
@@ -45,7 +52,6 @@ function Contact() {
   const handleSubmit = () => {
     if (Object.values(userInfo).every((value) => value.trim() !== "")) return;
 
-    console.log(userInfo);
     setLoading(true);
 
     setTimeout(() => {
@@ -55,15 +61,26 @@ function Contact() {
         email: "",
         message: "",
       });
+      
       setLoading(false);
     }, 3000);
   };
+
+  const notify = (msg: string, type: string) =>
+    toast(msg, {
+      autoClose: 5000,
+      type: type as TypeOptions,
+      pauseOnFocusLoss: false,
+      theme: theme,
+    });
 
   return (
     <section
       id="contact"
       className="p-8 sm:p-16 lg:p-4 w-full sm:h-screen h-80v grid grid-cols-1 lg:grid-cols-2 grid-rows-1 lg:gap-6 mb-8 items-center"
     >
+      <ToastContainer limit={1} />
+
       <Card className="mx-auto w-5/6 h-80v p-6">
         <CardHeader className="flex justify-between items-center px-8">
           <h2 className="text-3xl">Get in Touch</h2>
@@ -128,7 +145,10 @@ function Contact() {
             variant="shadow"
             color="primary"
             className="text-lg flex items-center justify-center gap-2 mb-4"
-            onClick={handleSubmit}
+            onClick={() => {
+              handleSubmit();
+              notify("You're Message has been sent!", "info")
+            }}
             isLoading={loading}
           >
             {!loading && "Send"}
