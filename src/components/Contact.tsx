@@ -1,3 +1,8 @@
+"use client";
+/* Utils */
+import { useState } from "react";
+import { useTheme } from "next-themes";
+
 /* Components */
 import {
   Card,
@@ -11,17 +16,35 @@ import {
   Input,
 } from "@nextui-org/react";
 import { LuInfo } from "react-icons/lu";
+import { ToastContainer, TypeOptions, toast } from "react-toastify";
+
+/* Styles */
+import "react-toastify/dist/ReactToastify.css";
 
 {
   /* TODO: Make the mail functionality actually works */
 }
 
 function Contact() {
+  const { theme } = useTheme();
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const notify = (msg: string, type: string) =>
+    toast(msg, {
+      autoClose: 5000,
+      type: type as TypeOptions,
+      pauseOnFocusLoss: false,
+      theme: theme,
+    });
+
   return (
     <section
       id="contact"
       className="p-8 sm:p-16 lg:p-4 w-full sm:h-screen h-80v grid grid-cols-1 lg:grid-cols-2 grid-rows-1 lg:gap-6 mb-8 items-center"
     >
+      <ToastContainer limit={1} />
+
       <Card className="mx-auto w-5/6 h-80v p-6">
         <CardHeader className="flex justify-between items-center px-8">
           <h2 className="text-3xl">Get in Touch</h2>
@@ -69,7 +92,13 @@ function Contact() {
           />
         </CardBody>
         <CardFooter className="flex justify-center items-center">
-          <Button size="lg" variant="shadow" color="primary" className="mb-4">
+          <Button
+            size="lg"
+            variant="shadow"
+            color="primary"
+            isLoading={isLoading}
+            className="mb-4"
+          >
             Send
           </Button>
         </CardFooter>

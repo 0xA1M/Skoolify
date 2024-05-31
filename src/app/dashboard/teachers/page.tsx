@@ -3,7 +3,15 @@
 import { useState, ChangeEvent, useEffect } from "react";
 
 /* Components */
-import { Button, Card, CardBody, Input, Spinner, Switch, Tooltip } from "@nextui-org/react";
+import {
+  Button,
+  Card,
+  CardBody,
+  Input,
+  Spinner,
+  Switch,
+  Tooltip,
+} from "@nextui-org/react";
 import Link from "next/link";
 import { CiSearch, CiTimer } from "react-icons/ci";
 
@@ -20,17 +28,16 @@ function TeachersPage() {
   const [Data, setData] = useState([]);
   const [search, setSearch] = useState<string>("");
   const [selectedUser, setSelectedUser] = useState<number>(0);
-// ----------------------------------------------------------
-const [status, setStatus] = useState<Status>(Status.accepted);
+  const [status, setStatus] = useState<Status>(Status.accepted);
   const [areEnrolled, setAreEnrolled] = useState<boolean>(false);
-  const [isLoading,SetisLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 
   useEffect(() => {
-    SetisLoading(true)
-    const FechData = async () => {
+    setIsLoading(true);
+    const fetchData = async () => {
       const response = await fetch(`http://localhost:3000/api/getTeachers`, {
         method: "POST",
         headers: {
@@ -42,27 +49,28 @@ const [status, setStatus] = useState<Status>(Status.accepted);
       const Data_ = await response.json();
       setData(Data_);
     };
-    FechData();
-    setTimeout(() => {SetisLoading(false)}, 3000);
+    fetchData();
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
   }, [status]);
- 
+
   const generateUsers = (): User[] => {
     var users: User[] = [];
     users = Data?.map((std: any, i: number) => {
       return {
-        id: String(Number(i)+1).padStart(3, "0"),
+        id: String(Number(i) + 1).padStart(3, "0"),
         fullName: std.username,
         phone: std.phone_number,
         email: std.email,
-        levels: std.level ,
+        levels: std.level,
         subjects: std.modules_Groups_sessionNumber,
         role: `Teacher`,
       };
     });
-    
+
     return users;
   };
-
 
   const users: User[] = generateUsers();
 
@@ -102,9 +110,10 @@ const [status, setStatus] = useState<Status>(Status.accepted);
                   isSelected={areEnrolled}
                   onValueChange={() => {
                     setAreEnrolled(!areEnrolled);
-                    status===Status.accepted ? setStatus(Status.request) : setStatus(Status.accepted)
+                    status === Status.accepted
+                      ? setStatus(Status.request)
+                      : setStatus(Status.accepted);
                     setSelectedUser(0);
-
                   }}
                   thumbIcon={({ isSelected, className }) =>
                     !isSelected ? (
@@ -129,54 +138,47 @@ const [status, setStatus] = useState<Status>(Status.accepted);
           />
         </CardBody>
       </Card>
-      {!isLoading ?
-     (
-      !areEnrolled ? (
-        <UsersGrid
-          users={users}
-          role="student"
-          search={search}
-          selectedUser={selectedUser}
-          setSelectedUser={setSelectedUser}
+      {!isLoading ? (
+        !areEnrolled ? (
+          <UsersGrid
+            users={users}
+            role="student"
+            search={search}
+            selectedUser={selectedUser}
+            setSelectedUser={setSelectedUser}
+            enrolled
+          />
+        ) : (
+          <UsersGrid
+            users={users}
+            role="student"
+            search={search}
+            selectedUser={selectedUser}
+            setSelectedUser={setSelectedUser}
+          />
+        )
+      ) : (
+        <div className=" w-[800px] h-[500px] flex justify-center items-center">
+          <Spinner size="lg" color="primary" />
+        </div>
+      )}
+      {!areEnrolled ? (
+        <UserInfo
+          user={
+            users[users.findIndex((obj) => parseInt(obj.id) === selectedUser)]
+          }
           enrolled
         />
       ) : (
-        <UsersGrid
-          users={users}
-          role="student"
-          search={search}
-          selectedUser={selectedUser}
-          setSelectedUser={setSelectedUser}
+        <UserInfo
+          user={
+            users[users.findIndex((obj) => parseInt(obj.id) === selectedUser)]
+          }
+          enrolled={false}
         />
-      )
-    ):
-    (
-      <div className=" w-[800px] h-[500px] flex justify-center items-center">
-      <Spinner size="lg" color="primary" />
-      </div>
-    )}
-      {!areEnrolled ? (
-         <UserInfo
-         user={
-           users[users.findIndex((obj) => parseInt(obj.id) === selectedUser)]
-         }
-         enrolled
-       />
-     ) : (
-       <UserInfo
-         user={
-           users[users.findIndex((obj) => parseInt(obj.id) === selectedUser)]
-         }
-         enrolled={false}
-       />
       )}
     </section>
   );
 }
 
 export default TeachersPage;
-// status==Status.accepted ? std.level : std.modules_Groups_sessionNumber?.map((obj:any) => obj.level),
-//         subjects: status==Status.accepted ? std.modules_Groups_sessionNumber : std.modules_Groups_sessionNumber?.map((obj: any) => ({
-//           session: "",
-//           group: "",
-//           subj

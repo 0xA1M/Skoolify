@@ -1,7 +1,10 @@
 "use client";
 /* Utils */
 import { FormEvent, useState } from "react";
-import Cookies from 'js-cookie';
+import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
+import Cookies from "js-cookie";
+
 /* Components */
 import {
   Input,
@@ -12,7 +15,6 @@ import {
   CardBody,
   CardFooter,
   Divider,
-  Spinner,
 } from "@nextui-org/react";
 import {
   LuArrowLeft,
@@ -22,26 +24,43 @@ import {
   LuKeyRound,
 } from "react-icons/lu";
 import Link from "next/link";
+import { ToastContainer, TypeOptions, toast } from "react-toastify";
 
 /* Custom Components */
 import ThemeSwitcher from "@/components/UI/ThemeSwitcher";
-import { useRouter } from "next/navigation";
+
+/* Styles */
+import "react-toastify/dist/ReactToastify.css";
 
 function StudentLogin() {
-  const [isVisible, setIsVisible] = useState<boolean>(false);
-  const toggleVisibility = () => setIsVisible(!isVisible);
-  const[Loading,setLoading]=useState(false);
   const router = useRouter();
-  const[error,setError]=useState("")
+  const { theme } = useTheme();
+
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [Loading, setLoading] = useState(false);
+
+  const notify = (msg: string, type: string) =>
+    toast(msg, {
+      autoClose: 5000,
+      type: type as TypeOptions,
+      pauseOnFocusLoss: false,
+      theme: theme,
+    });
+
   async function submitData(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
     const email: string = event.currentTarget.email.value;
     const password: string = event.currentTarget.password.value;
-    const data=JSON.stringify({
-      email:email,
-      password:password,
-      role:"student"
-    })
+
+    const data = JSON.stringify({
+      email: email,
+      password: password,
+      role: "student",
+    });
+
+    setLoading(true);
+
     try {
       const response = await fetch(`http://localhost:3000/api/Login`, {
         method: "POST",
@@ -52,28 +71,33 @@ function StudentLogin() {
       });
 
       const Data = await response.json();
-      setLoading(true);
-      if (response.status == 400)
-      {
+
+      if (response.status == 400) {
         throw new Error(Data.error);
-      } 
-      else 
-      {
-        const oneDay = 24 * 60 * 60 * 1000
-        const token=String(Data);
-        console.log(token)
-        Cookies.set("token",token,{ expires: Date.now() - oneDay })
-         setTimeout(() => {setLoading(false);router.push('/student')}, 3000);    
+      } else {
+        const oneDay = 24 * 60 * 60 * 1000;
+        const token = String(Data);
+        Cookies.set("token", token, { expires: Date.now() - oneDay });
+
+        notify("Hold Tight! You're Being Redirected.", "info");
+
+        setTimeout(() => {
+          setLoading(false);
+          router.push("/student");
+        }, 3000);
       }
     } catch (error: any) {
-      setTimeout(() => {setLoading(false);setError("Email or Password are incorrect")}, 3000);
+      setTimeout(() => {
+        setLoading(false);
+        notify("Email or Password are incorrect!", "error");
+      }, 3000);
     }
-  };
-  
-  
+  }
 
   return (
     <section className="w-full h-screen flex justify-center items-center flex-col mx-auto max-w-6xl">
+      <ToastContainer limit={1} />
+
       <section className="p-4 grid grid-cols-1 md:grid-cols-2 grid-rows-1 gap-4">
         <aside className="w-full h-full flex justify-between items-center mr-14">
           <Image
@@ -134,7 +158,7 @@ function StudentLogin() {
                       <button
                         className="focus:outline-none"
                         type="button"
-                        onClick={toggleVisibility}
+                        onClick={() => setIsVisible(!isVisible)}
                       >
                         {isVisible ? (
                           <LuEyeOff className="text-2xl text-default-400 pointer-events-none" />
@@ -150,29 +174,20 @@ function StudentLogin() {
                 </div>
               </div>
 
-              { 
-             Loading ?
-             <Spinner size="lg" color="primary" />
-             :
-             <Button
-                variant="shadow"
-                color="primary"
-                className="m-4 py-6 px-8 mt-10 md:mt-0"
-                size="lg"
-                type="submit"
-              >
-                Login
-              </Button>
-             }
+              <div className="mt-4 w-full flex flex-col items-center justify-center">
+                <Button
+                  variant="shadow"
+                  color="primary"
+                  className="m-4 py-6 px-8 mt-10 md:mt-0"
+                  size="lg"
+                  type="submit"
+                  radius="sm"
+                  isLoading={Loading}
+                >
+                  Login
+                </Button>
+              </div>
             </form>
-            {
-              Loading ?
-              ""
-              :
-            <div className=" w-full  flex justify-center pb-10">
-            <h4 className=" text-red-600">{error}</h4>
-            </div>
-             }
           </CardBody>
           <CardFooter className="text-center">
             <p>
