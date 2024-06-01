@@ -18,7 +18,6 @@ interface Props {
   children: React.ReactNode;
 }
 function HomeLayout({ children }: Props) {
-
   return (
     <Provider>
       <Nav />

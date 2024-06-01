@@ -115,7 +115,7 @@ function StudentLogin() {
                 href="/login"
                 className="p-2 rounded-xl transition-background duration-200 ease-in-out hover:bg-primary-500 hover:bg-opacity-20 drop-shadow-lg"
               >
-                <LuArrowLeft className="text-foreground" />
+                <LuArrowLeft className="text-foreground" size={24} />
               </Link>
             </article>
 

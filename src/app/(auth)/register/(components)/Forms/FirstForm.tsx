@@ -7,6 +7,7 @@ import Link from "next/link";
 
 /* Assets */
 import { FcGoogle } from "react-icons/fc";
+import { RxRocket } from "react-icons/rx";
 
 /* Types */
 import { FormProps } from "../Form";
@@ -53,7 +54,7 @@ function FirstForm({ setStep, setFormData }: FormProps) {
 
   return (
     <>
-      <article className="flex flex-col items-center justify-center">
+      <article className="flex flex-col items-center justify-center m-2 mb-4 gap-2">
         <h1 className="text-3xl font-medium mb-2">Create Account</h1>
         <Button
           variant="shadow"
@@ -63,7 +64,6 @@ function FirstForm({ setStep, setFormData }: FormProps) {
           <FcGoogle />
           Signup with Google
         </Button>
-        <h2 className="font-bold text-2xl">- OR -</h2>
       </article>
 
       <form
@@ -167,10 +167,11 @@ function FirstForm({ setStep, setFormData }: FormProps) {
           type="submit"
           variant="shadow"
           color="primary"
-          className="m-4 py-6 px-8 mt-10 md:mt-0"
+          className="m-4 py-6 px-8 mt-10 md:mt-0 font-semibold"
           size="lg"
         >
           Sign Up
+          <RxRocket size={22} />
         </Button>
 
         <p>

@@ -20,6 +20,7 @@ import {
 import { IoNotificationsOutline, IoSettingsOutline } from "react-icons/io5";
 import { CiLogout } from "react-icons/ci";
 import { TbSunMoon } from "react-icons/tb";
+import { MdOutlineContactSupport } from "react-icons/md";
 
 /* Custom Components */
 import Logo from "@/components/UI/Logo";
@@ -111,6 +112,15 @@ function TeacherDashboard() {
                   }
                 >
                   Settings
+                </DropdownItem>
+
+                <DropdownItem
+                  key="support"
+                  startContent={
+                    <MdOutlineContactSupport className="text-xl text-default-500 pointer-events-none flex-shrink-0" />
+                  }
+                >
+                  Support
                 </DropdownItem>
               </DropdownSection>
 

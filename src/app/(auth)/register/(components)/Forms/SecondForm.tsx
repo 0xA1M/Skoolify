@@ -10,6 +10,7 @@ import {
   SelectItem,
   Input,
 } from "@nextui-org/react";
+import { GrLinkNext } from "react-icons/gr";
 
 /* Types */
 import { FormProps } from "../Form";
@@ -219,10 +220,6 @@ function SecondForm({ formData, setStep, setFormData }: FormProps) {
       >
         {formData?.role == "teacher" && (
           <div className="w-full flex flex-col items-center justify-center mt-5 gap-2">
-            <h1 className="text-2xl lg:text-3xl text-center">
-              👋 Hello Dear Teacher!
-            </h1>
-
             <div className="w-80 lg:px-6 flex items-center justify-center ml-12 m-8">
               <Select
                 label="Choose the levels you want to teach"
@@ -273,10 +270,6 @@ function SecondForm({ formData, setStep, setFormData }: FormProps) {
 
         {formData?.role == "student" && (
           <div className="w-full h-full flex flex-col items-center justify-center mt-5">
-            <h1 className="text-4xl lg:text-5xl text-center lg:my-0">
-              👋 Hello Dear Student!
-            </h1>
-
             <div className="w-9/12 h-full flex flex-col lg:flex-row items-center justify-between p-8 gap-8">
               {/* Level Selection Menu */}
               <Select
@@ -364,10 +357,11 @@ function SecondForm({ formData, setStep, setFormData }: FormProps) {
           type="submit"
           variant="shadow"
           color="primary"
-          className="-mb-20 mt-10 py-6 px-8"
+          className="-mb-20 mt-10 py-6 px-8 font-semibold"
           size="lg"
         >
           Next
+          <GrLinkNext size={22} />
         </Button>
       </form>
     </>

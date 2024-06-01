@@ -15,8 +15,9 @@ function Footer() {
       <Logo isIndependent />
 
       <section className="hidden ml-16 col-span-2 col-start-2 text-center lg:block">
-        <p className="text-lg opacity-80 flex justify-center items-center">
-          &copy; {currentYear} SKOOLIFY . All Rights Reserved.
+        <p className="text-lg opacity-80 flex justify-center items-center font-semibold">
+          &copy; {currentYear} <span className="px-1 font-bold">SKOOLIFY</span>
+          All Rights Reserved.
         </p>
       </section>
 
@@ -32,11 +33,19 @@ function Footer() {
           </Tooltip>
         </Link>
 
-        <Link isExternal href="https://instagram.com" color="foreground">
+        <Link
+          isExternal
+          href="https://instagram.com/Skoolify"
+          color="foreground"
+        >
           <FaInstagram className="w-6 h-6 sm:w-8 sm:h-8 mx-1.5" />
         </Link>
 
-        <Link isExternal href="https://facebook.com" color="foreground">
+        <Link
+          isExternal
+          href="https://facebook.com/Skoolify"
+          color="foreground"
+        >
           <FaFacebook className="w-6 h-6 sm:w-8 sm:h-8 mx-1.5" />
         </Link>
 
@@ -48,7 +57,11 @@ function Footer() {
           <FaGithub className="w-6 h-6 sm:w-8 sm:h-8 mx-1.5" />
         </Link>
 
-        <Link isExternal href="https://linkedin.com" color="foreground">
+        <Link
+          isExternal
+          href="https://linkedin.com/Skoolify"
+          color="foreground"
+        >
           <FaLinkedin className="w-6 h-6 sm:w-8 sm:h-8 mx-1.5" />
         </Link>
       </section>

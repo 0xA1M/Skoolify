@@ -21,7 +21,7 @@ const ProgressBar: React.FC<ProgressStepperProps> = ({ progress, loading }) => {
       icon: <LuInfo size={24} color="currentColor" />,
     },
     {
-      title: "Level & Subjects",
+      title: "Level(s) & Subject(s)",
       completed: progress >= 2,
       icon: <VscLibrary size={24} color="currentColor" />,
     },

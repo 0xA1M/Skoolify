@@ -10,6 +10,7 @@ import { LuEye, LuEyeOff } from "react-icons/lu";
 
 /* Types */
 import { FormProps } from "../Form";
+import { PiConfetti } from "react-icons/pi";
 
 /* Third Form: This will retrieve the password set by the client */
 function ThirdForm({ setStep, setFormData }: FormProps) {
@@ -54,10 +55,6 @@ function ThirdForm({ setStep, setFormData }: FormProps) {
         onSubmit={onSubmit}
         className="w-full h-5/6 flex flex-col items-center justify-center gap-10 "
       >
-        <h1 className="text-2xl mx-auto lg:mx-0 lg:ml-32 self-start lg:text-4xl">
-          🔑 Choose a secure password
-        </h1>
-
         <div className="w-10/12 lg:w-6/12 flex flex-col p-4 gap-6 lg:gap-8">
           <Input
             label="Password"
@@ -116,10 +113,11 @@ function ThirdForm({ setStep, setFormData }: FormProps) {
           type="submit"
           variant="shadow"
           color="primary"
-          className="m-4 py-6 px-8"
+          className="m-4 py-6 px-8 font-semibold"
           size="lg"
         >
-          Next
+          Finish
+          <PiConfetti size={22} />
         </Button>
       </form>
     </>

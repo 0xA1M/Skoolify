@@ -30,7 +30,7 @@ function Nav() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const navItems: Menu = [
     {
-      link: "/",
+      link: "#home",
       label: "Home",
     },
     {

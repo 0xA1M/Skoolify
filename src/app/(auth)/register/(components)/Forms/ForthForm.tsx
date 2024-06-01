@@ -1,6 +1,6 @@
 "use client";
 /* Utils */
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 /* Components */
 import { Card, CardBody, Spinner } from "@nextui-org/react";
@@ -12,34 +12,41 @@ import { useRouter } from "next/navigation";
 /* Forth Form: This will display the waiting for validation message to the client */
 function ForthForm({ formData, loading, setLoading }: FormProps) {
   const router = useRouter();
-  
-  const [error_, setError] = useState("");
-  const [loading2,setLoading2]=useState(0)
-  
-  const data: string = JSON.stringify({
-    username: formData
-      ? `${String(formData.firstName)} ${String(formData.lastName)}`
-      : "",
-    email: String(formData?.email || ""),
-    phone_number: String(formData?.phone || ""),
-    gender: String(formData?.gender || ""),
-    birthday: String(formData?.dateOfBirth || ""),
-    password: String(formData?.password || ""),
-    modules_Groups_sessionNumber: formData?.subjects,
-    role: String(formData?.role || ""),
-    level:
-      formData?.levels.length === 1 ? formData.levels[0] : formData?.levels,
-  });
-  const hasFetched = useRef(false);
+
+  const [error, setError] = useState<string>("");
+  const [loading2, setLoading2] = useState<number>(0);
+
+  const data: string = useMemo(
+    () =>
+      JSON.stringify({
+        username: formData
+          ? `${String(formData.firstName)} ${String(formData.lastName)}`
+          : "",
+        email: String(formData?.email || ""),
+        phone_number: String(formData?.phone || ""),
+        gender: String(formData?.gender || ""),
+        birthday: String(formData?.dateOfBirth || ""),
+        password: String(formData?.password || ""),
+        modules_Groups_sessionNumber: formData?.subjects,
+        role: String(formData?.role || ""),
+        level:
+          formData?.levels.length === 1 ? formData.levels[0] : formData?.levels,
+      }),
+    [formData]
+  );
+
+  const hasFetched = useRef<boolean>(false);
+
   useEffect(() => {
     const handleRedirect = (path: string) => {
       router.push(path);
-      
     };
-   
+
     const FetchData = async () => {
       if (hasFetched.current) return;
+
       hasFetched.current = true;
+
       try {
         const response = await fetch(`http://localhost:3000/api/addRequest`, {
           method: "POST",
@@ -58,10 +65,11 @@ function ForthForm({ formData, loading, setLoading }: FormProps) {
           }, 3000);
         } else {
           const jsonData = await response.json();
+          handleRedirect("/register");
+
           throw new Error(jsonData);
         }
       } catch (error: any) {
-        console.log(error.message);
         setError(error.message);
         setLoading(2);
 
@@ -72,7 +80,7 @@ function ForthForm({ formData, loading, setLoading }: FormProps) {
     };
 
     FetchData();
-  }, []);
+  }, [data, router, setLoading]);
 
   switch (loading2) {
     case 0:
@@ -100,12 +108,12 @@ function ForthForm({ formData, loading, setLoading }: FormProps) {
               </h2>
               <p className="text-lg lg:indent-10 lg:px-4">
                 Our team will now review the information you provided. This
-                process usually takes 24 hours. Once your account is approved,
-                you will receive a confirmation email at the address you
-                provided during registration. If you have any urgent inquiries
-                or need assistance, feel free to contact us at{" "}
+                process usually takes around 24 hours. Once your account is
+                approved, you will receive a confirmation email at the address
+                you provided during registration. If you have any urgent
+                inquiries or need assistance, feel free to contact us at{" "}
                 <span className="italic">contact@skoolify.com</span>. Thank you
-                for choosing <span>SKOOLIFY</span>!
+                for choosing <span className="font-bold">SKOOLIFY</span>!
               </p>
             </div>
           </CardBody>
@@ -116,7 +124,7 @@ function ForthForm({ formData, loading, setLoading }: FormProps) {
       return (
         <div className="w-full h-full flex flex-col items-center justify-center mb-24">
           <h1 className="text-danger font-bold text-3xl text-center">
-            {error_}
+            {error}
           </h1>
 
           <h2 className="text-lg font-semibold text-zinc-700 text-center">

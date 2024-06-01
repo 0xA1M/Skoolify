@@ -36,7 +36,7 @@ function Login() {
               href="/"
               className="-ml-12 md:ml-0 p-2 rounded-xl transition-background duration-200 ease-in-out hover:bg-primary-500 hover:bg-opacity-20 drop-shadow-lg"
             >
-              <LuArrowLeft className="text-foreground" />
+              <LuArrowLeft className="text-foreground" size={24} />
             </Link>
 
             <h1 className="text-primary font-bold text-3xl ml-4 md:ml-3">

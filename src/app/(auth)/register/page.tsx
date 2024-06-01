@@ -1,11 +1,11 @@
 "use client";
 /* Utils */
 import { useState } from "react";
+import { redirect } from "next/navigation";
 
 /* Components */
-import { Image, Card, CardHeader, CardBody } from "@nextui-org/react";
+import { Image, Card, CardHeader, CardBody, Button } from "@nextui-org/react";
 import { LuArrowLeft } from "react-icons/lu";
-import Link from "next/link";
 
 /* Custom Components */
 import ThemeSwitcher from "@/components/UI/ThemeSwitcher";
@@ -54,7 +54,9 @@ function SignUp() {
               : "/Auth/register/student.png"
           }
           alt=""
-          className="w-auto h-full"
+          className={`${
+            formData.role === "teacher" ? "w-full h-[32rem]" : "w-full h-96"
+          }`}
         />
       );
       break;
@@ -63,7 +65,7 @@ function SignUp() {
         <Image
           src="/Auth/register/security.png"
           alt=""
-          className="w-auto h-full"
+          className="w-auto h-full scale-90"
         />
       );
       break;
@@ -72,7 +74,7 @@ function SignUp() {
         <Image
           src="/Auth/register/settings.png"
           alt=""
-          className="transform scale-75 hidden lg:block"
+          className="w-auto h-full scale-95"
         />
       );
       break;
@@ -80,10 +82,48 @@ function SignUp() {
 
   return (
     <section className="w-full h-screen grid grid-cols-1 lg:grid-cols-3 grid-rows-1">
-      <aside className="hidden lg:flex bg-primary-500 flex-col items-center justify-center">
-        <h1 className="w-full text-center flex flex-col text-4xl m-4">
-          Get Started with <span className="text-warning-500">SKOOLIFY</span>
-        </h1>
+      <aside className="hidden lg:flex bg-primary-500 flex-col items-center justify-center gap-4">
+        {step === 0 && (
+          <h1 className="text-white w-full text-center flex flex-col text-4xl font-semibold m-4">
+            Get Started with{" "}
+            <span className="m-1 text-warning-500 font-bold">SKOOLIFY</span>
+          </h1>
+        )}
+
+        {step === 1 && (
+          <>
+            {formData.role === "teacher" ? (
+              <h1 className="m-4 mb-8 text-white text-4xl text-center">
+                Pick your{" "}
+                <span className="text-warning-500 font-semibold">Levels</span> &{" "}
+                <span className="text-warning-500 font-semibold">Subjects</span>
+              </h1>
+            ) : (
+              <h1 className="m-4 mb-8 text-white text-4xl text-center">
+                Pick your{" "}
+                <span className="text-warning-500 font-semibold">Level</span> &{" "}
+                <span className="text-warning-500 font-semibold">Subjects</span>
+              </h1>
+            )}
+          </>
+        )}
+
+        {step === 2 && (
+          <h1 className="flex flex-col m-4 text-white text-4xl text-center">
+            Choose a Secure{" "}
+            <span className="text-warning-500 font-semibold">Password</span>
+          </h1>
+        )}
+
+        {step === 3 && (
+          <h1 className="m-4 mb-16 font-bold text-5xl text-center">
+            <span className="bg-gradient-to-r from-white to-warning-500 bg-clip-text text-transparent">
+              Congratulations
+            </span>{" "}
+            🎊
+          </h1>
+        )}
+
         {ImageNode!}
       </aside>
 
@@ -91,12 +131,21 @@ function SignUp() {
         <Card className="w-full h-full">
           <CardHeader className="h-14 flex items-center justify-center">
             <div className="flex item-center justify-center mr-auto">
-              <Link
-                href="/"
-                className="p-2 rounded-xl transition-background duration-200 ease-in-out hover:bg-primary-500 hover:bg-opacity-20 drop-shadow-lg self-center"
+              <Button
+                isIconOnly
+                color="primary"
+                variant="light"
+                className="self-center"
+                onClick={() => {
+                  if (step == 0) {
+                    redirect("/");
+                  } else {
+                    setStep((prevStep) => prevStep - 1);
+                  }
+                }}
               >
-                <LuArrowLeft className="text-foreground" />
-              </Link>
+                <LuArrowLeft className="text-foreground" size={24} />
+              </Button>
 
               <Logo />
             </div>

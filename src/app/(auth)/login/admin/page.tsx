@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import Cookies from "js-cookie";
 
-
 /* Components */
 import {
   Input,
@@ -46,7 +45,6 @@ function AdminLogin() {
       pauseOnFocusLoss: false,
       theme: theme,
     });
-
 
   async function submitData(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -117,7 +115,7 @@ function AdminLogin() {
                 href="/login"
                 className="p-2 rounded-xl transition-background duration-200 ease-in-out hover:bg-primary-500 hover:bg-opacity-20 drop-shadow-lg"
               >
-                <LuArrowLeft className="text-foreground" />
+                <LuArrowLeft className="text-foreground" size={24} />
               </Link>
             </article>
 
@@ -175,7 +173,6 @@ function AdminLogin() {
                   />
                 </div>
               </div>
-
 
               <div className="m-4 w-full flex flex-col items-center justify-center">
                 <Button
