@@ -1,6 +1,6 @@
 {
   "name": "skoolify",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -30,6 +30,7 @@
     "react-pro-sidebar": "^1.1.0",
     "react-step-progress-bar": "^1.0.3",
     "react-toastify": "^10.0.5",
+    "recharts": "^2.12.7",
     "sharp": "^0.33.3"
   },
   "devDependencies": {

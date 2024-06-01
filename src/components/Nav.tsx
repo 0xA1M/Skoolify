@@ -103,9 +103,9 @@ function Nav() {
             as={Link}
             href="/register"
             color="secondary"
-            variant="solid"
+            variant="shadow"
           >
-            <p className="text-foreground text-medium">Sign Up</p>
+            <p className="text-medium">Sign Up</p>
           </Button>
         </NavbarItem>
       </NavbarContent>

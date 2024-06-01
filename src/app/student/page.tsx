@@ -28,7 +28,17 @@ import {
   Tooltip,
   Select,
   SelectItem,
+  Chip,
 } from "@nextui-org/react";
+
+/* Custom Components */
+import Logo from "@/components/UI/Logo";
+import ThemeSwitcher from "@/components/UI/ThemeSwitcher";
+import DayCell from "@/components/UI/DayCell";
+import Schedule from "@/components/UI/Schedule";
+import GradeChart from "@/components/UI/GradeChart";
+
+/* Assets */
 import { IoNotificationsOutline, IoSettingsOutline } from "react-icons/io5";
 import { CiLogout } from "react-icons/ci";
 import { TbSunMoon } from "react-icons/tb";
@@ -37,17 +47,11 @@ import { RiCalendarScheduleFill } from "react-icons/ri";
 import { FaChartLine } from "react-icons/fa";
 import { IoLibrary } from "react-icons/io5";
 import { TbMathFunction } from "react-icons/tb";
-import { FaChevronRight, FaChevronLeft } from "react-icons/fa6";
+import { FaChevronRight, FaChevronLeft, FaRegMessage } from "react-icons/fa6";
 import { LuCalendarClock } from "react-icons/lu";
 
-/* Custom Components */
-import Logo from "@/components/UI/Logo";
-import ThemeSwitcher from "@/components/UI/ThemeSwitcher";
-import DayCell from "@/components/UI/DayCell";
-import Schedule from "@/components/UI/Schedule";
-
 function StudentDashboard() {
-  const [selectedSubject, setSelectedSubject] = useState<string>("math"); // change this according to the student's data
+  const [selectedGroup, setSelectedGroup] = useState<string>("grp-01"); // change this according to the student's data
   const [selectedDate, setSelectedDate] = useState<CalendarDate>(
     today(getLocalTimeZone())
   );
@@ -59,29 +63,29 @@ function StudentDashboard() {
 
   let UtilNode: React.JSX.Element;
 
-  const subjects = [
+  const groups = [
     {
-      value: "math",
-      label: "Math",
+      value: "grp-01",
+      label: "Grp 01",
     },
     {
-      value: "physics",
-      label: "Physics",
-    },
-
-    {
-      value: "science",
-      label: "Science",
+      value: "grp-02",
+      label: "Grp 02",
     },
 
     {
-      value: "english",
-      label: "English",
+      value: "grp-03",
+      label: "Grp 03",
     },
 
     {
-      value: "arabic",
-      label: "Arabic",
+      value: "grp-04",
+      label: "Grp 04",
+    },
+
+    {
+      value: "grp-05",
+      label: "Grp 05",
     },
   ];
 
@@ -110,7 +114,42 @@ function StudentDashboard() {
           </Card>
 
           <Card className="col-span-3 col-start-8">
-            <CardBody>General Info</CardBody>
+            <CardBody className="flex flex-col items-center justify-between gap-2">
+              <Card fullWidth shadow="md" className="h-[15%]">
+                <CardBody className="flex flex-row items-center justify-between px-4">
+                  <User
+                    name="Teacher's Name"
+                    description="Group Subject"
+                    avatarProps={{
+                      showFallback: true,
+                      color: "primary",
+                    }}
+                    classNames={{
+                      name: "text-sm",
+                      description: "text-xs text-zinc-500",
+                    }}
+                  />
+
+                  <Button
+                    isIconOnly
+                    radius="sm"
+                    variant="light"
+                    color="primary"
+                  >
+                    <FaRegMessage size={20} />
+                  </Button>
+                </CardBody>
+              </Card>
+
+              <Card fullWidth shadow="md" className="h-[85%]">
+                <CardBody className="grid grid-cols-1 grid-rows-5 gap-4">
+                  <div className="row-span-2 bg-red-500">1</div>
+                  <div className="row-span-3 row-start-3 ">
+                    <GradeChart />
+                  </div>
+                </CardBody>
+              </Card>
+            </CardBody>
           </Card>
         </div>
       );
@@ -142,7 +181,7 @@ function StudentDashboard() {
   };
 
   const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedSubject(e.target.value);
+    setSelectedGroup(e.target.value);
   };
 
   return (
@@ -411,13 +450,13 @@ function StudentDashboard() {
                 selectionMode="single"
                 label="Groups"
                 labelPlacement="outside-left"
-                selectedKeys={[selectedSubject]}
+                selectedKeys={[selectedGroup]}
                 onChange={handleSelectionChange}
-                items={subjects}
+                items={groups}
                 className="flex items-center w-40"
               >
-                {(subject) => (
-                  <SelectItem key={subject.value}>{subject.label}</SelectItem>
+                {(group) => (
+                  <SelectItem key={group.value}>{group.label}</SelectItem>
                 )}
               </Select>
             )}

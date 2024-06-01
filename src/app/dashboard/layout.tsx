@@ -5,8 +5,7 @@ import { usePathname } from "next/navigation";
 /* Custom Components */
 import Provider from "@/components/UI/Provider";
 import SideNavBar from "@/components/UI/SideNavBar";
-import { cookies } from "next/headers";
-import { redirect } from 'next/navigation'
+import { redirect } from "next/navigation";
 interface Props {
   children: React.ReactNode;
 }
@@ -14,11 +13,12 @@ interface Props {
 function DashboardLayout({ children }: Props) {
   const pathname = usePathname();
 
-  if(!cookies().has("token"))
-    {
-      redirect("/login")
-    }
-  
+  if (!document.cookie.includes("token")) {
+    // Check for token in document.cookie
+    redirect("/login");
+    return null; // Prevent rendering further
+  }
+
   return (
     <Provider>
       <main className="w-full h-screen flex">
