@@ -19,7 +19,7 @@ const DayCell = ({ selectedDate, day, setDay }: DayCellProps) => {
   return (
     <p className="w-14 h-8">
       <span className="w-full h-full flex items-center justify-center">
-        {new DateFormatter(getLocalTimeZone(), {
+        {new DateFormatter("en", {
           weekday: "narrow",
         }).format(selectedDate.toDate(getLocalTimeZone()))}
       </span>
