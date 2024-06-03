@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 /* Custom Components */
 import Provider from "@/components/UI/Provider";
 import SideNavBar from "@/components/UI/SideNavBar";
-import { redirect } from 'next/navigation'
 interface Props {
   children: React.ReactNode;
 }

@@ -5,10 +5,23 @@ import { useRouter } from "next/navigation";
 /* Components */
 import { Button, Link, Card, CardBody, CardHeader } from "@nextui-org/react";
 import { MdChevronLeft } from "react-icons/md";
+import { useEffect } from "react";
 
 function Settings() {
   const router = useRouter();
-
+  useEffect(()=>{
+    const Fetch=async ()=>{
+      const response = await fetch(`http://localhost:3000/api/getNotification`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id:1100}),
+      });
+      const data= await response.json();
+    }
+    Fetch();
+   },[])
   return (
     <section className="w-full h-full p-6">
       <Card className="w-full h-full p-4 z-50">

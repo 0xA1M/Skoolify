@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 
 /* Components */
-import { Button, Link, Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Button, Link, Card, CardBody, CardHeader, Textarea } from "@nextui-org/react";
 import { MdChevronLeft } from "react-icons/md";
 
 function NotificationFeed() {
@@ -27,7 +27,11 @@ function NotificationFeed() {
           <h1 className="font-bold text-4xl mx-auto">Notifications</h1>
         </CardHeader>
         <CardBody className="grid place-content-center text-3xl">
-          Stay Tuned!
+        <Textarea
+          label="Description"
+          placeholder="Enter your description"
+          className="max-w-xs"
+           />
         </CardBody>
       </Card>
     </section>

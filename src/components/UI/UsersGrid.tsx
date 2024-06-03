@@ -32,7 +32,7 @@ export type User = {
   email: string;
   phone: string;
   profilePic?: string;
-  subjects? : {
+  subjects?: {
     subject: string;
     group: string;
     sessions?: number;
@@ -60,20 +60,21 @@ function UsersGrid({
 }: Props) {
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [Loading,setLoading]=useState<boolean>(false)
- 
-  const handleStudent = async (id:string,status:Status) => 
-    {
-     setLoading(true)
-      const response = await fetch(`http://localhost:3000/api/acceptStudent`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({id:parseInt(id) - 1,status:status}),
-      });
-      setTimeout(() => {setLoading(false)}, 3000);
-      };           
+  const [Loading, setLoading] = useState<boolean>(false);
+
+  const handleStudent = async (id: string, status: Status) => {
+    setLoading(true);
+    const response = await fetch(`http://localhost:3000/api/acceptStudent`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: parseInt(id) - 1, status: status }),
+    });
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  };
   const renderCell = useCallback(
     (user: any, columnKey: any) => {
       const cellValue = user[columnKey as keyof User];
@@ -97,7 +98,7 @@ function UsersGrid({
           ))}
         </>
       );
-      console.log(cellValue)
+      console.log(cellValue);
       const StudentSubjects = ({ value }: SubjectProps) => (
         <>
           {value?.slice(0, 3).map((obj, index) => (
@@ -114,15 +115,15 @@ function UsersGrid({
           ))}
         </>
       );
-       
+
       // Approve Student' Enrollment
       const handleApprove = (id: string) => {
-        handleStudent(id,Status.accepted)
+        handleStudent(id, Status.accepted);
       };
 
       // Discard Student's Enrollment
       const handleDiscard = (id: string) => {
-        handleStudent(id,Status.request) // i used Status.request thats mean the admin do not want accept the user
+        handleStudent(id, Status.request); // i used Status.request thats mean the admin do not want accept the user
       };
 
       switch (columnKey) {
@@ -154,7 +155,7 @@ function UsersGrid({
               radius="sm"
               variant="flat"
             >
-              {cellValue[0]} 
+              {cellValue[0]}
             </Chip>
           );
 
@@ -167,7 +168,7 @@ function UsersGrid({
                 size="sm"
                 variant="light"
                 color="success"
-                onClick={() =>  handleApprove(user.id)}
+                onClick={() => handleApprove(user.id)}
               >
                 <LuCheckCircle size={24} />
               </Button>
@@ -189,7 +190,7 @@ function UsersGrid({
           return cellValue;
       }
     },
-    [role, users]
+    [role]
   );
 
   const rowsPerPage = enrolled ? 8 : 7;
@@ -279,16 +280,14 @@ function UsersGrid({
   useEffect(() => {
     setPage(1);
   }, [search]);
- if(Loading)
-  {
-    return(
-    <div className="  h-[700px] w-[400px] flex items-center m-auto ">
-       <Spinner size="lg" color="primary" />
-    </div>
-   
-    )
+  if (Loading) {
+    return (
+      <div className="  h-[700px] w-[400px] flex items-center m-auto ">
+        <Spinner size="lg" color="primary" />
+      </div>
+    );
   }
-  return enrolled  ? (
+  return enrolled ? (
     <Table
       fullWidth
       isStriped
@@ -412,7 +411,8 @@ function UsersGrid({
         <TableBody emptyContent={"There is nothing here!"}>{[]}</TableBody>
       )}
     </Table>
-  )};
+  );
+}
 //}
 
 export default UsersGrid;

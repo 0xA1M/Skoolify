@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
+import Student from "./models/Student";
+import { decrypt } from "./Authorization/Encry_Dcry";
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
@@ -36,7 +38,12 @@ export async function middleware(request: NextRequest) {
     }
    // return NextResponse.next();
   }
-  
+  // if (request.nextUrl.pathname.startsWith('/api/getNotification')) 
+  //   {
+  //     const id:string=String(cookies().get("token"));
+  //     const std=Student.findById(decrypt(id));
+      
+  //   }
 }
 
 export const config = {
