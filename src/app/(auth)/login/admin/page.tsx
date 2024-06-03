@@ -79,9 +79,9 @@ function AdminLogin() {
         Cookies.set("token", token, { expires: Date.now() - oneDay });
 
         notify("Hold Tight! You're Being Redirected.", "info");
+        setLoading(false);
 
         setTimeout(() => {
-          setLoading(false);
           router.push("/dashboard");
         }, 3000);
       }

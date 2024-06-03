@@ -25,7 +25,6 @@ import {
   User,
   Tabs,
   Tab,
-  Tooltip,
   Select,
   SelectItem,
   Chip,
@@ -108,12 +107,12 @@ function StudentDashboard() {
 
     case "subjects":
       UtilNode = (
-        <div className="h-full grid grid-cols-10 grid-rows-1 gap-2">
-          <Card className="col-span-7">
+        <div className="h-full grid grid-cols-12 grid-rows-1 gap-2">
+          <Card className="col-span-8">
             <CardBody>Classmates</CardBody>
           </Card>
 
-          <Card className="col-span-3 col-start-8">
+          <Card className="col-start-9 col-span-4">
             <CardBody className="flex flex-col items-center justify-between gap-2">
               <Card fullWidth shadow="md" className="h-[15%]">
                 <CardBody className="flex flex-row items-center justify-between px-4">
@@ -142,9 +141,14 @@ function StudentDashboard() {
               </Card>
 
               <Card fullWidth shadow="md" className="h-[85%]">
-                <CardBody className="grid grid-cols-1 grid-rows-5 gap-4">
-                  <div className="row-span-2 bg-red-500">1</div>
-                  <div className="row-span-3 row-start-3 ">
+                <CardBody className="grid grid-cols-1 grid-rows-6 gap-4">
+                  {/* Info */}
+                  <div className="row-span-2 p-1">
+                    <p>I need to fill this space with something....</p>
+                  </div>
+
+                  {/* Chart */}
+                  <div className="row-start-3 row-span-4">
                     <GradeChart />
                   </div>
                 </CardBody>
