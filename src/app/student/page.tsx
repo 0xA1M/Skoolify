@@ -36,6 +36,7 @@ import ThemeSwitcher from "@/components/UI/ThemeSwitcher";
 import DayCell from "@/components/UI/DayCell";
 import Schedule from "@/components/UI/Schedule";
 import GradeChart from "@/components/UI/GradeChart";
+import StatsCard from "@/components/UI/StatsCard";
 
 /* Assets */
 import { IoNotificationsOutline, IoSettingsOutline } from "react-icons/io5";
@@ -48,6 +49,8 @@ import { IoLibrary } from "react-icons/io5";
 import { TbMathFunction } from "react-icons/tb";
 import { FaChevronRight, FaChevronLeft, FaRegMessage } from "react-icons/fa6";
 import { LuCalendarClock } from "react-icons/lu";
+import { GoPeople } from "react-icons/go";
+import { RxCounterClockwiseClock } from "react-icons/rx";
 
 function StudentDashboard() {
   const [selectedGroup, setSelectedGroup] = useState<string>("grp-01"); // change this according to the student's data
@@ -59,6 +62,7 @@ function StudentDashboard() {
   );
   const [notification, setNotification] = useState<number>(0);
   const [selectedTab, setSelectedTab] = useState<string>("schedule");
+  const [sessions, setSessions] = useState<number>(5); // Change  this according to the student's data
 
   let UtilNode: React.JSX.Element;
 
@@ -143,8 +147,29 @@ function StudentDashboard() {
               <Card fullWidth shadow="md" className="h-[85%]">
                 <CardBody className="grid grid-cols-1 grid-rows-6 gap-4">
                   {/* Info */}
-                  <div className="row-span-2 p-1">
-                    <p>I need to fill this space with something....</p>
+                  <div className="row-span-2 p-1 px-6 grid grid-rows-2 grid-cols-1 gap-4">
+                    <StatsCard
+                      isSmall
+                      val={sessions}
+                      role="Sessions Left"
+                      className={`text-white ${
+                        sessions >= 3
+                          ? "bg-success-500"
+                          : sessions == 2 || sessions == 1
+                          ? "bg-warning-500"
+                          : "bg-danger-500"
+                      }`}
+                      Icon={
+                        <RxCounterClockwiseClock size={24} className="mx-3" />
+                      }
+                    />
+
+                    <StatsCard
+                      isSmall
+                      val={30}
+                      role="Classmate"
+                      Icon={<GoPeople size={24} className="mx-3" />}
+                    />
                   </div>
 
                   {/* Chart */}
@@ -429,6 +454,7 @@ function StudentDashboard() {
                 }
               ></Tab>
               <Tab
+                isDisabled
                 key="progress"
                 title={
                   <div className="flex items-center space-x-2">
@@ -438,6 +464,7 @@ function StudentDashboard() {
                 }
               ></Tab>
               <Tab
+                isDisabled
                 key="resources"
                 title={
                   <div className="flex items-center space-x-2">

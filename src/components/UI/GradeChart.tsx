@@ -1,5 +1,6 @@
 "use client";
 /* Utils */
+import { useState } from "react";
 import { useTheme } from "next-themes";
 
 /* Components */
@@ -25,9 +26,7 @@ const RenderShape = (props: any) => {
     startAngle,
     endAngle,
     fill,
-    payload,
     percent,
-    value,
   } = props;
   const sin = Math.sin(-RADIAN * midAngle);
   const cos = Math.cos(-RADIAN * midAngle);
@@ -105,7 +104,6 @@ function GradeChart() {
     { name: "Present", value: 7 },
     { name: "Absent", value: 3 },
   ];
-
   const colors = ["#4169E1", "#FF4719"];
 
   return (
@@ -126,8 +124,9 @@ function GradeChart() {
             paddingAngle={4}
             stroke="none"
             dataKey="value"
+            className="mb-4"
           >
-            {data.map((entry, index) => (
+            {data.map((_, index) => (
               <Cell key={`cell-${index}`} fill={colors[index]}></Cell>
             ))}
           </Pie>
