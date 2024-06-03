@@ -109,31 +109,33 @@ function GradeChart() {
   const colors = ["#4169E1", "#FF4719"];
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
-      <PieChart>
-        <Pie
-          activeIndex={0}
-          activeShape={RenderShape}
-          inactiveShape={RenderShape}
-          data={data}
-          cx="50%"
-          cy="50%"
-          innerRadius={60}
-          outerRadius={80}
-          startAngle={450}
-          endAngle={90}
-          paddingAngle={4}
-          stroke="none"
-          dataKey="value"
-        >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={colors[index]}></Cell>
-          ))}
-        </Pie>
+    <>
+      <ResponsiveContainer width="100%" height="100%">
+        <PieChart>
+          <Pie
+            activeIndex={0}
+            activeShape={RenderShape}
+            inactiveShape={RenderShape}
+            data={data}
+            cx="50%"
+            cy="50%"
+            innerRadius={60}
+            outerRadius={80}
+            startAngle={450}
+            endAngle={90}
+            paddingAngle={4}
+            stroke="none"
+            dataKey="value"
+          >
+            {data.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={colors[index]}></Cell>
+            ))}
+          </Pie>
 
-        <Legend iconSize={6} iconType="circle" />
-      </PieChart>
-    </ResponsiveContainer>
+          <Legend iconSize={6} iconType="circle" />
+        </PieChart>
+      </ResponsiveContainer>
+    </>
   );
 }
 

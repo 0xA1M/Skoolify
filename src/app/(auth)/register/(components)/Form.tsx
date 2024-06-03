@@ -29,6 +29,7 @@ export type FormDataType = {
         subjects: string[];
       }[];
   password: string;
+  profilePic?: string;
 }; // This is the data schema that will followed.
 
 export interface FormProps {

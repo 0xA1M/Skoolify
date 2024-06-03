@@ -1,6 +1,6 @@
 "use client";
 /* Utils */
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 /* Components */
 import {
@@ -22,6 +22,7 @@ import {
   Tabs,
   Tab,
   Tooltip,
+  Spinner,
 } from "@nextui-org/react";
 import { today, getLocalTimeZone, parseDate } from "@internationalized/date";
 import { IoAddCircleOutline } from "react-icons/io5";
@@ -31,9 +32,9 @@ import { VscSymbolMisc } from "react-icons/vsc";
 
 /* Custom Components */
 import StatsCard from "@/components/UI/StatsCard";
+import EnrollmentChart from "@/components/UI/EnrollmentChart";
 
 /* Types */
-
 type Task = {
   date: DateValue;
   tasks: string[];
@@ -47,6 +48,7 @@ function Dashboard() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [task, setTask] = useState<string>("");
   const [selectedTab, setSelectedTab] = useState<string>("stats");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const addTask = () => {
     if (!task.trim()) return;
@@ -94,12 +96,34 @@ function Dashboard() {
     });
   };
 
+  let Util: React.JSX.Element;
+
+  switch (selectedTab) {
+    case "stats":
+      Util = <EnrollmentChart />;
+      break;
+
+    default:
+      Util = <p>Coming Soon!</p>;
+      break;
+  }
+
+  useEffect(() => {
+    setLoading(true);
+
+    let timeout = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+
+    () => clearTimeout(timeout);
+  }, [setLoading]);
+
   return (
     <section className="h-full grid grid-cols-3 grid-rows-8 gap-4">
       <header className="p-2 col-span-3 col-start-1 row-start-1 w-full grid grid-cols-3 grid-rows-1 gap-4">
-        <StatsCard role="Student" val={2000} />
-        <StatsCard role="Teacher" val={100} />
-        <StatsCard role="Staff" val={26} />
+        <StatsCard role="Student" val={172} />
+        <StatsCard role="Teacher" val={29} />
+        <StatsCard role="Staff" val={11} />
       </header>
 
       <main className="p-2 mt-2 col-span-3 row-span-7 row-start-2 grid grid-cols-4 grid-rows-8 gap-4">
@@ -294,6 +318,7 @@ function Dashboard() {
                 }
               ></Tab>
               <Tab
+                isDisabled
                 key="other"
                 title={
                   <div className="flex items-center space-x-2">
@@ -304,8 +329,8 @@ function Dashboard() {
               ></Tab>
             </Tabs>
           </CardHeader>
-          <CardBody className="grid place-content-center text-3xl">
-            {selectedTab === "stats" ? <p>Coming Soon!</p> : <p>Stay Tuned!</p>}
+          <CardBody className="w-full h-full flex items-center justify-center">
+            {loading ? <Spinner /> : Util!}
           </CardBody>
         </Card>
       </main>

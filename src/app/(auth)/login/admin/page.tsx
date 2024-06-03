@@ -132,7 +132,7 @@ function AdminLogin() {
               <div className="w-full h-full">
                 <div className="w-full flex items-center justify-center md:px-4">
                   <label htmlFor="email">
-                    <LuMail />
+                    <LuMail size={24} />
                   </label>
                   <Input
                     id="email"
@@ -147,7 +147,7 @@ function AdminLogin() {
 
                 <div className="w-full flex items-center justify-center md:px-4">
                   <label htmlFor="pass">
-                    <LuKeyRound />
+                    <LuKeyRound size={24} />
                   </label>
                   <Input
                     id="pass"

@@ -8,6 +8,8 @@ import {
   Dispatch,
   SetStateAction,
 } from "react";
+import { useTheme } from "next-themes";
+import { ToastContainer, TypeOptions, toast } from "react-toastify";
 
 /* Components */
 import {
@@ -22,8 +24,9 @@ import {
   Button,
   Spinner,
 } from "@nextui-org/react";
+
+/* Assets */
 import { LuCheckCircle, LuXCircle } from "react-icons/lu";
-import { Status } from "@/enums/Status";
 
 /* Types */
 export type User = {
@@ -40,6 +43,7 @@ export type User = {
   levels?: string[];
   role: string;
 };
+import { Status } from "@/enums/Status";
 
 interface Props {
   users: User[];
@@ -61,9 +65,20 @@ function UsersGrid({
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [Loading, setLoading] = useState<boolean>(false);
+  const { theme } = useTheme();
+
+  const notify = (msg: string, type: string) => {
+    toast(msg, {
+      autoClose: 5000,
+      type: type as TypeOptions,
+      pauseOnFocusLoss: false,
+      theme: theme,
+    });
+  };
 
   const handleStudent = async (id: string, status: Status) => {
     setLoading(true);
+
     const response = await fetch(`http://localhost:3000/api/acceptStudent`, {
       method: "POST",
       headers: {
@@ -71,13 +86,22 @@ function UsersGrid({
       },
       body: JSON.stringify({ id: parseInt(id) - 1, status: status }),
     });
+
+    if (response.ok) {
+      notify("Student Accepted Successfully", "info");
+    } else {
+      notify("An Unexpected Error Occurred", "error");
+    }
+
     setTimeout(() => {
       setLoading(false);
     }, 3000);
   };
+
   const renderCell = useCallback(
     (user: any, columnKey: any) => {
       const cellValue = user[columnKey as keyof User];
+
       interface SubjectProps {
         value: { subject: string; group: string }[];
       }
@@ -98,7 +122,7 @@ function UsersGrid({
           ))}
         </>
       );
-      console.log(cellValue);
+
       const StudentSubjects = ({ value }: SubjectProps) => (
         <>
           {value?.slice(0, 3).map((obj, index) => (
@@ -123,7 +147,7 @@ function UsersGrid({
 
       // Discard Student's Enrollment
       const handleDiscard = (id: string) => {
-        handleStudent(id, Status.request); // i used Status.request thats mean the admin do not want accept the user
+        handleStudent(id, Status.request);
       };
 
       switch (columnKey) {
@@ -202,15 +226,11 @@ function UsersGrid({
           (user) =>
             user.fullName.toLowerCase().includes(search.toLowerCase()) ||
             parseInt(user.id) == parseInt(search)
-        ) /* to add search by subject
-         ||
-            user.subjects?.includes(
-              search.charAt(0).toUpperCase() + search.slice(1)
-            )  */
+        )
       : users; // Use all users if no search
 
     // Calculate the total number of pages to display in the pagination
-    const pages = Math.ceil(filteredUsers?.length / rowsPerPage); // error : i add ?
+    const pages = Math.ceil(filteredUsers?.length / rowsPerPage);
     setTotalPages(pages);
 
     // Perform pagination on the filtered or original user list
@@ -280,6 +300,7 @@ function UsersGrid({
   useEffect(() => {
     setPage(1);
   }, [search]);
+
   if (Loading) {
     return (
       <div className="  h-[700px] w-[400px] flex items-center m-auto ">
@@ -287,132 +308,142 @@ function UsersGrid({
       </div>
     );
   }
-  return enrolled ? (
-    <Table
-      fullWidth
-      isStriped
-      color="secondary"
-      selectionBehavior="toggle"
-      selectionMode="single"
-      aria-label="Enrolled Users Data"
-      onRowAction={(key) => setSelectedUser(parseInt(key.toString()))}
-      bottomContent={
-        <div className="flex w-full justify-center">
-          <Pagination
-            isCompact
-            size="sm"
-            showControls
-            showShadow
-            variant="flat"
-            color="primary"
-            page={page}
-            total={totalPages}
-            loop
-            onChange={(page) => setPage(page)}
-          />
-        </div>
-      }
-      classNames={{
-        wrapper: "min-h-full",
-      }}
-      className="col-span-4 row-span-5 col-start-1 row-start-2"
-    >
-      <TableHeader columns={columns}>
-        {(column) => (
-          <TableColumn
-            key={column.key}
-            className="p-4 text-medium bg-primary-500 text-white"
-          >
-            {column.label}
-          </TableColumn>
-        )}
-      </TableHeader>
 
-      {items.length > 0 ? (
-        <TableBody items={items}>
-          {(item) => (
-            <TableRow
-              key={item.id}
-              className={`rounded-lg relative ${
-                parseInt(item.id) === selectedUser ? "blue-dot" : "remove-dot"
-              }`}
-            >
-              {(columnKey) => (
-                <TableCell className="p-4 first-of-type:rounded-s-lg last-of-type:rounded-e-lg">
-                  {renderCell(item, columnKey)}
-                </TableCell>
-              )}
-            </TableRow>
-          )}
-        </TableBody>
-      ) : (
-        <TableBody emptyContent={"There is nothing here!"}>{[]}</TableBody>
-      )}
-    </Table>
-  ) : (
-    <Table
-      fullWidth
-      isStriped
-      color="secondary"
-      selectionBehavior="toggle"
-      selectionMode="single"
-      aria-label="Non Enrolled Users Data"
-      onRowAction={(key) => setSelectedUser(parseInt(key.toString()))}
-      bottomContent={
-        <div className="flex w-full justify-center mb-4">
-          <Pagination
-            isCompact
-            size="sm"
-            showControls
-            showShadow
-            variant="flat"
-            color="primary"
-            page={page}
-            total={totalPages}
-            loop
-            onChange={(page) => setPage(page)}
-          />
-        </div>
-      }
-      classNames={{
-        wrapper: "min-h-full",
-      }}
-      className="col-span-4 row-span-5 col-start-1 row-start-2"
-    >
-      <TableHeader columns={role === "teacher" ? columns : enrolledColumns}>
-        {(column) => (
-          <TableColumn
-            key={column.key}
-            className="p-4 text-medium bg-primary-500 text-white"
-          >
-            {column.label}
-          </TableColumn>
-        )}
-      </TableHeader>
+  return (
+    <>
+      <ToastContainer />
 
-      {items?.length > 0 ? (
-        <TableBody items={items}>
-          {(item) => (
-            <TableRow
-              key={item.id}
-              className={`rounded-lg relative ${
-                parseInt(item.id) === selectedUser ? "blue-dot" : "remove-dot"
-              }`}
-            >
-              {(columnKey) => (
-                <TableCell className="p-4 first-of-type:rounded-s-lg last-of-type:rounded-e-lg">
-                  {renderCell(item, columnKey)}
-                </TableCell>
+      {enrolled ? (
+        <Table
+          fullWidth
+          isStriped
+          color="secondary"
+          selectionBehavior="toggle"
+          selectionMode="single"
+          aria-label="Enrolled Users Data"
+          onRowAction={(key) => setSelectedUser(parseInt(key.toString()))}
+          bottomContent={
+            <div className="flex w-full justify-center">
+              <Pagination
+                isCompact
+                size="sm"
+                showControls
+                showShadow
+                variant="flat"
+                color="primary"
+                page={page}
+                total={totalPages}
+                loop
+                onChange={(page) => setPage(page)}
+              />
+            </div>
+          }
+          classNames={{
+            wrapper: "min-h-full",
+          }}
+          className="col-span-4 row-span-5 col-start-1 row-start-2"
+        >
+          <TableHeader columns={columns}>
+            {(column) => (
+              <TableColumn
+                key={column.key}
+                className="p-4 text-medium bg-primary-500 text-white"
+              >
+                {column.label}
+              </TableColumn>
+            )}
+          </TableHeader>
+
+          {items.length > 0 ? (
+            <TableBody items={items}>
+              {(item) => (
+                <TableRow
+                  key={item.id}
+                  className={`rounded-lg relative ${
+                    parseInt(item.id) === selectedUser
+                      ? "blue-dot"
+                      : "remove-dot"
+                  }`}
+                >
+                  {(columnKey) => (
+                    <TableCell className="p-4 first-of-type:rounded-s-lg last-of-type:rounded-e-lg">
+                      {renderCell(item, columnKey)}
+                    </TableCell>
+                  )}
+                </TableRow>
               )}
-            </TableRow>
+            </TableBody>
+          ) : (
+            <TableBody emptyContent={"There is nothing here!"}>{[]}</TableBody>
           )}
-        </TableBody>
+        </Table>
       ) : (
-        <TableBody emptyContent={"There is nothing here!"}>{[]}</TableBody>
+        <Table
+          fullWidth
+          isStriped
+          color="secondary"
+          selectionBehavior="toggle"
+          selectionMode="single"
+          aria-label="Non Enrolled Users Data"
+          onRowAction={(key) => setSelectedUser(parseInt(key.toString()))}
+          bottomContent={
+            <div className="flex w-full justify-center mb-4">
+              <Pagination
+                isCompact
+                size="sm"
+                showControls
+                showShadow
+                variant="flat"
+                color="primary"
+                page={page}
+                total={totalPages}
+                loop
+                onChange={(page) => setPage(page)}
+              />
+            </div>
+          }
+          classNames={{
+            wrapper: "min-h-full",
+          }}
+          className="col-span-4 row-span-5 col-start-1 row-start-2"
+        >
+          <TableHeader columns={role === "teacher" ? columns : enrolledColumns}>
+            {(column) => (
+              <TableColumn
+                key={column.key}
+                className="p-4 text-medium bg-primary-500 text-white"
+              >
+                {column.label}
+              </TableColumn>
+            )}
+          </TableHeader>
+
+          {items?.length > 0 ? (
+            <TableBody items={items}>
+              {(item) => (
+                <TableRow
+                  key={item.id}
+                  className={`rounded-lg relative ${
+                    parseInt(item.id) === selectedUser
+                      ? "blue-dot"
+                      : "remove-dot"
+                  }`}
+                >
+                  {(columnKey) => (
+                    <TableCell className="p-4 first-of-type:rounded-s-lg last-of-type:rounded-e-lg">
+                      {renderCell(item, columnKey)}
+                    </TableCell>
+                  )}
+                </TableRow>
+              )}
+            </TableBody>
+          ) : (
+            <TableBody emptyContent={"There is nothing here!"}>{[]}</TableBody>
+          )}
+        </Table>
       )}
-    </Table>
+    </>
   );
 }
-//}
 
 export default UsersGrid;

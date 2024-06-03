@@ -11,8 +11,15 @@ import {
   CardBody,
   Divider,
   Chip,
-  useDisclosure,
 } from "@nextui-org/react";
+
+/* Custom Components */
+import EditPopUp from "./EditPopUp";
+
+/* Type */
+import type { User } from "./UsersGrid";
+
+/* Assets */
 import { FaFingerprint } from "react-icons/fa";
 import { IoMailOutline } from "react-icons/io5";
 import { CiCircleInfo, CiPhone } from "react-icons/ci";
@@ -21,21 +28,14 @@ import { GiMaterialsScience } from "react-icons/gi";
 import { LiaChalkboardTeacherSolid } from "react-icons/lia";
 import { FiEdit } from "react-icons/fi";
 
-/* Custom Components */
-import EditPopUp from "./EditPopUp";
-
-/* Type */
-import type { User } from "./UsersGrid";
-
 interface Props {
   user: User;
   enrolled: boolean;
 }
 
-
 function UserInfo({ user, enrolled }: Props) {
   const [editPanel, setEditPanel] = useState<boolean>(false);
-  console.log(user)
+
   if (user) {
     return (
       <>

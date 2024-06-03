@@ -1,5 +1,8 @@
 /* Components */
 import { Card, CardBody, Divider } from "@nextui-org/react";
+import CountUp from "react-countup";
+
+/* Assets */
 import { BsPersonGear } from "react-icons/bs";
 import { GoMortarBoard } from "react-icons/go";
 import { LiaChalkboardTeacherSolid } from "react-icons/lia";
@@ -24,7 +27,7 @@ function StatsCard({ role, val }: Props) {
         <div className="mx-auto text-center">
           <h2 className="font-semibold">Number of {role}s</h2>
 
-          <p className="text-xl font-bold">{val}</p>
+          <CountUp end={val} duration={2.5} className="text-xl font-bold" />
         </div>
       </CardBody>
     </Card>
