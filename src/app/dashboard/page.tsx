@@ -25,14 +25,19 @@ import {
   Spinner,
 } from "@nextui-org/react";
 import { today, getLocalTimeZone, parseDate } from "@internationalized/date";
-import { IoAddCircleOutline } from "react-icons/io5";
-import { MdOutlineDeleteOutline } from "react-icons/md";
-import { TfiStatsUp } from "react-icons/tfi";
-import { VscSymbolMisc } from "react-icons/vsc";
 
 /* Custom Components */
 import StatsCard from "@/components/UI/StatsCard";
 import EnrollmentChart from "@/components/UI/EnrollmentChart";
+
+/* Assets */
+import { BsPersonGear } from "react-icons/bs";
+import { GoMortarBoard } from "react-icons/go";
+import { LiaChalkboardTeacherSolid } from "react-icons/lia";
+import { IoAddCircleOutline } from "react-icons/io5";
+import { MdOutlineDeleteOutline } from "react-icons/md";
+import { TfiStatsUp } from "react-icons/tfi";
+import { VscSymbolMisc } from "react-icons/vsc";
 
 /* Types */
 type Task = {
@@ -113,7 +118,7 @@ function Dashboard() {
 
     let timeout = setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 1500);
 
     () => clearTimeout(timeout);
   }, [setLoading]);
@@ -121,9 +126,21 @@ function Dashboard() {
   return (
     <section className="h-full grid grid-cols-3 grid-rows-8 gap-4">
       <header className="p-2 col-span-3 col-start-1 row-start-1 w-full grid grid-cols-3 grid-rows-1 gap-4">
-        <StatsCard role="Student" val={172} />
-        <StatsCard role="Teacher" val={29} />
-        <StatsCard role="Staff" val={11} />
+        <StatsCard
+          role="Student"
+          val={172}
+          Icon={<GoMortarBoard size={36} className="mx-3" />}
+        />
+        <StatsCard
+          role="Teacher"
+          val={29}
+          Icon={<LiaChalkboardTeacherSolid size={36} className="mx-3" />}
+        />
+        <StatsCard
+          role="Staff"
+          val={11}
+          Icon={<BsPersonGear size={36} className="mx-3" />}
+        />
       </header>
 
       <main className="p-2 mt-2 col-span-3 row-span-7 row-start-2 grid grid-cols-4 grid-rows-8 gap-4">

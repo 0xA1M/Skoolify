@@ -4,18 +4,17 @@ import Admin from "@/models/Admin";
 import Student from "@/models/Student";
 
 export async function POST(request: Request) {
-    await dbConnect();
-    const res=await request.json();
-    var response=[];
-    if(res.status===Status.accepted)
-    {
-     response= await Student.find();
-    }
-    else
-    {
-     response= await Admin.find();
-     response=response[0].requests.filter((request:any) => request.role === 'student');
-    }
-    console.log(response)
-     return Response.json(response)
-     }
+  await dbConnect();
+  const res = await request.json();
+  var response = [];
+  if (res.status === Status.accepted) {
+    response = await Student.find();
+  } else {
+    response = await Admin.find();
+    response = response[0].requests.filter(
+      (request: any) => request.role === "student"
+    );
+  }
+  console.log(response);
+  return Response.json(response);
+}

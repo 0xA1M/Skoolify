@@ -111,7 +111,7 @@ function ThirdForm({ setStep, setFormData }: FormProps) {
 
         <Button
           type="submit"
-          variant="shadow"
+          variant="solid"
           color="primary"
           className="m-4 py-6 px-8 font-semibold"
           size="lg"
