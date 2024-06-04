@@ -78,7 +78,7 @@ function AdminLogin() {
         const token = String(Data);
         Cookies.set("token", token, { expires: Date.now() - oneDay });
 
-        notify("Hold Tight! You're Being Redirected.", "info");
+        notify("Hold Tight! You're Being Redirected.", "success");
         setLoading(false);
 
         setTimeout(() => {

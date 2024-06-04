@@ -3,11 +3,34 @@
 import { useRouter } from "next/navigation";
 
 /* Components */
-import { Button, Link, Card, CardBody, CardHeader, Textarea } from "@nextui-org/react";
+import {
+  Button,
+  Link,
+  Card,
+  CardBody,
+  CardHeader,
+  Textarea,
+  Input,
+} from "@nextui-org/react";
 import { MdChevronLeft } from "react-icons/md";
 
-function NotificationFeed() {
+function Notifications() {
   const router = useRouter();
+
+  let value: string;
+  let email: string;
+
+  const Send = async () => {
+    const response = await fetch(`http://localhost:3000/api/addNotification`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ sender: email, content: value }),
+    });
+
+    console.log(response);
+  };
 
   return (
     <section className="w-full h-full p-10">
@@ -26,16 +49,35 @@ function NotificationFeed() {
 
           <h1 className="font-bold text-4xl mx-auto">Notifications</h1>
         </CardHeader>
-        <CardBody className="grid place-content-center text-3xl">
-        <Textarea
-          label="Description"
-          placeholder="Enter your description"
-          className="max-w-xs"
-           />
+        <CardBody className="w-full  flex items-center justify-between place-content-center text-3xl">
+          <Textarea
+            label="Description"
+            variant="bordered"
+            placeholder="Enter your content"
+            disableAnimation
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              value = event.target.value;
+            }}
+            classNames={{
+              base: " max-w-lg",
+              input: " resize-y min-h-[200px]",
+            }}
+          />
+          <div className="flex w-[30%] flex-wrap md:flex-nowrap gap-4">
+            <Input
+              type="email"
+              label="Email"
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                email = event.target.value;
+              }}
+              placeholder="Enter your email"
+            />
+          </div>
+          <Button onClick={Send}>Send</Button>
         </CardBody>
       </Card>
     </section>
   );
 }
 
-export default NotificationFeed;
+export default Notifications;

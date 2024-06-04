@@ -87,11 +87,12 @@ function SideNavBar() {
       icon: <FaUserCheck size={22} />,
     },
     {
-      title: "Notifications",
+      title: "Timetable",
       label: "timetable",
       link: "/dashboard/timetable",
       icon: <FaClock size={22} />,
     },
+
     /* {
       title: "Events",
       label: "events",
@@ -292,7 +293,7 @@ function SideNavBar() {
 
                 <DropdownItem
                   key="settings"
-                  href={"/dashboard/settings"}
+                  href={"/dashboard/notifications"}
                   startContent={
                     <IoSettingsOutline className="text-xl text-default-500 pointer-events-none flex-shrink-0" />
                   }

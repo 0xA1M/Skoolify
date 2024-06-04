@@ -79,7 +79,67 @@ function TeachersPage() {
     return users;
   };
 
-  const users: User[] = generateUsers();
+  /* Change this later */
+  const generatedUsers = generateUsers();
+
+  const users: User[] = [
+    {
+      id: "001",
+      fullName: "Dr. Hakim",
+      phone: "9999999",
+      email: "hakim@estin.dz",
+      levels: ["3hs"],
+      subjects: [
+        {
+          group: "grp-1",
+          subject: "math",
+        },
+      ],
+      role: "Teacher",
+    },
+    {
+      id: "002",
+      fullName: "Dr. Hakim",
+      phone: "9999999",
+      email: "hakim@estin.dz",
+      levels: ["3hs"],
+      subjects: [
+        {
+          group: "grp-1",
+          subject: "math",
+        },
+      ],
+      role: "Teacher",
+    },
+    {
+      id: "003",
+      fullName: "Dr. Hakim",
+      phone: "9999999",
+      email: "hakim@estin.dz",
+      levels: ["3hs"],
+      subjects: [
+        {
+          group: "grp-1",
+          subject: "math",
+        },
+      ],
+      role: "Teacher",
+    },
+    {
+      id: "004",
+      fullName: "Dr. Hakim",
+      phone: "9999999",
+      email: "hakim@estin.dz",
+      levels: ["3hs"],
+      subjects: [
+        {
+          group: "grp-1",
+          subject: "math",
+        },
+      ],
+      role: "Teacher",
+    },
+  ];
 
   return (
     <section className="w-full h-full grid grid-cols-6 grid-rows-6 gap-4 px-2">
