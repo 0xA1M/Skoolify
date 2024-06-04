@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith("/dashboard")) {
     // change the condition below
-    if (cookies().has("token"))
+    if (!cookies().has("token"))
       return NextResponse.redirect(new URL("/", request.url));
   } else {
     if (cookies().has("token")) {

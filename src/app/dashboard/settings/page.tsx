@@ -37,7 +37,7 @@ function Settings() {
 
           <h1 className="font-bold text-4xl mx-auto">Settings</h1>
         </CardHeader>
-        <CardBody className="w-full  flex items-center place-content-center text-3xl">
+        <CardBody className="w-full  flex items-center justify-between place-content-center text-3xl">
         <Textarea
        label="Description"
         variant="bordered"
