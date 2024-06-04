@@ -57,7 +57,7 @@ function FirstForm({ setStep, setFormData }: FormProps) {
       <article className="flex flex-col items-center justify-center m-2 mb-4 gap-2">
         <h1 className="text-3xl font-medium mb-2">Create Account</h1>
         <Button
-          variant="shadow"
+          variant="solid"
           size="lg"
           className="text-white bg-[#152259] rounded-md flex items-center text-lg py-2 px-4 font-medium gap-2 cursor-pointer mb-1"
         >
@@ -165,7 +165,7 @@ function FirstForm({ setStep, setFormData }: FormProps) {
 
         <Button
           type="submit"
-          variant="shadow"
+          variant="solid"
           color="primary"
           className="m-4 py-6 px-8 mt-10 md:mt-0 font-semibold"
           size="lg"

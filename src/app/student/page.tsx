@@ -27,7 +27,7 @@ import {
   Tab,
   Select,
   SelectItem,
-  Chip,
+  ScrollShadow,
 } from "@nextui-org/react";
 
 /* Custom Components */
@@ -37,6 +37,7 @@ import DayCell from "@/components/UI/DayCell";
 import Schedule from "@/components/UI/Schedule";
 import GradeChart from "@/components/UI/GradeChart";
 import StatsCard from "@/components/UI/StatsCard";
+import StudentCard from "@/components/UI/StudentCard";
 
 /* Assets */
 import { IoNotificationsOutline, IoSettingsOutline } from "react-icons/io5";
@@ -113,7 +114,36 @@ function StudentDashboard() {
       UtilNode = (
         <div className="h-full grid grid-cols-12 grid-rows-1 gap-2">
           <Card className="col-span-8">
-            <CardBody>Classmates</CardBody>
+            <CardBody>
+              <ScrollShadow className="p-4 flex flex-col items-center gap-4 overflow-auto">
+                <StudentCard
+                  name="Big Dick Randy"
+                  description="dick@randy.com"
+                  groups={[
+                    {
+                      value: "grp-01",
+                      label: "Grp 01",
+                    },
+                    {
+                      value: "grp-02",
+                      label: "Grp 02",
+                    },
+                    {
+                      value: "grp-03",
+                      label: "Grp 03",
+                    },
+                    {
+                      value: "grp-04",
+                      label: "Grp 04",
+                    },
+                    {
+                      value: "grp-05",
+                      label: "Grp 05",
+                    },
+                  ]}
+                />
+              </ScrollShadow>
+            </CardBody>
           </Card>
 
           <Card className="col-start-9 col-span-4">
@@ -123,13 +153,14 @@ function StudentDashboard() {
                   <User
                     name="Teacher's Name"
                     description="Group Subject"
-                    avatarProps={{
-                      showFallback: true,
-                      color: "primary",
-                    }}
                     classNames={{
                       name: "text-sm",
                       description: "text-xs text-zinc-500",
+                    }}
+                    avatarProps={{
+                      src: "", // Change this to the pfp of the teacher
+                      showFallback: true,
+                      color: "primary",
                     }}
                   />
 
@@ -419,9 +450,9 @@ function StudentDashboard() {
           </CardHeader>
 
           <CardBody className="flex flex-col items-center gap-2">
-            <Card fullWidth shadow="sm" className="min-h-20">
+            {/* <Card fullWidth shadow="sm" className="min-h-20">
               <CardBody>Working on it!</CardBody>
-            </Card>
+            </Card> */}
           </CardBody>
         </Card>
 

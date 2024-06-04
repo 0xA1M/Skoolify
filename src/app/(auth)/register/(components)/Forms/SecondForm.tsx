@@ -355,7 +355,7 @@ function SecondForm({ formData, setStep, setFormData }: FormProps) {
 
         <Button
           type="submit"
-          variant="shadow"
+          variant="solid"
           color="primary"
           className="-mb-20 mt-10 py-6 px-8 font-semibold"
           size="lg"

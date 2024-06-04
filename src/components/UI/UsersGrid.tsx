@@ -29,6 +29,7 @@ import {
 import { LuCheckCircle, LuXCircle } from "react-icons/lu";
 
 /* Types */
+import { Status } from "@/enums/Status";
 export type User = {
   id: string;
   fullName: string;
@@ -43,7 +44,6 @@ export type User = {
   levels?: string[];
   role: string;
 };
-import { Status } from "@/enums/Status";
 
 interface Props {
   users: User[];
@@ -214,7 +214,7 @@ function UsersGrid({
           return cellValue;
       }
     },
-    [role]
+    [role, handleStudent]
   );
 
   const rowsPerPage = enrolled ? 8 : 7;
