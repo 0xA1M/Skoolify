@@ -136,7 +136,11 @@ function Dashboard() {
           val={29}
           Icon={<LiaChalkboardTeacherSolid size={36} className="mx-3" />}
         />
-        <StatsCard role="Staff" val={11} Icon={<BsPersonGear size={36} />} />
+        <StatsCard
+          role="Staff"
+          val={11}
+          Icon={<BsPersonGear size={36} className="mx-3" />}
+        />
       </header>
 
       <main className="p-2 mt-2 col-span-3 row-span-7 row-start-2 grid grid-cols-4 grid-rows-8 gap-4">

@@ -104,6 +104,7 @@ function GradeChart() {
     { name: "Present", value: 7 },
     { name: "Absent", value: 3 },
   ];
+
   const colors = ["#4169E1", "#FF4719"];
 
   return (

@@ -17,7 +17,7 @@ export async function GET(request: Request) {
 }
 export async function POST(request: Request) {
   const res = await request.json();
-  console.log(res);
+
   const response = await Get_all_students(res);
   return new Response(JSON.stringify(response), {
     status: 200,
