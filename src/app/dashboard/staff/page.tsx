@@ -76,7 +76,6 @@ function StaffPage() {
                 variant="solid"
                 radius="sm"
                 color="primary"
-                className="shadow-md shadow-primary-300"
               >
                 Add Staff
               </Button>

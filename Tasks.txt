@@ -1,0 +1,6 @@
+- Fix Teacher's Page bug
+- Make Student Dashboard
+- Fix Add Student/Teacher
+- Fix check in design
+- Add session deletion in timetable 
+- Add session recurrence in timetable

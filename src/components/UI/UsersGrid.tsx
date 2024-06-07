@@ -67,36 +67,42 @@ function UsersGrid({
   const [Loading, setLoading] = useState<boolean>(false);
   const { theme } = useTheme();
 
-  const notify = (msg: string, type: string) => {
-    toast(msg, {
-      autoClose: 5000,
-      type: type as TypeOptions,
-      pauseOnFocusLoss: false,
-      theme: theme,
-    });
-  };
+  const notify = useCallback(
+    (msg: string, type: string) => {
+      toast(msg, {
+        autoClose: 5000,
+        type: type as TypeOptions,
+        pauseOnFocusLoss: false,
+        theme: theme,
+      });
+    },
+    [theme]
+  );
 
-  const handleStudent = async (id: string, status: Status) => {
-    setLoading(true);
+  const handleStudent = useCallback(
+    async (id: string, status: Status) => {
+      setLoading(true);
 
-    const response = await fetch(`http://localhost:3000/api/acceptStudent`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id: parseInt(id) - 1, status: status }),
-    });
+      const response = await fetch(`http://localhost:3000/api/acceptStudent`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: parseInt(id) - 1, status: status }),
+      });
 
-    if (response.ok) {
-      notify("Student Accepted Successfully", "info");
-    } else {
-      notify("An Unexpected Error Occurred", "error");
-    }
+      if (response.ok) {
+        notify("Student Accepted Successfully", "info");
+      } else {
+        notify("An Unexpected Error Occurred", "error");
+      }
 
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-  };
+      setTimeout(() => {
+        setLoading(false);
+      }, 3000);
+    },
+    [notify]
+  );
 
   const renderCell = useCallback(
     (user: any, columnKey: any) => {

@@ -117,13 +117,9 @@ function StudentDashboard() {
             <CardBody>
               <ScrollShadow className="p-4 flex flex-col items-center gap-4 overflow-auto">
                 <StudentCard
-                  name="Big Dick Randy"
-                  description="dick@randy.com"
+                  name="Zalla Abdessamed"
+                  description="a_zalla@estin.dz"
                   groups={[
-                    {
-                      value: "grp-01",
-                      label: "Grp 01",
-                    },
                     {
                       value: "grp-02",
                       label: "Grp 02",
@@ -139,6 +135,36 @@ function StudentDashboard() {
                     {
                       value: "grp-05",
                       label: "Grp 05",
+                    },
+                  ]}
+                />
+
+                <StudentCard
+                  name="Safi Achref"
+                  description="a_zalla@estin.dz"
+                  groups={[
+                    {
+                      value: "grp-01",
+                      label: "Grp 01",
+                    },
+                    {
+                      value: "grp-02",
+                      label: "Grp 02",
+                    },
+                  ]}
+                />
+
+                <StudentCard
+                  name="Outerbah Mohamed"
+                  description="a_zalla@estin.dz"
+                  groups={[
+                    {
+                      value: "grp-01",
+                      label: "Grp 01",
+                    },
+                    {
+                      value: "grp-02",
+                      label: "Grp 02",
                     },
                   ]}
                 />
